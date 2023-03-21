@@ -1,0 +1,81 @@
+.header {
+    display: flex;
+    width: 100vw;
+    height: 5.81rem;
+    margin: auto;
+    padding: 0;
+  }
+
+  .logoArea{
+    width: 6rem;
+    margin: auto;
+    cursor: pointer;
+  }
+
+  .search-InputArea{
+    display: flex;
+    align-items: center;
+    margin: auto;
+  }
+
+  .searchInput {
+    width: 60.19rem;
+    height: 2.81rem;
+    flex-grow: 0;
+    margin: auto;
+    padding: 0.25rem 3.00rem 0.38rem 3.63rem;
+    border-radius: 0.63rem;
+    background-color: #fff;
+    border:none
+  }
+
+  .searchInput:focus{
+    border: 1px solid;
+    border-color:#bb2649;
+    outline: none;
+  }
+  
+  .searchBtn-box{
+    width: 3rem;
+    height: 2.81rem;
+    margin: 0 0.3rem;
+    border:1px solid #dfdfdf;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#828282;
+
+}
+
+.searchBtn-box:hover{
+    color:#bb2649;
+    border:1px solid #bb2649;
+}
+
+.searchBtn{
+    margin: auto;
+    cursor: pointer;
+}
+
+.topMenuArea .topIcon{
+    color:#ccc;
+    cursor: pointer;
+    margin: 0.3rem;
+    margin-top: 1.5rem;
+}
+
+.topMenuArea .topIcon:hover{
+    color:#bb2649;
+}
+
+.topMenuArea{
+    margin: 0 0 0.5rem;
+    width: 10rem;
+}
+
+.topIcon{
+    size: 2rem;
+    padding: 0.1rem;
+}
