@@ -1,5 +1,5 @@
 .pageMenu-box, .categoryMenu-box {
-    width: 9.5vw;
+    width: 9vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     border-radius: 0.63rem;
     background-color: #fff;
     margin-bottom: 2rem;
-    padding: 1rem 3rem;
+    padding: 1rem 2.7rem 1rem 2.5rem;
   }
 
 .pageMenu-box div, .categoryMenu-box div{
