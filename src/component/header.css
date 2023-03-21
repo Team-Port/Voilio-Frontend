@@ -1,25 +1,28 @@
 .header {
     display: flex;
+    position:sticky;
+    top:0;
     width: 100vw;
     height: 5.81rem;
-    margin: auto;
     padding: 0;
+    z-index: 10000;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .logoArea{
-    width: 6rem;
-    margin: auto;
+    width: 10vw;
+    padding-left: 40px;
     cursor: pointer;
   }
 
   .search-InputArea{
     display: flex;
     align-items: center;
-    margin: auto;
   }
 
   .searchInput {
-    width: 60.19rem;
+    width: 60vw;
     height: 2.81rem;
     flex-grow: 0;
     margin: auto;
@@ -71,11 +74,7 @@
 }
 
 .topMenuArea{
-    margin: 0 0 0.5rem;
+    padding-right: 20px;
     width: 10rem;
 }
 
-.topIcon{
-    size: 2rem;
-    padding: 0.1rem;
-}
