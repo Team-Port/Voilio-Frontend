@@ -1,15 +1,11 @@
 import React from 'react';
+import Sidebar from '../component/Sidebar';
 
 const Home = () => {
     return (
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
-                <div className='page-menu-box'>
-
-                </div>
-                <div className='page-menu-box'>
-
-                </div>
+                <Sidebar/>
             </div>
             <div className='video-list'>
                 
