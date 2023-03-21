@@ -2,4 +2,29 @@
   flex-grow: 0;
   background-color: #f5f5f5;
   padding: 0.1rem;
+  font-family: "NanumMyeongjo";
 }
+
+.home-wrap{
+  display: flex;
+}
+
+.home-wrap .left-sidebar-box {
+  flex: 0 0 70px;
+}
+
+@font-face {
+  font-family: "NanumMyeongjo";
+  font-style: normal;
+  font-weight: normal;
+  src: url(./../public/asset/font/Nanum_Myeongjo/NanumMyeongjo-Regular.ttf);
+}
+
+@font-face {
+  font-family: "NanumMyeongjo";
+  src: url(./../public/asset/font/Nanum_Myeongjo/NanumMyeongjo-Bold.ttf);
+}
+
+
+
+
