@@ -16,7 +16,7 @@ const Header = () => {
                 placeholder='검색'
                 className='searchInput' />
             <div className='searchBtn-box'>
-                <BsSearch className='topIcon-search' size='1.5rem' ></BsSearch> 
+                <BsSearch className='topIcon-search' size='1.2rem' ></BsSearch> 
             </div>
         </div>
         <div className='topMenuArea'>
