@@ -41,8 +41,8 @@
   .searchBtn-box{
     width: 3rem;
     height: 2.81rem;
-    margin: 0 0.3rem;
-    border:1px solid #dfdfdf;
+    /* margin: 0 0.3rem; */
+    /* border:1px solid #dfdfdf; */
     cursor: pointer;
     border-radius: 20px;
     display: flex;

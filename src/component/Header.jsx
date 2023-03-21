@@ -8,7 +8,7 @@ const Header = () => {
     return (
         <div className='header'>
         <div className='logoArea'>
-            <img className='headerLogo' src={'public_asset/voilioLogo.png'}></img>
+            <img className='headerLogo' src={'asset/voilioLogo.png'}></img>
         </div>
         <div className='search-InputArea'>
             <input
