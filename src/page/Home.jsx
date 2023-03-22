@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '../component/Sidebar';
+import VideoList from '../component/VideoList';
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
                 <Sidebar/>
             </div>
             <div className='video-list'>
-                
+                <VideoList/>
             </div>
             <div className='right-sidebar-box'>
 
