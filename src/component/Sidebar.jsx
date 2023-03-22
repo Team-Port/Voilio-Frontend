@@ -17,6 +17,8 @@ const Sidebar = () => {
                 <div><img src={'asset/dance.png'}/>Dance</div>
                 <div><img src={'asset/language.png'}/>Language</div>
                 <div><img src={'asset/exercise.png'}/>Exercise</div>
+                <div><img src={'asset/exercise.png'}/>Exercise</div>
+                <div><img src={'asset/exercise.png'}/>Exercise</div>
             </div>
         </div>
     );

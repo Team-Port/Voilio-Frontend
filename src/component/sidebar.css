@@ -1,12 +1,17 @@
 .sidebarMenu-box{
+    /* position: fixed; */
     position: sticky;
-    top: 13%;
-
+    top: 5.8rem;
 }
 
+/* .categoryMenu-box{
+    overflow-y: scroll;
+    height: 22rem;
+} */
+
 .pageMenu-box, .categoryMenu-box {
-    width: 9vw;
-    height: auto;
+    width: 8vw;
+    /* height: auto; */
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
@@ -24,7 +29,7 @@
     height: 1.6rem;
     cursor: pointer;
     background-color: #fff;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     margin-bottom: 0.2rem;
     display: flex;
     align-items: center;
@@ -40,7 +45,7 @@
   } 
 
 .pageMenu-box div img , .categoryMenu-box div img{
-    width: 1.8rem;
+    width: 1.7rem;
     object-fit:cover;
     background: none;
     margin-right: 1rem;
