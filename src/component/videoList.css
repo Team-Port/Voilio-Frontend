@@ -1,6 +1,7 @@
 .videoList{
+    width: 63vw;
+    /* margin-left: 3rem; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding:0 8px 16px
 }

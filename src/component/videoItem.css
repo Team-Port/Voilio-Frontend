@@ -1,7 +1,7 @@
 .videoItem{
     width: calc(40% - 8px);
-    padding: 0.4em;
-    margin: 0.3rem;
+    /* padding: 0.4em; */
+    /* margin: 0.3rem; */
 }
 
 .thumnail img{

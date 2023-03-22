@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '../component/Sidebar';
+import InfoList from '../component/InfoList';
 import VideoList from '../component/VideoList';
 
 const Home = () => {
@@ -12,7 +13,7 @@ const Home = () => {
                 <VideoList/>
             </div>
             <div className='right-sidebar-box'>
-
+                <InfoList/>
             </div>
         </div>
     );
