@@ -1,3 +1,9 @@
+.sidebarMenu-box{
+    position: sticky;
+    top: 13%;
+
+}
+
 .pageMenu-box, .categoryMenu-box {
     width: 9vw;
     height: auto;
