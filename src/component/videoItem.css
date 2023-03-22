@@ -1,0 +1,26 @@
+.videoItem{
+    width: calc(40% - 8px);
+    padding: 0.4em;
+    margin: 0.3rem;
+}
+
+.thumnail img{
+    width: 100%;
+    border-radius: 15px;
+}
+
+.metaData{
+    display: flex;
+    text-align:left;
+    padding: 0.5em;
+    flex:1 1 70%;
+}
+
+.metaData .channelImg{
+    flex:0 0 36px;
+    width:36px;
+    height:36px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: contain;
+}
