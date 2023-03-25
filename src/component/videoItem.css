@@ -2,6 +2,7 @@
     width: calc(40% - 8px);
     /* padding: 0.4em; */
     /* margin: 0.3rem; */
+    /* flex:1 1 20%; */
 }
 
 .thumnail img{
@@ -12,15 +13,46 @@
 .metaData{
     display: flex;
     text-align:left;
-    padding: 0.5em;
+    padding: 0.3em;
     flex:1 1 70%;
 }
 
-.metaData .channelImg{
+.channelImg{
     flex:0 0 36px;
-    width:36px;
-    height:36px;
+    width:30px;
+    height:30px;
     border-radius: 50%;
     overflow: hidden;
     object-fit: contain;
+}
+
+.infoText-box{
+    width: 100%;
+}
+
+.infoText{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title{
+    margin: 0.2rem;
+}
+
+.category{
+    margin: 0.2rem;
+    color: #a8a7a7;
+    font-size: 0.7rem;
+}
+
+.channel{
+    margin: 0.2rem;
+    color: #464646;
+    font-size: 0.9rem;
+}
+
+.publishDate{
+    margin: 0.2rem;
+    color: #bcbcbc;
+    font-size: 0.5rem;
 }
