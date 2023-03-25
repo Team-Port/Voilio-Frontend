@@ -5,9 +5,14 @@
     /* flex:1 1 20%; */
 }
 
-.thumnail img{
+.thumnail-img{
     width: 100%;
     border-radius: 15px;
+    cursor: pointer;
+}
+
+.thumnail-img:hover{
+    border-radius: 0%;
 }
 
 .metaData{
@@ -24,6 +29,7 @@
     border-radius: 50%;
     overflow: hidden;
     object-fit: contain;
+    cursor: pointer;
 }
 
 .infoText-box{
@@ -43,12 +49,14 @@
     margin: 0.2rem;
     color: #a8a7a7;
     font-size: 0.7rem;
+    cursor: pointer;
 }
 
 .channel{
     margin: 0.2rem;
     color: #464646;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .publishDate{
