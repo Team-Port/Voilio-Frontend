@@ -24,7 +24,7 @@ const VideoItem = ({videoItem, display}) => {
                         </span>
                         <span className='infoText'>
                             <p className='channel'>{videoItem.snippet.channelTitle}</p>
-                            <p className='publishDate'>published Date</p>
+                            <p className='publishDate'>{videoItem.snippet.publishedAt}</p>
                         </span>
                     </div>
                 </div>
