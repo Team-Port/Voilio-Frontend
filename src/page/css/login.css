@@ -1,0 +1,51 @@
+.login-container{
+    margin: auto;
+    padding-bottom: 20rem;
+}
+
+.id-box, .pwd-box, .login-btn-box, .welcome-box {
+    margin: 2rem;
+}
+
+#userID, #userPWD{
+    width: 30vw;
+    border: 1px solid #bababa;
+    border-radius: 10px;
+    padding: 0.7rem;
+}
+
+#userID:focus, #userPWD:focus{
+    outline: none; 
+    color: #bb2649;    
+    border: 1px solid #bb2649; 
+}
+
+.login-btn-box{
+    text-align: center;
+}
+
+.login-btn{
+    cursor: pointer;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem 2rem;
+}
+
+.login-btn:hover{
+    border: 1px solid #bb2649;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #bb2649;
+    padding: 0.5rem 2rem;
+
+}
+
+.welcome-box{
+    margin-left: 2rem;
+    margin-bottom: 3.6rem;
+    color: #202020;
+}
+
+.welcome-box p span{
+    color: #bb2649;
+}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
+import Login from './page/Login';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
@@ -36,6 +37,7 @@ function App() {
                 <Header/>
                     <Routes>
                         <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
+                        <Route path="/login" element={<Login/>} />
                     </Routes>
             
             </BrowserRouter>
