@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Join = () => {
     const navigator = useNavigate();
-    
+
     const joinUser = (e) => {
         e.preventDefault();
         // dispatch(login(true));
@@ -31,6 +31,10 @@ const Join = () => {
                 <form onSubmit={(e)=> {joinUser(e)}} >
                     <div>
                         <div className='input-box'>
+                            <div><label htmlFor='userPWD'>Name</label></div>
+                            <div><input type="text" id="userPWD" placeholder="이름을 입력해주세요"></input></div>
+                        </div>
+                        <div className='input-box'>
                             <div><label htmlFor='userID'>E-mail</label></div>
                             <div><input type="text" id="userID" placeholder="아이디로 사용할 이메일을 입력해주세요"></input></div>
                         </div>
@@ -43,8 +47,8 @@ const Join = () => {
                             <div><input type="text" id="userPWD" placeholder="비밀번호를 한 번 더 입력해주세요"></input></div>
                         </div>
                         <div className='input-box'>
-                            <div><label htmlFor='userPWD'>Phone Number</label></div>
-                            <div><input type="text" id="userPWD" placeholder="전화번호를 입력해주세요"></input></div>
+                            <div><label htmlFor='userPWD'>Nickname</label></div>
+                            <div><input type="text" id="userPWD" placeholder="채널이름으로 쓰일 닉네임을 지어주세요!"></input></div>
                         </div>
                     </div>
                     <div className='profile-btn-box'>

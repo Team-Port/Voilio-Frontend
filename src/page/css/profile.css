@@ -1,22 +1,24 @@
 .login-container{
     width: 50vw;
-    /* margin-top: 5vh; */
     margin-left: 12vw;
-    padding-bottom: 20rem;    
     text-align: center;
 }
 
 .welcome-box {
-    margin: 2rem;
+    margin: 1rem;
 }
 
 .login-btn-box , .input-box {
     font-size: 0.8rem;
-    margin: 2rem;
+    margin: 1.5rem;
+}
+
+.input-box input{
+    height: 0.5rem;
 }
 
 #userID, #userPWD{
-    width: 25vw;
+    width: 20vw;
     border: 1px solid #bababa;
     border-radius: 10px;
     padding: 0.7rem;
