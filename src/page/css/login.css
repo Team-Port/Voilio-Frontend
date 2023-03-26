@@ -32,24 +32,27 @@
     border: 1px solid #bb2649; 
 }
 
-.login-btn-box{
+.profile-btn-box{
     text-align: center;
 }
 
-.login-btn{
+.login-btn , .join-btn{
     cursor: pointer;
     border: none;
     font-size: 2rem;
     padding: 0.5rem 2rem;
     color: #929292;
+    margin: 0.8rem;
 }
 
-.login-btn:hover{
+.login-btn:hover , .join-btn:hover{
     border: 1px solid #bb2649;
-    border-radius: 5px;
+    border-radius: 30px;
     box-sizing: border-box;
-    color: #bb2649;
+    color: #ffffff;
+    background-color: #bb2649;
     padding: 0.5rem 2rem;
+    transition: all.5s;
 
 }
 

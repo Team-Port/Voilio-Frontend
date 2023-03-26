@@ -43,8 +43,9 @@ const Login = () => {
                             <div><input type="text" id="userPWD" placeholder="비밀번호를 입력해주세요"></input></div>
                         </div>
                     </div>
-                    <div className='login-btn-box'>
+                    <div className='profile-btn-box'>
                         <input className='login-btn' type="submit" value="login"></input>
+                        <input className='join-btn' type="button" value="join"></input>
                     </div>
                 </form>
             </div>
