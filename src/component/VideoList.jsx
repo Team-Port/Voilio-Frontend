@@ -2,10 +2,11 @@ import React from 'react';
 import './videoList.css'
 import VideoItem from './VideoItem';
 
-const VideoList = () => {
+const VideoList = ({display}) => {
     return (
-        <ul className='videoList'>
-            <VideoItem/>
+        <ul className='videoList' >
+            <VideoItem 
+                display={display}/>
         </ul>
     );
 };

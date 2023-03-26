@@ -20,9 +20,9 @@ const Header = () => {
             </div>
         </div>
         <div className='topMenuArea'>
-            <BsSuitHeart className='topIcon' size='2rem'></BsSuitHeart>
-            <BsChatRightHeart className='topIcon'size='2rem'></BsChatRightHeart>
-            <BsPersonCircle className='topIcon'size='2rem'></BsPersonCircle>
+            <BsSuitHeart className='topIcon' size='1.5rem'></BsSuitHeart>
+            <BsChatRightHeart className='topIcon'size='1.5rem'></BsChatRightHeart>
+            <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
         </div>
     </div>
     );

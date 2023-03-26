@@ -2,7 +2,10 @@
     width: calc(40% - 8px);
     /* padding: 0.4em; */
     /* margin: 0.3rem; */
-    /* flex:1 1 20%; */
+}
+
+.videoItem.list-h{
+    flex:1 1 20%
 }
 
 .thumnail-img{

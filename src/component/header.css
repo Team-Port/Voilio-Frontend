@@ -11,9 +11,9 @@
   }
 
   .logoArea{
-    width: 10vw;
-    padding-left: 2.5rem;
-    padding-right: 1rem;
+    width: 5vw;
+    padding-left: 5rem;
+    /* padding-right: 1rem; */
     cursor: pointer;
   }
 
@@ -27,7 +27,7 @@
   }
 
   .searchInput {
-    width: 63vw;
+    width: 66vw;
     height: 2.5rem;
     flex-grow: 0;
     margin: auto;
@@ -78,6 +78,6 @@
 }
 
 .topMenuArea{
-    padding-right: 40px;
-    width: 10rem;
+    padding-right: 1.8rem;
+    /* width: 10rem; */
 }

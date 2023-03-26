@@ -10,7 +10,8 @@ const Home = () => {
                 <Sidebar/>
             </div>
             <div className='video-list'>
-                <VideoList/>
+                <VideoList
+                    display='list-h'/>
             </div>
             <div className='right-sidebar-box'>
                 <InfoList/>

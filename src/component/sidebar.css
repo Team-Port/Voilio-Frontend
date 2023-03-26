@@ -1,17 +1,15 @@
 .sidebarMenu-box{
-    /* position: fixed; */
     position: sticky;
     top: 5.8rem;
 }
 
-/* .categoryMenu-box{
+.categoryMenu-box{
     overflow-y: scroll;
     height: 22rem;
-} */
+}
 
 .pageMenu-box, .categoryMenu-box {
     width: 8vw;
-    /* height: auto; */
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
