@@ -1,7 +1,7 @@
 import React from 'react';
-import './css/login.css'
+import './css/profile.css'
 // import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { login } from '../store/user/userSlice';
 import Sidebar from '../component/Sidebar';
 
@@ -34,18 +34,20 @@ const Login = () => {
                 </div>
                 <form onSubmit={(e)=> {loginUser(e)}} >
                     <div className='input-box'>
-                        <div className='id-box'>
+                        <div className='input-box'>
                             <div><label htmlFor='userID'>ID</label></div>
                             <div><input type="text" id="userID" placeholder="아이디(이메일)을 입력해주세요"></input></div>
                         </div>
-                        <div className='pwd-box'>
+                        <div className='input-box'>
                             <div><label htmlFor='userPWD'>Password</label></div>
                             <div><input type="text" id="userPWD" placeholder="비밀번호를 입력해주세요"></input></div>
                         </div>
                     </div>
                     <div className='profile-btn-box'>
                         <input className='login-btn' type="submit" value="login"></input>
-                        <input className='join-btn' type="button" value="join"></input>
+                        <Link to={'/join'}>
+                            <input className='join-btn' type="button" value="join"></input>
+                        </Link>
                     </div>
                 </form>
             </div>
