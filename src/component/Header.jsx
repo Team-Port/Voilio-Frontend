@@ -25,7 +25,9 @@ const Header = () => {
         <div className='topMenuArea'>
             <BsSuitHeart className='topIcon' size='1.5rem'></BsSuitHeart>
             <BsChatRightHeart className='topIcon'size='1.5rem'></BsChatRightHeart>
-            <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
+            <Link to={'/login'}>
+                <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
+            </Link>
         </div>
     </div>
     );

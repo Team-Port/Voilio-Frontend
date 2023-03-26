@@ -13,6 +13,10 @@ ul,li{
   justify-content: space-between;
 }
 
+.profile-wrap{
+  display: flex;
+}
+
 
 a{
   text-decoration: none;
