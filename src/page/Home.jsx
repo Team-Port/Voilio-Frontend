@@ -3,7 +3,7 @@ import Sidebar from '../component/Sidebar';
 import InfoList from '../component/InfoList';
 import VideoList from '../component/VideoList';
 
-const Home = () => {
+const Home = ({videoItems}) => {
     return (
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
@@ -11,6 +11,7 @@ const Home = () => {
             </div>
             <div className='video-list'>
                 <VideoList
+                    videoItems = {videoItems}
                     display='list-h'/>
             </div>
             <div className='right-sidebar-box'>

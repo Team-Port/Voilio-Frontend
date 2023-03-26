@@ -1,8 +1,10 @@
 .videoList{
     display: flex;
-    width: 63vw;
+    width: 68vw;
     flex-wrap: wrap;
     justify-content: center;
+    padding-left: 0rem;
+    margin: 0;
 }
 
 .videoList.list-h {
