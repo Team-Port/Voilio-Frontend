@@ -1,12 +1,14 @@
 .infoMenu-box{
-    /* position: fixed; */
     position: sticky;
-    top: 5.8rem;
+    top: 6.8rem;
 }
 
 .subscribe-box{
     width: 11.8vw;
+    max-height: 38rem;
+    overflow: scroll;
     display: flex;
+    position: sticky;
     flex-direction: column;
     margin-right: 1.2rem;
     justify-content: flex-start;
@@ -29,7 +31,7 @@
     align-items: center;
     text-align: center;
     color: #909090;
-
+    position: sticky;
   }
   
 .subscribe-box div:hover{
@@ -48,6 +50,7 @@
 .ss-titleImg{
   width: 30px;
   background: none;
+  padding-right: 0.1rem;
 }
 
 .subscribe-title{
@@ -57,6 +60,7 @@
   align-items: center;
   margin-bottom: 0.6rem;
   padding-left: 1.3rem;
+  padding-bottom: 0.1rem;
 
 }
 
@@ -67,4 +71,5 @@
   border-radius: 50%;
   overflow: hidden;
   object-fit: contain;
+  padding-right: 0.1rem;
 }

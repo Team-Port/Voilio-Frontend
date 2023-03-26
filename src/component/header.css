@@ -3,8 +3,8 @@
     position:sticky;
     top:0;
     width: 100vw;
-    height: 5rem;
-    padding: 0;
+    height: 6rem;
+    padding: 0.1rem;
     z-index: 10000;
     justify-content: space-between;
     align-items: center;
