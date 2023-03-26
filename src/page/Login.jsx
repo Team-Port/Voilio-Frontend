@@ -3,7 +3,7 @@ import './css/login.css'
 // import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import { login } from '../store/user/userSlice';
-import Sidebar from '../component/Sidebar'
+import Sidebar from '../component/Sidebar';
 
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
     }
 
     return (
-        <div className='home-wrap'>
+        <div className='profile-wrap'>
             <div className='left-sidebar-box'>
                 <Sidebar/>
             </div>
@@ -33,13 +33,15 @@ const Login = () => {
                     </p>
                 </div>
                 <form onSubmit={(e)=> {loginUser(e)}} >
-                    <div className='id-box'>
-                        <div><label htmlFor='userID'>ID</label></div>
-                        <div><input type="text" id="userID" placeholder="아이디(이메일)을 입력해주세요"></input></div>
-                    </div>
-                    <div className='pwd-box'>
-                        <div><label htmlFor='userPWD'>Password</label></div>
-                        <div><input type="text" id="userPWD" placeholder="비밀번호를 입력해주세요"></input></div>
+                    <div className='input-box'>
+                        <div className='id-box'>
+                            <div><label htmlFor='userID'>ID</label></div>
+                            <div><input type="text" id="userID" placeholder="아이디(이메일)을 입력해주세요"></input></div>
+                        </div>
+                        <div className='pwd-box'>
+                            <div><label htmlFor='userPWD'>Password</label></div>
+                            <div><input type="text" id="userPWD" placeholder="비밀번호를 입력해주세요"></input></div>
+                        </div>
                     </div>
                     <div className='login-btn-box'>
                         <input className='login-btn' type="submit" value="login"></input>

@@ -5,7 +5,7 @@ import './videoItem.css'
 const VideoItem = ({videoItem, display}) => {
     return (
         <li className={`videoItem ${display}`}>
-            {/* <Link to="/watch"> */}
+            <Link to="/watch">
             <div className='item'>
                 <div className='thumnail'>
                     <img className='thumnail-img' src={videoItem.snippet.thumbnails.medium.url} alt="videoThumnail" />
@@ -29,7 +29,7 @@ const VideoItem = ({videoItem, display}) => {
                     </div>
                 </div>
             </div>
-            {/* </Link> */}
+            </Link>
         </li>
     );
 };

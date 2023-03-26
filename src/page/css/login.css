@@ -1,10 +1,20 @@
 .login-container{
-    margin: auto;
-    padding-bottom: 20rem;
+    width: 50vw;
+    margin-top: 5vh;
+    margin-left: 12vw;
+    padding-bottom: 20rem;    
+    text-align: center;
 }
 
-.id-box, .pwd-box, .login-btn-box, .welcome-box {
+.input-box{
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
+.id-box, .pwd-box, .login-btn-box {
     margin: 2rem;
+    font-size: 0.8rem;
 }
 
 #userID, #userPWD{
@@ -12,6 +22,8 @@
     border: 1px solid #bababa;
     border-radius: 10px;
     padding: 0.7rem;
+    text-align: center;
+    margin: 0 1rem;
 }
 
 #userID:focus, #userPWD:focus{
@@ -29,6 +41,7 @@
     border: none;
     font-size: 2rem;
     padding: 0.5rem 2rem;
+    color: #929292;
 }
 
 .login-btn:hover{
