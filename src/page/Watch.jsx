@@ -1,19 +1,20 @@
 import React from "react";
+import "./css/watch.css";
 import Sidebar from "../component/Sidebar";
 import InfoList from "../component/InfoList";
-import Watch from "../component/Watch/Watch";
+import VideoWatch from "../component/VideoWatch/VideoWatch";
 
 const WatchPage = () =>{
     return(
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
-                <Sidebar></Sidebar>
+                <Sidebar/>
             </div>
-            <div className='Board'>
-                <Watch></Watch>
+            <div className='watch'>
+                <VideoWatch/>
             </div>
             <div className='right-sidebar-box'>
-                <InfoList></InfoList>
+                <InfoList/>
             </div>
         </div>
     );
