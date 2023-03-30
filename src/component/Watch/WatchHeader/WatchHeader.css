@@ -1,0 +1,79 @@
+.leftVideoInfo {
+    width: 301px;
+    height: 52px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    padding: 0 100px 0 0;
+}
+
+.Title {
+    width: 110px;
+    height: 52px;
+    flex-grow: 0;
+    font-family: NanumMyeongjo;
+    font-size: 48px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000;
+}
+
+.category {
+    width: 69px;
+    height: 19px;
+    flex-grow: 0;
+    margin: 16.5px 0 16.5px 2px;
+    font-family: Catamaran;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+}
+
+.videoHeader {
+    width: 897px;
+    height: 52px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+  }
+  .rightHeaderInfo {
+    width: 596px;
+    height: 31px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0 4px 200px;
+  }
+
+  .createAt {
+    width: 50px;
+    height: 23px;
+    flex-grow: 0;
+    font-family: Catamaran;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #8f8f8f;
+  }

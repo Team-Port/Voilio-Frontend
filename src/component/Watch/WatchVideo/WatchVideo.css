@@ -1,0 +1,20 @@
+.Rectangle-54 {
+    width: 900px;
+    height: 500px;
+    flex-grow: 0;
+    padding: 231px 32px 214.3px 804.5px;
+    border-radius: 20px;
+    background-color: #d9d9d9;
+}
+.videoDes {
+    width: 900px;
+    height: 262px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0 10px 10px;
+    border: solid 1px #717171;
+  }

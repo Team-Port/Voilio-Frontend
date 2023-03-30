@@ -1,16 +1,16 @@
 import React from "react";
 import Sidebar from "../component/Sidebar";
 import InfoList from "../component/InfoList";
-import Watch from "../component/Watch/Watch";
+import Board from "../component/Board/Board";
 
-const WatchPage = () =>{
+const BoardPage = () =>{
     return(
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
                 <Sidebar></Sidebar>
             </div>
             <div className='Board'>
-                <Watch></Watch>
+                <Board></Board>
             </div>
             <div className='right-sidebar-box'>
                 <InfoList></InfoList>
@@ -19,4 +19,4 @@ const WatchPage = () =>{
     );
 };
 
-export default WatchPage;
+export default BoardPage;
