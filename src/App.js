@@ -41,7 +41,7 @@ function App() {
                         <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
                         <Route path="/login" element={<Login/>} />
                         <Route path="/join" element={<Join/>} />
-                        {/* <Route path="/watch" element={<WatchPage/>}/> */}
+                        <Route path="/watch" element={<WatchPage/>}/>
                     </Routes>
             </BrowserRouter>
         </div>
