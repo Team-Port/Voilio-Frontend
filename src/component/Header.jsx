@@ -1,5 +1,6 @@
 import React from 'react';
 import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch } from 'react-icons/bs'
+import { Link } from 'react-router-dom';
 
 import './header.css'
 
@@ -7,9 +8,11 @@ import './header.css'
 const Header = () => {
     return (
         <div className='header'>
-        <div className='logoArea'>
-            <img className='headerLogo' src={'asset/voilio.png'}></img>
-        </div>
+        <Link to={'/'}>
+            <div className='logoArea'>
+                <img className='headerLogo' src={'asset/voilio.png'}></img>
+            </div>
+        </Link>
         <div className='search-InputArea'>
             <input
                 type = 'search'
@@ -22,7 +25,9 @@ const Header = () => {
         <div className='topMenuArea'>
             <BsSuitHeart className='topIcon' size='1.5rem'></BsSuitHeart>
             <BsChatRightHeart className='topIcon'size='1.5rem'></BsChatRightHeart>
-            <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
+            <Link to={'/login'}>
+                <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
+            </Link>
         </div>
     </div>
     );
