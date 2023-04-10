@@ -4,13 +4,28 @@ import Sidebar from '../component/Sidebar';
 import { useNavigate } from 'react-router-dom';
 
 const Join = () => {
+    const {emailValue, pwdValue, nicknameValue} = this.state;
     const navigator = useNavigate();
+
+    fetch("http://localhost:8080/api/v1/users/join", {
+        method:"POST",
+        body: JSON.stringify({
+            email : emailValue,
+            password : pwdValue,
+            nickname : nicknameValue
+        })
+    })
+    .then((response) => response.json())
+    .then((result) => {
+        result.message === "사용자가 정상적으로 등록되었습니다." ? alert("회원가입에 성공했습니다✨") : alert("회원가입에 실패했습니다 다시 부탁드릴게요😿")
+    })
 
     const joinUser = (e) => {
         e.preventDefault();
         // dispatch(login(true));
         navigator('/login')      //   함수로 쓸때는 Link를 못쓰니 navigator사용
     }
+    
 
     return (
         <div className='profile-wrap'>
