@@ -4,6 +4,7 @@ import Sidebar from '../component/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useState } from "react";
+import { BiShow, BiHide} from 'react-icons/bi'
 
 const Join = () => {
     const [emailValue, setEmailValue] = useState("");
@@ -11,6 +12,7 @@ const Join = () => {
     const [nicknameValue, setNicknameValue] = useState("");
     const [message, setMessage] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
+    const [showPswd, setShowPswd] = useState(false);
 
     const navigate = useNavigate();
 
@@ -45,6 +47,10 @@ const Join = () => {
         setConfirmPassword(event.currentTarget.value);
     }
 
+    const toggleShowPswd =()=>{
+        setShowPswd(!showPswd);
+    }
+
     return (
         <div className='profile-wrap'>
             <div className='left-sidebar-box'>
@@ -71,20 +77,44 @@ const Join = () => {
                                         onChange={(e) => {
                                             setEmailValue(e.target.value); }}></input></div>
                         </div>
-                        <div className='input-box'>
-                            <div><label htmlFor='userPWD'>Password</label></div>
-                            <div><input type="text" id="userPWD"
+                        <div>
+                            <div className='pwd-box'>
+                                <label htmlFor='userPWD'>Password</label>
+                                <div className="absolute top-[16px] right-[20px] sm:right-[30px]">
+                                    {showPswd ? (
+                                    <BiShow onClick={toggleShowPswd} />
+                                    ) : (
+                                    <BiHide onClick={toggleShowPswd} />
+                                    )}
+                                </div>               
+                            </div>
+                            <div>
+                                <input type={showPswd ? "text" : "password"} 
+                                        id="userPWD"
                                         placeholder="비밀번호를 입력해주세요"
                                         value={pwdValue}
                                         onChange={(e) => {
-                                            setPwdValue(e.target.value); }}></input></div>
+                                            setPwdValue(e.target.value); }}></input>      
+                            </div>
                         </div>
                         <div className='input-box'>
-                            <div><label htmlFor='userPWD'>Password Check</label></div>
-                            <div><input type="text" id="userPWD" 
+                            <div className='pwd-box'>
+                                <label htmlFor='userPWD'>Password Check</label>
+                                <div className="absolute top-[16px] right-[20px] sm:right-[30px]">
+                                    {showPswd ? (
+                                    <BiShow onClick={toggleShowPswd} />
+                                    ) : (
+                                    <BiHide onClick={toggleShowPswd} />
+                                    )}
+                                </div>     
+                            </div>
+                            <div>
+                                <input type={showPswd ? "text" : "password"}
+                                        id="userPWD" 
                                         placeholder="비밀번호를 한 번 더 입력해주세요"
                                         value={ConfirmPassword}
-                                        onChange={onConfirmPasswordHandler}></input></div>
+                                        onChange={onConfirmPasswordHandler}></input>
+                            </div>
                         </div>
                         <div className='input-box'>
                             <div><label htmlFor='userPWD'>Nickname</label></div>
@@ -92,7 +122,7 @@ const Join = () => {
                                         placeholder="채널이름으로 쓰일 닉네임을 지어주세요!"
                                         value={nicknameValue}
                                         onChange={(e) => {
-                                            setNicknameValue(e.target.value); }}></input></div>
+                                            setNicknameValue(e.target.value); }}></input> </div>
                         </div>
                     </div>
                     <div className='profile-btn-box'>
