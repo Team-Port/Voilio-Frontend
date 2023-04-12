@@ -18,7 +18,7 @@ const Join = () => {
 
     const registerAxios = () => {
         axios
-            .post("http://localhost:8080/api/v1/auth/signup", {
+            .post("http://http://ec2-43-201-52-229.ap-northeast-2.compute.amazonaws.com/:8080/api/v1/auth/signup", {
                 email : emailValue,
                 password : pwdValue,
                 nickname : nicknameValue
