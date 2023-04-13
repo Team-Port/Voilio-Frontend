@@ -19,7 +19,7 @@ const Login = () => {
 
     const loginAxios = () => {
          axios
-            .post("http://www.voilio.site:8080/api/v1/auth/login", {
+            .post("http://ec2-43-201-52-229.ap-northeast-2.compute.amazonaws.com:8080/api/v1/auth/login", {
                 email : emailValue,
                 password : pwdValue
             })
