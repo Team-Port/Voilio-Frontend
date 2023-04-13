@@ -4,12 +4,12 @@ import VideoWatch_Header from './Header/Header';
 import VideoWatch_Video from './Video/Video';
 import VideoWatch_Comment from './Comment/Comment';
 
-const VideoWatch = () => {
+const VideoWatch = ({data}) => {
     return (
         <div className='videoWatch'>
-            <VideoWatch_Header/>
-            <VideoWatch_Video/>
-            <VideoWatch_Comment/>
+            <VideoWatch_Header data={data}/>
+            <VideoWatch_Video data={data}/>
+            <VideoWatch_Comment data={data}/>
         </div>
     );
 };

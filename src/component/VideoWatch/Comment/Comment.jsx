@@ -1,7 +1,7 @@
 import React from 'react';
 import './Comment.css'
 
-const VideoWatch_Comment = () => {
+const VideoWatch_Comment = ({data}) => {
     return (
         <div className="commentBox">
             <span>댓글</span>

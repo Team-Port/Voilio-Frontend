@@ -1,22 +1,23 @@
 import React from 'react';
 import './Header.css'
 
-const VideoWatch_Header = () => {
+const VideoWatch_Header = ({data}) => {
     return (
         <div className="videoHeader">
             <div className="leftVideoInfo">
                 <span className="Title">
-                    Title
+                   {data.title}
                 </span>
-                <div>
-                    <span className="categoryText">
-                        category
-                    </span>
-                </div>
+                <span className="categoryText">
+                    {data.category1}
+                </span>
+                <span className="categoryText">
+                    {data.category2}
+                </span>
             </div>
             <div className="rightHeaderInfo">
                 <span className="createAt">
-                    createAt
+                    {data.created_at}
                 </span>
             </div>
         </div>

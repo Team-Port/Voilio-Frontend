@@ -6,7 +6,7 @@ import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
 import {videoURL} from './lib/sampleAPI'
-import WatchPage from './page/Watch';
+import Watch from './page/Watch';
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 
@@ -41,7 +41,7 @@ function App() {
                         <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
                         <Route path="/login" element={<Login/>} />
                         <Route path="/join" element={<Join/>} />
-                        <Route path="/watch" element={<WatchPage/>}/>
+                        <Route path="/watch" element={<Watch/>}/>
                     </Routes>
             </BrowserRouter>
         </div>
