@@ -19,11 +19,12 @@ const Login = () => {
 
     const loginAxios = () => {
          axios
-            .post("http://ec2-43-201-52-229.ap-northeast-2.compute.amazonaws.com:8080/api/v1/auth/login", {
+            .post("http://localhost:8080/api/v1/auth/login", {
                 email : emailValue,
                 password : pwdValue
-            })
+            })            
             .then((response) => {
+                localStorage.jwtAuthToken = response.headers['jwt-auth-token'];
                 console.log(response);
                 alert("또 만나네요! 반가워요✨")
                 if(response.status === 200){
@@ -34,7 +35,9 @@ const Login = () => {
             alert("이메일과 비밀번호가 일치하지 않습니다.")
             console.log(err)
         });
+        
     }
+
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
