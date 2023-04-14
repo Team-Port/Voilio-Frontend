@@ -24,7 +24,7 @@ const Login = () => {
                 password : pwdValue
             })            
             .then((response) => {
-                localStorage.jwtAuthToken = response.headers['jwt-auth-token'];
+                localStorage.setItem('jwtAuthToken', response.data.data.accessToken);
                 console.log(response);
                 alert("또 만나네요! 반가워요✨")
                 if(response.status === 200){
