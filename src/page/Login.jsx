@@ -1,12 +1,12 @@
 import React from 'react';
 import './css/profile.css'
-// import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-// import { login } from '../store/user/userSlice';
 import Sidebar from '../component/Sidebar';
 import axios from "axios";
 import { useState } from "react";
 import { BiShow, BiHide} from 'react-icons/bi'
+import jwt_decode from "jwt-decode";
+
 
 
 const Login = () => {
@@ -14,29 +14,40 @@ const Login = () => {
     const [pwdValue, setPwdValue] = useState("");
     const [message, setMessage] = useState("");
     const [showPswd, setShowPswd] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const navigate = useNavigate();
 
-    const loginAxios = () => {
-         axios
-            .post("http://localhost:8080/api/v1/auth/login", {
-                email : emailValue,
-                password : pwdValue
-            })            
-            .then((response) => {
-                localStorage.setItem('jwtAuthToken', response.data.data.accessToken);
-                console.log(response);
-                alert("또 만나네요! 반가워요✨")
-                if(response.status === 200){
-                    return navigate("/");
-                }
-            }).catch((err) => {
-            setMessage(err.response.message)
-            alert("이메일과 비밀번호가 일치하지 않습니다.")
-            console.log(err)
-        });
-        
-    }
+    const onLogin = () => {
+        axios
+          .post("http://localhost:8080/api/v1/auth/login", {
+            email : emailValue,
+            password : pwdValue
+          })
+          .then((response) => {
+            localStorage.setItem("jwtAuthToken", response.data.data.accessToken);
+            const decodedToken = jwt_decode(response.data.data.accessToken);
+            console.log(decodedToken)
+            const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+            console.log(expirationTime)
+            if (expirationTime < Date.now()) {
+              localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
+            } else {
+              setLoggedIn(true); // 로그인 상태 변경
+            }
+            console.log(response);
+            alert("또 만나네요! 반가워요✨");
+            if (response.status === 200) {
+              return navigate("/");
+            }
+          })
+          .catch((err) => {
+            setMessage(err.response.message);
+            alert("이메일과 비밀번호가 일치하지 않습니다.");
+            console.log(err);
+          });
+      };
+      
 
 
     const onSubmitHandler = (event) => {
@@ -97,7 +108,7 @@ const Login = () => {
                     </div>
                     <div className='profile-btn-box'>
                         <input className='login-btn' type="submit" value="login"
-                                onClick={loginAxios}>
+                                onClick={onLogin}>
                         </input>
                         <Link to={'/join'}>
                             <input className='join-btn' type="button" value="join"></input>

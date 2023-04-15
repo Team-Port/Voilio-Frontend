@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
 import Join from './page/Join';
+import Profile from './component/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
@@ -40,6 +41,7 @@ function App() {
                         <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
                         <Route path="/login" element={<Login/>} />
                         <Route path="/join" element={<Join/>} />
+                        <Route path="/profile" element={<Profile/>} />
                     </Routes>
             
             </BrowserRouter>
