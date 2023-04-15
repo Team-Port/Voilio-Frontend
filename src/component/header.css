@@ -11,14 +11,15 @@
   }
 
   .logoArea{
-    width: 5vw;
-    padding-left: 5rem;
-    /* padding-right: 1rem; */
+    width: 5.5rem;
+    padding: 0 3.5rem;
+    margin: 0 0.5rem;
     cursor: pointer;
   }
 
   .headerLogo{
-    width: 6vw;
+    width: 100%;
+    min-width: 4rem;
   }
 
   .search-InputArea{
@@ -27,10 +28,10 @@
   }
 
   .searchInput {
-    width: 66vw;
+    width: 60vw;
     height: 2.5rem;
     flex-grow: 0;
-    margin: auto;
+    margin: 0 0 0 0.4rem;
     padding: 0.25rem 3.00rem 0.38rem 3.63rem;
     border-radius: 0.63rem;
     background-color: #fff;
@@ -46,8 +47,6 @@
   .searchBtn-box{
     width: 3rem;
     height: 2.81rem;
-    /* margin: 0 0.3rem; */
-    /* border:1px solid #dfdfdf; */
     cursor: pointer;
     border-radius: 20px;
     display: flex;
@@ -68,9 +67,9 @@
 }
 
 .topMenuArea .topIcon{
+    width: 3rem;
     color:#ccc;
     cursor: pointer;
-    margin: 0.3rem;
 }
 
 .topMenuArea .topIcon:hover{
@@ -78,6 +77,20 @@
 }
 
 .topMenuArea{
-    padding-right: 1.8rem;
-    /* width: 10rem; */
+    padding-right: 0.1rem;
+    width: 15rem;
+}
+
+@media (max-width: 1050px) {
+  .logoArea{
+    width: 5rem;
+    /* padding: 0 3rem 0 1.5rem; */
+  }
+}
+
+@media (max-width: 880px) {
+  .logoArea{
+    width: 3rem;
+    padding: 0 3rem 0 1.5rem;
+  }
 }

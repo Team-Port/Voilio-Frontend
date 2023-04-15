@@ -12,6 +12,7 @@ let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 
 function App() {
     const [videoItems, setVideoItems] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     // 비디오데이터
     const videoData = async () => {
@@ -36,12 +37,12 @@ function App() {
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header/>
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                     <Routes>
-                        <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
-                        <Route path="/login" element={<Login/>} />
+                        <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
+                        <Route path="/login" element={<Login/>} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                         <Route path="/join" element={<Join/>} />
-                        <Route path="/profile" element={<Profile/>} />
+                        <Route path="/profile" element={<Profile/>} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
                     </Routes>
             
             </BrowserRouter>

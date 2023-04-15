@@ -9,12 +9,11 @@ import jwt_decode from "jwt-decode";
 
 
 
-const Login = () => {
+const Login = ({ loggedIn, setLoggedIn }) => {
     const [emailValue, setEmailValue] = useState("");
     const [pwdValue, setPwdValue] = useState("");
     const [message, setMessage] = useState("");
     const [showPswd, setShowPswd] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
 
     const navigate = useNavigate();
 

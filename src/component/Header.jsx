@@ -1,68 +1,56 @@
-import React from 'react';
-import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch } from 'react-icons/bs'
-import { BiLogInCircle }  from 'react-icons/bi'
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import React from "react";
+import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch } from "react-icons/bs";
+import { SlLogin } from "react-icons/sl";
+import { Link } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import jwt_decode from "jwt-decode";
+import { handleLoginChange } from "./../lib/Auth"; // auth.js에서 handleLoginChange 함수를 불러옴
 
-import './header.css'
+import "./header.css";
 
+const Header = ({ loggedIn, setLoggedIn }) => {
 
-const Header = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    useEffect(() => {
+    const handleLoginChange = useCallback(() => {
         const token = localStorage.getItem('jwtAuthToken');
         if (token) {
-          setLoggedIn(true);
+          const decodedToken = jwt_decode(token);
+          const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+          if (expirationTime < Date.now()) {
+            localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
+            setLoggedIn(false);
+          }
+          else setLoggedIn(true);
         } else {
           setLoggedIn(false);
         }
       }, []);
 
-    return (
-        <div className='header'>
-        <Link to={'/'}>
-            <div className='logoArea'>
-                <img className='headerLogo' src={'asset/voilio.png'}></img>
-            </div>
-        </Link>
-        <div className='search-InputArea'>
-            <input
-                type = 'search'
-                placeholder='검색'
-                className='searchInput' />
-            <div className='searchBtn-box'>
-                <BsSearch className='topIcon-search' size='1.2rem' ></BsSearch> 
-            </div>
+  return (
+    <div className="header">
+      <Link to={"/"}>
+        <div className="logoArea">
+          <img className="headerLogo" src={"asset/voilio.png"}></img>
         </div>
-        <div className='topMenuArea'>
-            <span>
-            <BsSuitHeart className='topIcon' size='1.5rem'></BsSuitHeart>
-            </span>
-            <span>
-            <BsChatRightHeart className='topIcon'size='1.5rem'></BsChatRightHeart>
-            </span>
-            {localStorage.getItem('jwtAuthToken') ? (
-                <Link to={'/profile'}>
-                    <BsPersonCircle className='topIcon'size='1.5rem'></BsPersonCircle>
-                </Link>
-            ): (
-                <Link to={'/login'}>
-                    <BiLogInCircle className='topIcon'size='1.5rem'></BiLogInCircle>
-                </Link>
-            )}
-            
+      </Link>
+      <div className="search-InputArea">
+        <input type="search" placeholder="검색" className="searchInput" />
+        <div className="searchBtn-box">
+          <BsSearch className="topIcon-search" size="1.2rem"></BsSearch>
         </div>
+      </div>
+      <div className="topMenuArea">
+        {localStorage.getItem("jwtAuthToken") ? (
+          <Link to={"/profile"}>
+            <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
+            <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
+            <BsPersonCircle className="topIcon" size="1.5rem"></BsPersonCircle>
+          </Link>
+        ) : (
+          <Link to={"/login"}>
+            <SlLogin className="topIcon" size="1.5rem"></SlLogin>
+          </Link>
+        )}
+      </div>
     </div>
-    );
+  );
 };
-
-export default Header;
-
-/*
-localStorage.getItem('jwtAuthToken')를 사용하여 로그인 여부를 확인하
-또한, localStorage.getItem('jwtAuthToken')가 존재하면 프로필 아이콘을, 
-그렇지 않으면 로그인 아이콘을 렌더링하도록 변경
-
-이렇게 변경하면 페이지가 새로고침되지 않아도 로그인 상태에 따라 아이콘이 바로 변경
-*/
