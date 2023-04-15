@@ -4,7 +4,6 @@ import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import jwt_decode from "jwt-decode";
-import { handleLoginChange } from "./../lib/Auth"; // auth.js에서 handleLoginChange 함수를 불러옴
 
 import "./header.css";
 
@@ -54,3 +53,5 @@ const Header = ({ loggedIn, setLoggedIn }) => {
     </div>
   );
 };
+
+export default Header;
