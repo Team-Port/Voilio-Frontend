@@ -72,7 +72,7 @@
     cursor: pointer;
 }
 
-.topMenuArea .topIcon:hover{
+.topMenuArea .topIcon:hover{ 
     color:#bb2649;
 }
 
@@ -93,4 +93,35 @@
     width: 3rem;
     padding: 0 3rem 0 1.5rem;
   }
+}
+
+.show-menu{
+  width: 5rem;
+  height: 5.2rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  position: absolute;
+  left: 89vw;
+  transition: 1s;
+  display: block;
+  padding: 3px;
+  margin: 3px;
+  }
+
+.show-menu li{
+  margin: 1rem 0.5rem;
+  text-align: center;
+}
+
+.show-menu li:hover{
+  color: #bb2649;
+}
+  
+.hide-menu{
+  width: 5rem;
+  height: 6rem;
+  position: absolute;
+  /* left: -376px; */
+  transition: 1s;
+  display: none;
 }

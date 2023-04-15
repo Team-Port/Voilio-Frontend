@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import "./header.css";
 
 const Header = ({ loggedIn, setLoggedIn }) => {
+    const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
 
     const handleLoginChange = useCallback(() => {
         const token = localStorage.getItem('jwtAuthToken');
@@ -24,6 +25,10 @@ const Header = ({ loggedIn, setLoggedIn }) => {
         }
       }, []);
 
+    const toggleMenu = () => {
+        setMenu(isOpen => !isOpen); // on,off 개념 boolean
+    }
+
   return (
     <div className="header">
       <Link to={"/"}>
@@ -39,11 +44,22 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       </div>
       <div className="topMenuArea">
         {localStorage.getItem("jwtAuthToken") ? (
-          <Link to={"/profile"}>
-            <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
-            <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
-            <BsPersonCircle className="topIcon" size="1.5rem"></BsPersonCircle>
-          </Link>
+        <div className="private-btn-container">
+            <div className="right-header-btn">
+                <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
+                <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
+                <BsPersonCircle className="topIcon" size="1.5rem" onClick={()=>toggleMenu()}></BsPersonCircle>
+            </div>
+            <div className="private-toggle-menu">
+                    <ul className={isOpen ? "show-menu" : "hide-menu"}>  
+                        <Link to={"/profile"}>
+                            <li >MyPage</li>
+                        </Link>
+                        <li >Logout</li>
+                    </ul>
+            </div>      
+        </div>
+
         ) : (
           <Link to={"/login"}>
             <SlLogin className="topIcon" size="1.5rem"></SlLogin>
