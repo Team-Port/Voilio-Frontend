@@ -121,7 +121,6 @@
   width: 5rem;
   height: 6rem;
   position: absolute;
-  /* left: -376px; */
   transition: 1s;
   display: none;
 }

@@ -2,39 +2,58 @@ import React from "react";
 import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch } from "react-icons/bs";
 import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import jwt_decode from "jwt-decode";
 
 import "./header.css";
 
 const Header = ({ loggedIn, setLoggedIn }) => {
-    const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
+  const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
+  const menuRef = useRef(document.createElement("div")); // 초기값 할당
 
-    const handleLoginChange = useCallback(() => {
-        const token = localStorage.getItem('jwtAuthToken');
-        if (token) {
-          const decodedToken = jwt_decode(token);
-          const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-          if (expirationTime < Date.now()) {
-            localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-            setLoggedIn(false);
-          }
-          else setLoggedIn(true);
-        } else {
+  const handleLoginChange = useCallback(() => {
+      const token = localStorage.getItem('jwtAuthToken');
+      if (token) {
+        const decodedToken = jwt_decode(token);
+        const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+        if (expirationTime < Date.now()) {
+          localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
           setLoggedIn(false);
         }
-      }, []);
+        else setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    }, []);
 
 
-    const toggleMenu = () => {
-        setMenu(isOpen => !isOpen); // on,off 개념 boolean
+  const logout = () => {
+    localStorage.removeItem("jwtAuthToken");
+    setLoggedIn(false);
+  }
+
+  const toggleMenu = () => {
+    setMenu(!isOpen);  // 기존 isOpen 값의 반대값으로
+  }  
+
+  const handleClickOutside = useCallback((event) => {
+    if (isOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenu(false); // 메뉴 영역 외부를 클릭하면 메뉴를 닫음
     }
+  }, [isOpen, menuRef]);
+  
+  /* 
+    useEffect에서 이벤트 리스너를 추가하고, 해당 이벤트 리스너를 삭제하는 것이 중요하다. 
+     이것을 제대로 처리하지 않으면, 메모리 누수와 같은 문제가 발생할 수 있다.
+  */
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClickOutside, toggleMenu]);  
 
-    const logout = () => {
-      localStorage.removeItem("jwtAuthToken");
-      setLoggedIn(false);
-    }
-
+  
   return (
     <div className="header">
       <Link to={"/"}>
@@ -54,18 +73,18 @@ const Header = ({ loggedIn, setLoggedIn }) => {
             <div className="right-header-btn">
                 <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
                 <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
-                <BsPersonCircle className="topIcon" size="1.5rem" onClick={()=>toggleMenu()}></BsPersonCircle>
+                <BsPersonCircle className="topIcon" size="1.5rem" onClick={toggleMenu}></BsPersonCircle>
+
             </div>
             <div className="private-toggle-menu">
-                    <ul className={isOpen ? "show-menu" : "hide-menu"}>  
-                        <Link to={"/profile"}>
-                            <li>MyPage</li>
-                        </Link>
-                        <li onClick={logout}>Logout</li>
-                    </ul>
-            </div>      
-        </div>
-
+              <ul className={isOpen ? "show-menu" : "hide-menu"}>
+                <li>
+                  <Link to={"/profile"}>MyPage</Link>
+                </li>
+                <li onClick={logout}>Logout</li>
+              </ul>
+            </div>
+          </div>
         ) : (
           <Link to={"/login"}>
             <SlLogin className="topIcon" size="1.5rem"></SlLogin>
