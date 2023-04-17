@@ -25,8 +25,14 @@ const Header = ({ loggedIn, setLoggedIn }) => {
         }
       }, []);
 
+
     const toggleMenu = () => {
         setMenu(isOpen => !isOpen); // on,off 개념 boolean
+    }
+
+    const logout = () => {
+      localStorage.removeItem("jwtAuthToken");
+      setLoggedIn(false);
     }
 
   return (
@@ -53,9 +59,9 @@ const Header = ({ loggedIn, setLoggedIn }) => {
             <div className="private-toggle-menu">
                     <ul className={isOpen ? "show-menu" : "hide-menu"}>  
                         <Link to={"/profile"}>
-                            <li >MyPage</li>
+                            <li>MyPage</li>
                         </Link>
-                        <li >Logout</li>
+                        <li onClick={logout}>Logout</li>
                     </ul>
             </div>      
         </div>
