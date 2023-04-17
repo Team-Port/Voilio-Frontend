@@ -1,19 +1,57 @@
 import React from 'react';
 import './css/profile.css'
-// import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-// import { login } from '../store/user/userSlice';
 import Sidebar from '../component/Sidebar';
+import axios from "axios";
+import { useState } from "react";
+import { BiShow, BiHide} from 'react-icons/bi'
+import jwt_decode from "jwt-decode";
 
 
-const Login = () => {
-    const navigator = useNavigate();
-    // const dispatch = useDispatch();
 
-    const loginUser = (e) => {
-        e.preventDefault();
-        // dispatch(login(true));
-        navigator('/')      //   함수로 쓸때는 Link를 못쓰니 navigator사용
+const Login = ({ loggedIn, setLoggedIn }) => {
+    const [emailValue, setEmailValue] = useState("");
+    const [pwdValue, setPwdValue] = useState("");
+    const [message, setMessage] = useState("");
+    const [showPswd, setShowPswd] = useState(false);
+
+    const navigate = useNavigate();
+
+    const onLogin = () => {
+        axios
+          .post("http://localhost:8080/api/v1/auth/login", {
+            email : emailValue,
+            password : pwdValue
+          })
+          .then((response) => {
+            localStorage.setItem("jwtAuthToken", response.data.data.accessToken);
+            const decodedToken = jwt_decode(response.data.data.accessToken);
+            const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+            if (expirationTime < Date.now()) {
+              localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
+            } else {
+              setLoggedIn(!loggedIn); // 로그인 상태 변경
+            }
+            alert("또 만나네요! 반가워요✨");
+            if (response.status === 200) {
+              return navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err.response);
+            console.log(err.response.message);
+            if (err.response && err.response.status === 401) {
+                alert("이메일과 비밀번호가 일치하지 않습니다😅");
+              }
+          });
+      };
+      
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+    }
+
+    const toggleShowPswd =()=>{
+        setShowPswd(!showPswd);
     }
 
     return (
@@ -32,19 +70,42 @@ const Login = () => {
                         🤟🏻 다양한 분야 사람들과, 채용 담당자들과 DM을 해보세요 ⭐️
                     </p>
                 </div>
-                <form onSubmit={(e)=> {loginUser(e)}} >
+                <form onClick={onSubmitHandler} >
                     <div className='input-box'>
                         <div className='input-box'>
                             <div><label htmlFor='userID'>ID</label></div>
-                            <div><input type="text" id="userID" placeholder="아이디(이메일)을 입력해주세요"></input></div>
+                            <div>
+                                <input type="text" id="userID" 
+                                    placeholder="아이디(이메일)을 입력해주세요"
+                                    onChange={(e) => {
+                                        setEmailValue(e.target.value); }}>
+                                </input>
+                            </div>
                         </div>
                         <div className='input-box'>
-                            <div><label htmlFor='userPWD'>Password</label></div>
-                            <div><input type="text" id="userPWD" placeholder="비밀번호를 입력해주세요"></input></div>
+                            <div className='pwd-box'>
+                                <label htmlFor='userPWD'>Password</label>
+                                <div className="absolute top-[16px] right-[20px] sm:right-[30px]">
+                                    {showPswd ? (
+                                    <BiShow onClick={toggleShowPswd} />
+                                    ) : (
+                                    <BiHide onClick={toggleShowPswd} />
+                                    )}
+                                </div>  
+                            </div>
+                            <div>
+                                <input type={showPswd ? "text" : "password"} id="userPWD" 
+                                    placeholder="비밀번호를 입력해주세요"
+                                    onChange={(e) => {
+                                        setPwdValue(e.target.value); }}>
+                                </input>
+                            </div>
                         </div>
                     </div>
                     <div className='profile-btn-box'>
-                        <input className='login-btn' type="submit" value="login"></input>
+                        <input className='login-btn' type="submit" value="login"
+                                onClick={onLogin}>
+                        </input>
                         <Link to={'/join'}>
                             <input className='join-btn' type="button" value="join"></input>
                         </Link>

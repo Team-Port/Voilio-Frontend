@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
 import Join from './page/Join';
+import Profile from './component/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
@@ -12,6 +13,7 @@ let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 
 function App() {
     const [videoItems, setVideoItems] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     // 비디오데이터
     const videoData = async () => {
@@ -36,11 +38,12 @@ function App() {
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header/>
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
                     <Routes>
-                        <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo}/>}/>
-                        <Route path="/login" element={<Login/>} />
+                        <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
+                        <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
+                        <Route path="/profile" element={<Profile oggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/watch" element={<WatchPage/>}/>
                     </Routes>
             </BrowserRouter>

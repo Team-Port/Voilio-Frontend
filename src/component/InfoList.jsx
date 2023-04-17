@@ -12,19 +12,19 @@ const SubscribeList = () => {
                 <div>
                     <img className = 'subscribeNum' src={'asset/num1.png'}/>
                     <img className='ss-channelImg' src={'asset/test_thum.jpeg'}/>
-                    길연이의 개발 일지</div>
+                    Techeer</div>
                 <div>
                     <img className = 'subscribeNum' src={'asset/num2.png'}/>
                     <img className='ss-channelImg' src={'asset/test_thum.jpeg'}/>
-                    채널명채널명채널명채널명</div>
+                    IT's Your Life</div>
                 <div>
                     <img className = 'subscribeNum' src={'asset/num3.png'}/>
                     <img className='ss-channelImg' src={'asset/test_thum.jpeg'}/>
-                    ㅋㅋ</div>
+                    Techeer Partners</div>
                 <div>
                     <img className = 'subscribeNum' src={'asset/num4.png'}/>
                     <img className='ss-channelImg' src={'asset/test_thum.jpeg'}/>
-                    aaaaa</div>
+                    AbcaBc</div>
             </div>
         </div>
     );

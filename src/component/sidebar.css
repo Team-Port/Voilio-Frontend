@@ -12,14 +12,14 @@
     width: 8vw;
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
+    margin-left: 1.2rem;
     justify-content: flex-start;
     align-items: center;
     gap: 2.00rem;
     border-radius: 0.63rem;
     background-color: #fff;
     margin-bottom: 2rem;
-    padding: 1rem 2.7rem 1rem 2.5rem;
+    padding: 1rem 2rem 1rem 2rem;
   }
 
 .pageMenu-box div, .categoryMenu-box div{
@@ -47,4 +47,18 @@
     object-fit:cover;
     background: none;
     margin-right: 1rem;
+}
+
+@media (max-width: 880px) {
+  .sidebarMenu-box p {
+    display: none;
+  }
+  .pageMenu-box, .categoryMenu-box{
+    width: 2rem;
+  }
+
+}
+
+.sidebarMenu-box p {
+  background-color: #fff;
 }
