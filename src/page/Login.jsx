@@ -26,29 +26,26 @@ const Login = ({ loggedIn, setLoggedIn }) => {
           .then((response) => {
             localStorage.setItem("jwtAuthToken", response.data.data.accessToken);
             const decodedToken = jwt_decode(response.data.data.accessToken);
-            console.log(decodedToken)
             const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-            console.log(expirationTime)
             if (expirationTime < Date.now()) {
               localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
             } else {
-              setLoggedIn(true); // 로그인 상태 변경
+              setLoggedIn(!loggedIn); // 로그인 상태 변경
             }
-            console.log(response);
             alert("또 만나네요! 반가워요✨");
             if (response.status === 200) {
               return navigate("/");
             }
           })
           .catch((err) => {
-            setMessage(err.response.message);
-            alert("이메일과 비밀번호가 일치하지 않습니다.");
-            console.log(err);
+            console.log(err.response);
+            console.log(err.response.message);
+            if (err.response && err.response.status === 401) {
+                alert("이메일과 비밀번호가 일치하지 않습니다😅");
+              }
           });
       };
       
-
-
     const onSubmitHandler = (event) => {
         event.preventDefault();
     }
