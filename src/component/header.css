@@ -107,6 +107,10 @@
   padding: 3px;
   margin: 3px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.15);
+  visibility: visible;
+  transition: visibility 0s, opacity 0.3s linear;
+  z-index: 1;
+  opacity: 1;
 }
 
 .show-menu.making{
@@ -121,17 +125,23 @@
   padding: 3px;
   margin: 3px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.15);
+  
 }
 
 .show-menu li{
   margin: 1rem 0.5rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .show-menu li:hover{
   color: #bb2649;
 }
-  
+
+.show-menu li button {
+  cursor: pointer;
+}
+
 .hide-menu{
   width: 5rem;
   height: 6rem;

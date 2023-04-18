@@ -2,16 +2,15 @@ import React from "react";
 import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch, BsCloudPlus } from "react-icons/bs";
 import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import jwt_decode from "jwt-decode";
+
 
 import "./header.css";
 
 const Header = ({ loggedIn, setLoggedIn }) => {
   const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
-  const menuRef = useRef(document.createElement("div")); // 초기값 할당
-  const makingMenuRef = useRef(document.createElement("div")); // 초기값 할당
 
   const handleLoginChange = useCallback(() => {
       const token = localStorage.getItem('jwtAuthToken');
@@ -28,7 +27,6 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       }
     }, []);
 
-
   const logout = () => {
     localStorage.removeItem("jwtAuthToken");
     setLoggedIn(false);
@@ -42,29 +40,10 @@ const Header = ({ loggedIn, setLoggedIn }) => {
     setMakingMenu(!isMakingOpen);
   }
 
-  const handleClickOutside = useCallback(
-    (event) => {
-      if (isOpen && menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenu(false); // 메뉴 영역 외부를 클릭하면 메뉴를 닫음
-      }
-
-      if (isMakingOpen && makingMenuRef.current && !makingMenuRef.current.contains(event.target)) {
-        setMakingMenu(false); // 새로운 메뉴 영역 외부를 클릭하면 새로운 메뉴를 닫음
-      }
-    },
-    [isOpen, isMakingOpen, menuRef, makingMenuRef]
-  );
-  
-  /*
-    useEffect에서 이벤트 리스너를 추가하고, 해당 이벤트 리스너를 삭제하는 것이 중요하다.
-    이것을 제대로 처리하지 않으면, 메모리 누수와 같은 문제가 발생할 수 있다.
-  */
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickOutside, toggleMenu, toggleMakingMenu]);
+  const closeMenu = () => {
+    setMenu(false);
+    setMakingMenu(false);
+  }
 
   return (
     <div className="header">
@@ -83,24 +62,24 @@ const Header = ({ loggedIn, setLoggedIn }) => {
         {localStorage.getItem("jwtAuthToken") ? (
         <div className="private-btn-container">
             <div className="right-header-btn">
-                <BsCloudPlus className="topIcon" size="1.65rem" onClick={toggleMakingMenu}></BsCloudPlus>
+                <BsCloudPlus className="topIcon dropdown" size="1.65rem" onMouseEnter={toggleMakingMenu}></BsCloudPlus>
                 <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
                 <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
-                <BsPersonCircle className="topIcon" size="1.5rem" onClick={toggleMenu}></BsPersonCircle>
+                <BsPersonCircle className="topIcon" size="1.5rem" onMouseEnter={toggleMenu} ></BsPersonCircle>
             </div>
 
             <div className="private-toggle-menu">
-              <ul className={isOpen ? "show-menu personal" : "hide-menu"}>
+              <ul className={isOpen ? "show-menu personal" : "hide-menu"} onMouseLeave={closeMenu}>
                 <li>
-                  <Link to={"/profile"}>MyPage</Link>
+                <Link to={"/profile"}> MyPage</Link>
                 </li>
                 <li onClick={logout}>Logout</li>
               </ul>
             </div>
 
             <div className="private-toggle-menu">
-              <ul className={isMakingOpen ? "show-menu making" : "hide-menu"}>
-                <li>동영상 업로드</li>
+              <ul className={isMakingOpen ? "show-menu making" : "hide-menu"} onMouseLeave={closeMenu}>
+                <li> <Link to={"/upload"}>동영상 업로드</Link></li>
                 <li>게시물 업로드</li>
               </ul>
             </div>
