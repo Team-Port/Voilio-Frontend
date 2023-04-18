@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
@@ -8,6 +9,7 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import {videoURL} from './lib/sampleAPI'
 import WatchPage from './page/Watch';
+import UploadVideo from './page/UploadVideo';
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 
@@ -45,6 +47,7 @@ function App() {
                         <Route path="/join" element={<Join/>} />
                         <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/watch" element={<WatchPage/>}/>
+                        <Route path="/upload" element={<UploadVideo/>}/>
                     </Routes>
             </BrowserRouter>
         </div>
