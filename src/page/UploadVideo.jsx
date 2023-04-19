@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import './css/uploadVideo.css';
+import TextEditor from '../component/TextEditor'
 
 const UploadVideo = () => {
   const [videoFile, setVideoFile] = useState(null);
@@ -89,8 +90,9 @@ const UploadVideo = () => {
         </div>
 
       </div>
+        <TextEditor  />
     </div>
   );
 };
 
-                export default UploadVideo;
+export default UploadVideo;
