@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import MDEditor from '@uiw/react-md-editor';
-import axios from 'axios';
+import { useState } from 'react';
+import Dropzone from 'react-dropzone';
+import './css/uploadVideo.css';
 
 const UploadVideo = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoFileName, setVideoFileName] = useState('');
   const [videoFileExtension, setVideoFileExtension] = useState('');
   const [videoDuration, setVideoDuration] = useState('');
-  const [editorValue, setEditorValue] = useState('');
-
+  const [imageFile, setImageFile] = useState(null);
+  const [imageFileName, setImageFileName] = useState('');
+  const [imageFileExtension, setImageFileExtension] = useState('');
+  
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
     setVideoFile(file);
@@ -16,39 +18,84 @@ const UploadVideo = () => {
     setVideoFileExtension(file.name.split('.').pop());
     setVideoDuration(''); // 영상 길이 초기화
   };
-
-  const handleEditorChange = (value) => {
-    setEditorValue(value);
+  
+  const handleImageFileChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+    setImageFileName(file.name);
+    setImageFileExtension(file.name.split('.').pop());
   };
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append('videoFile', videoFile);
-    formData.append('editorValue', editorValue);
+  const handleVideoDrop = (files) => {
+    setVideoFile(files[0]);
+    setVideoFileName(files[0].name);
+    setVideoFileExtension(files[0].name.split('.').pop());
+    setVideoDuration(''); // 영상 길이 초기화
+  };
 
-    axios.post('/api/upload-video', formData)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleImageDrop = (files) => {
+    setImageFile(files[0]);
+    setImageFileName(files[0].name);
+    setImageFileExtension(files[0].name.split('.').pop());
+  };
+
+  const handleUpload = () => {
+    console.log('videoFile', videoFile);
+    console.log('imageFile', imageFile);
   };
 
   return (
     <div>
-      <input type="file" accept="video/*" onChange={handleVideoFileChange} />
-      {videoFile && (
+      <div className='upload-container'>
         <div>
-          <p>파일 이름: {videoFileName}</p>
-          <p>파일 확장자: {videoFileExtension}</p>
-          <p>영상 길이: {videoDuration}</p>
+          <h2>영상 업로드</h2>
+          <div>
+            <input type="file" accept="video/*" onChange={handleVideoFileChange} />
+            또는
+            <Dropzone onDrop={handleVideoDrop} accept="video/*" multiple={false}>
+              {({getRootProps, getInputProps}) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>드래그앤 드롭 또는 클릭해서 파일을 업로드하세요.</p>
+                </div>
+              )}
+            </Dropzone>
+            {videoFile && (
+              <div>
+                <p>파일 이름: {videoFileName}</p>
+                <p>파일 확장자: {videoFileExtension}</p>
+                <p>영상 길이: {videoDuration}</p>
+                <video src={URL.createObjectURL(videoFile)} controls width="400"></video>
+              </div>
+            )}
+          </div>
+          <button onClick={handleUpload}>영상 업로드</button>
         </div>
-      )}
-      <MDEditor value={editorValue} onChange={handleEditorChange} />
-      <button onClick={handleSubmit}>글과 영상 업로드</button>
+        <div>
+          <h2>사진 업로드</h2>
+          <div>
+            <input type="file" accept="image/*" onChange={handleImageFileChange} />
+            또는
+            <Dropzone onDrop={handleImageDrop} accept="image/*" multiple={false}>
+              {({getRootProps, getInputProps}) => (
+                <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                  <p>드래그앤 드롭 또는 클릭해서 파일을 업로드하세요.</p>
+                </div>
+              )}
+            </Dropzone>
+            {imageFile && ( <div>
+              <p>파일 이름: {imageFileName}</p>
+              <p>파일 확장자: {imageFileExtension}</p>
+              <img src={URL.createObjectURL(imageFile)} alt={imageFileName} width="400" />
+          </div>
+        )}
+        </div>
+      <button onClick={handleUpload}>사진 업로드</button>
     </div>
-  );
-};
-
-export default UploadVideo;
+  </div>
+</div>
+          );
+          };
+                
+                export default UploadVideo;
