@@ -42,6 +42,7 @@ const TextEditor = () => {
         <div className='content-input-box'>
             <label htmlFor="context"/>
             <Editor
+                className="editor"
                 id="context"
                 value={context}
                 onChange={handleContextChange}

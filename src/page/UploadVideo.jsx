@@ -43,7 +43,7 @@ const UploadVideo = () => {
   };
 
   return (
-    <div>
+    <div className='upload-wrap'>
       <div className='upload-container'>
         <div>
           <h2>영상 업로드</h2>
@@ -90,7 +90,10 @@ const UploadVideo = () => {
         </div>
 
       </div>
-        <TextEditor  />
+        <TextEditor/>
+        <div className='upload-summit-btn'>
+          <input className='join-btn' type="button" value="Upload"></input>
+        </div>
     </div>
   );
 };
