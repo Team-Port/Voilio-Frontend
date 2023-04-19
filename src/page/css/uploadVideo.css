@@ -13,7 +13,7 @@
     background-color: rgb(232, 231, 231);
     width: 600px;
     height: 500px;
-    padding: 1rem;
+    padding: 1rem 0;
     border: none;
     border-radius: 10px;
     overflow: scroll;

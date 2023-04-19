@@ -13,6 +13,7 @@ const UploadVideo = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageFileName, setImageFileName] = useState('');
   const [imageFileExtension, setImageFileExtension] = useState('');
+  const [bothFilesUploaded, setBothFilesUploaded] = useState(false);
 
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
@@ -20,6 +21,7 @@ const UploadVideo = () => {
     setVideoFileName(file.name);
     setVideoFileExtension(file.name.split('.').pop());
     setVideoDuration(''); // 영상 길이 초기화
+    if (imageFile) setBothFilesUploaded(true);
   };
 
   const handleImageFileChange = (e) => {
@@ -27,6 +29,7 @@ const UploadVideo = () => {
     setImageFile(file);
     setImageFileName(file.name);
     setImageFileExtension(file.name.split('.').pop());
+    if (videoFile) setBothFilesUploaded(true);
   };
 
   const handleVideoDrop = (files) => {
@@ -34,12 +37,14 @@ const UploadVideo = () => {
     setVideoFileName(files[0].name);
     setVideoFileExtension(files[0].name.split('.').pop());
     setVideoDuration(''); // 영상 길이 초기화
+    if (imageFile) setBothFilesUploaded(true);
   };
 
   const handleImageDrop = (files) => {
     setImageFile(files[0]);
     setImageFileName(files[0].name);
     setImageFileExtension(files[0].name.split('.').pop());
+    if (videoFile) setBothFilesUploaded(true);
   };
 
   return (
@@ -49,6 +54,7 @@ const UploadVideo = () => {
           <h2>영상 업로드</h2>
           <div className='input-container'>
             <input className='select-btn' type="file" accept="video/*" onChange={handleVideoFileChange} />
+            
             <Dropzone onDrop={handleVideoDrop} accept="video/*" multiple={false}>
               {({getRootProps, getInputProps}) => (
                 <div {...getRootProps()}>
@@ -90,10 +96,14 @@ const UploadVideo = () => {
         </div>
 
       </div>
+      {videoFile && imageFile && (
+        <>
         <TextEditor/>
         <div className='upload-summit-btn'>
           <input className='join-btn' type="button" value="Upload"></input>
         </div>
+        </>
+      )}
     </div>
   );
 };
