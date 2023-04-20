@@ -1,7 +1,7 @@
-.Rectangle-54 {
-    width: 900px;
-    height: 500px;
-    flex-grow: 0;
-    border-radius: 20px;
-    background-color: #d9d9d9;
+.playVideoBox iframe{
+    display: flex;
+    margin: auto;
+    width: 98%;
+    min-height: 550px;
+    border: none;
 }

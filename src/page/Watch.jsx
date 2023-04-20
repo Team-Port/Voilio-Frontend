@@ -4,7 +4,7 @@ import Sidebar from "../component/Sidebar";
 import InfoList from "../component/InfoList";
 import VideoWatch from "../component/VideoWatch/VideoWatch";
 
-const WatchPage = () =>{
+const Watch = () =>{
     return(
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
@@ -20,4 +20,4 @@ const WatchPage = () =>{
     );
 };
 
-export default WatchPage;
+export default Watch;

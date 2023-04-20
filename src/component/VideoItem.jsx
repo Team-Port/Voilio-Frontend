@@ -8,23 +8,23 @@ const VideoItem = ({videoItem, display}) => {
             <Link to="/watch">
             <div className='item'>
                 <div className='thumnail'>
-                    <img className='thumnail-img' src={videoItem.snippet.thumbnails.medium.url} alt="videoThumnail" />
+                    <img className='thumnail-img' src={videoItem.thumbnail_url} alt="videoThumnail" />
                 </div>
                 <div className='metaData'>
                     <div className='channelImg-box'>
-                        <img className='channelImg'src ={videoItem.snippet.thumbnails.default.url} alt="channelImg-thum"/>
+                        <img className='channelImg'src ={videoItem.thumbnail_url} alt="channelImg-thum"/>
                     </div>
                     <div className='infoText-box'>
                         <span className='infoText'>
-                            <p className='title'>{videoItem.snippet.title}</p>
+                            <p className='title'>{videoItem.title}</p>
                             <span>
                                 <p className='category'>category</p>
                                 <p className='category'>category</p>
                             </span>
                         </span>
                         <span className='infoText'>
-                            <p className='channel'>{videoItem.snippet.channelTitle}</p>
-                            <p className='publishDate'>{videoItem.snippet.publishedAt}</p>
+                            <p className='channel'>{videoItem.updated_at}</p>
+                            <p className='publishDate'>{videoItem.updated_at}</p>
                         </span>
                     </div>
                 </div>

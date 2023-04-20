@@ -3,9 +3,12 @@ import './Video.css';
 
 const VideoWatch_Video = () => {
     return (
-        <div className='VideoWatch_Video'>
-            <div className="Rectangle-54"/>
-            
+        <div>
+            <div className="watch-box"/>
+                <div className='playVideoBox'>
+                    <iframe className="videoframe" type="text/html" title="비디오플레이어"
+                    src="http://localhost:8080/api/v1/boards" />
+                </div>
             <div className="videoDes">
                 <span>hello</span>
             </div>

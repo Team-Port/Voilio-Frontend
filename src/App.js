@@ -6,8 +6,9 @@ import Profile from './component/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
-import {videoURL} from './lib/sampleAPI'
-import WatchPage from './page/Watch';
+// import {videoURL} from './lib/sampleAPI'
+import Watch from './page/Watch';
+import axios from "axios";
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 
@@ -15,14 +16,17 @@ function App() {
     const [videoItems, setVideoItems] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
 
+
     // 비디오데이터
-    const videoData = async () => {
-        const URL = videoURL;
-        const response = await fetch(URL);
-        const result = await response.json();
-        setVideoItems(result.items)
-        console.log(result.items)
-        defaultVideos = result.items
+    const videoData = () => {
+        axios
+          .get("http://localhost:8080/api/v1/boards/lists")
+          .then((response) => {
+            setVideoItems(response.data.data._embedded.boardResponseList);
+        })
+          .catch((error) => {
+            console.log(error);
+        });
     }
 
     // 비디오는 한 번만 불러질 수 있도록 useEffect사용. useEffect안에서 videoData function을 바로 넣을 순 없다
@@ -44,7 +48,7 @@ function App() {
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
                         <Route path="/profile" element={<Profile oggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-                        <Route path="/watch" element={<WatchPage/>}/>
+                        <Route path="/watch" element={<Watch videoItems={videoItems}/>}/>
                     </Routes>
             </BrowserRouter>
         </div>
