@@ -18,8 +18,8 @@ const VideoItem = ({videoItem, display}) => {
                         <span className='infoText'>
                             <p className='title'>{videoItem.title}</p>
                             <span>
-                                <p className='category'>category</p>
-                                <p className='category'>category</p>
+                                <p className='category'>{videoItem.category1}</p>
+                                <p className='category'>{videoItem.category2}</p>
                             </span>
                         </span>
                         <span className='infoText'>

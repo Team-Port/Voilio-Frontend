@@ -10,7 +10,7 @@ const VideoList = ({videoItems, display}) => {
                 videoItems && videoItems.map(videoItem => (
                     <VideoItem 
                         videoItem={videoItem}
-                        key={VideoItem.id} 
+                        key={videoItem.id} 
                         display = {display}  />
                 ))
             }
