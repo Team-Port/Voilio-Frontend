@@ -10,7 +10,7 @@ import Watch from './page/Watch';
 import axios from "axios";
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
-let selectedWatch = JSON.parse(sessionStorage.getItem('selectedWatch')) || null;
+let selectWatch = JSON.parse(sessionStorage.getItem('selectWatch')) || null;
 
 function App() {
     const [videoItems, setVideoItems] = useState([]);
@@ -34,28 +34,15 @@ function App() {
         videoData();
     }, [] )
 
-    // useEffect (() => {
-    //     sessionStorage.setItem('defaultVideos', JSON.stringify(defaultVideos));
-    //     sessionStorage.setItem('selectedWatch', JSON.stringify(selectedWatch));
-    //   }, [selectVideo])
+    useEffect (() => {
+        sessionStorage.setItem('defaultVideos', JSON.stringify(defaultVideos));
+        sessionStorage.setItem('selectWatch', JSON.stringify(selectWatch));
+      }, [selectedWatch])
 
      // 다른 페이지에서 로고눌렀을 때 home으로 오는데, 30개 동영상 리스트는 session에서 가져올 수 있도록
     const clickLogo=() => {
         setVideoItems(defaultVideos);
     }
-
-    // const selectVideoItem = (video) => {
-    //     setSelectVideo(video.data.data._embedded.boardResponseList.id);
-    //     // selectedWatch=video;
-    //     console.log(video+"..")
-    //     window.scrollTo({
-    //       top:0,
-    //       behavior:'smooth'
-    //     })
-    //   }
-    // const handleSelectItem = () => {
-    //     selectVideoItem(videoItem.id);
-    // }
 
     const handleSelectVideo = (videoId) => {
         setSelectedWatch(videoId);

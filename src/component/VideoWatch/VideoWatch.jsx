@@ -7,25 +7,31 @@ import axios from "axios";
 import {useEffect, useState} from 'react';
 
 const VideoWatch = ({selectedWatch}) => {
-    const [videoItem, setVideoItem] = useState(null);
+    const [videoItem, setVideoItem] = useState({});
 
     // 비디오데이터
     const oneVideoData = () => {
         axios
             .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
             .then((response) => {
-            setVideoItem(response.data.data);
-            console.log(response.data)
-        })
+                sessionStorage.setItem("videoItem", JSON.stringify(response.data.data));
+                setVideoItem(response.data.data);
+                console.log(response.data)
+            })
             .catch((error) => {
-            console.log(error);
-        });
+                console.log(error);
+            });
     }
 
-    // 비디오는 한 번만 불러질 수 있도록 useEffect사용. useEffect안에서 videoData function을 바로 넣을 순 없다
     useEffect (()=> {
-        oneVideoData();
-    }, [] )
+        const videoItemData = sessionStorage.getItem("videoItem");
+        if (videoItemData) {
+            setVideoItem(JSON.parse(videoItemData));
+        } else {
+            oneVideoData();
+        }
+    }, [selectedWatch, videoItem])
+    
 
     return (
        <div className='videoWatch'>
