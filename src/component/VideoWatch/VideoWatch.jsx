@@ -23,14 +23,23 @@ const VideoWatch = ({selectedWatch}) => {
             });
     }
 
-    useEffect (()=> {
-        const videoItemData = sessionStorage.getItem("videoItem");
-        if (videoItemData) {
-            setVideoItem(JSON.parse(videoItemData));
+    useEffect(() => {
+        const storedVideoItem = sessionStorage.getItem(selectedWatch);
+        if (storedVideoItem) {
+        setVideoItem(JSON.parse(storedVideoItem));
         } else {
-            oneVideoData();
+        axios
+            .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
+            .then((response) => {
+            setVideoItem(response.data.data);
+            sessionStorage.setItem(selectedWatch, JSON.stringify(response.data.data));
+            })
+            .catch((error) => {
+            console.log(error);
+            });
         }
-    }, [selectedWatch, videoItem])
+    }, [selectedWatch]);
+
     
 
     return (
