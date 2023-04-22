@@ -1,10 +1,5 @@
 .videoHeader-container{
   width: 100%;
-  background-color: white;
-}
-
-.videoHeader-container *{
-  background-color: white;
 }
 
 .videoHeader-title h2{
