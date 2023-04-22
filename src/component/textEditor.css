@@ -1,0 +1,41 @@
+.title-input-box{
+    display: flex;
+    align-items: center;
+}
+
+.title-input-box *{
+    margin: 0.5rem ;
+}
+
+.editor-container {
+    width: 90%;
+    height: auto;
+    margin: auto;
+    padding: 3rem 0;
+}
+
+.editor-container input{
+    width: 80%;
+    height: 2.8rem;
+    border: 2px solid #aeaeae;
+    border-radius: 10px;
+    padding: 0 1.2rem;
+    font-size: 1.3rem;
+    box-sizing: border-box;
+}
+
+/* .editor{
+    background-color: #f5f5f5;
+    color: black;
+} */
+
+select {
+    width: 8rem; 
+    height: 1.3rem;
+    border: 1.5px solid rgb(187, 187, 187);
+    /* background: url('./../../public/asset/arrow.jpg') no-repeat 95% 50%;  */
+    border-radius: 10px; 
+    /* -webkit-appearance: none;  */
+    /* -moz-appearance: none;
+    appearance: none; */
+}

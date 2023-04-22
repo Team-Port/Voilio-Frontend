@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
@@ -8,6 +9,9 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import Watch from './page/Watch';
 import axios from "axios";
+import {videoURL} from './lib/sampleAPI'
+import UploadVideo from './page/UploadVideo';
+
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
 let selectWatch = JSON.parse(sessionStorage.getItem('selectWatch')) || null;
@@ -60,8 +64,9 @@ function App() {
                         <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
-                        <Route path="/profile" element={<Profile oggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/watch/:id" element={<Watch handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
+                        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                        <Route path="/upload" element={<UploadVideo/>}/>
                     </Routes>
             </BrowserRouter>
         </div>

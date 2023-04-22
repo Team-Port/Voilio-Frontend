@@ -95,28 +95,53 @@
   }
 }
 
-.show-menu{
+.show-menu.personal{
   width: 5rem;
   height: 5.2rem;
   border-radius: 20px;
   border: 1px solid #ccc;
   position: absolute;
-  left: 89vw;
+  left: 91vw;
   transition: 1s;
   display: block;
   padding: 3px;
   margin: 3px;
-  }
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.15);
+  visibility: visible;
+  transition: visibility 0s, opacity 0.3s linear;
+  z-index: 1;
+  opacity: 1;
+}
+
+.show-menu.making{
+  width: 8rem;
+  height: 5.2rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  position: absolute;
+  left: 78vw;
+  transition: 1s;
+  display: block;
+  padding: 3px;
+  margin: 3px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.15);
+  
+}
 
 .show-menu li{
   margin: 1rem 0.5rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .show-menu li:hover{
   color: #bb2649;
 }
-  
+
+.show-menu li button {
+  cursor: pointer;
+}
+
 .hide-menu{
   width: 5rem;
   height: 6rem;
