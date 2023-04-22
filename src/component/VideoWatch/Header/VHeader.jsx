@@ -7,21 +7,18 @@ const VHeader = ({videoItem}) => {
     }
 
     return (
-        <div className="videoHeader">
-            <div className="leftVideoInfo">
-                <span className="Title">
-                    {videoItem.title}
-                </span>
-                <div>
-                    <span className="categoryText">
-                        category
-                    </span>
-                </div>
+        <div className="videoHeader-container">
+            <div className="videoHeader-title">
+                <h2>{videoItem.title}</h2>
             </div>
-            <div className="rightHeaderInfo">
-                <span className="createAt">
-                    createAt
-                </span>
+            <div className='videoHeader-info'>
+                <div className='category-box'>
+                    <p>{videoItem.category1}</p>
+                    <p>{videoItem.category2}</p>
+                </div>
+                <div className="createAt">
+                    <p>{videoItem.created_at}</p>
+                </div>
             </div>
         </div>
     );

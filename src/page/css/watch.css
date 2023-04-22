@@ -5,3 +5,10 @@
     background-color: #fff;
     width: 100%;
 }
+
+ 
+@media (max-width: 880px) {
+    .right-sidebar-box{
+        display: none;
+    }
+}

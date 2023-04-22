@@ -21,4 +21,4 @@ const Watch = ({selectedWatch, handleSelectVideo}) =>{
     );
 };
 
-export default Watch;
+export default Watch; 
