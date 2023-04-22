@@ -1,5 +1,7 @@
 import React from 'react';
-import './vHeader.css'
+import './vHeader.css';
+import * as common from '../../../lib/common';
+
 
 const VHeader = ({videoItem}) => {
     if (!videoItem) {
@@ -17,7 +19,7 @@ const VHeader = ({videoItem}) => {
                     <p>{videoItem.category2}</p>
                 </div>
                 <div className="createAt">
-                    <p>{videoItem.created_at}</p>
+                    <p>{common.publishedDate(videoItem.created_at)}</p>
                 </div>
             </div>
         </div>

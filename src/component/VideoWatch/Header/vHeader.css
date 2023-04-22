@@ -30,6 +30,7 @@
 }
 
 .category-box p{
+  font-size: 0.9rem;
   margin: 0 0.5rem;
   padding: 0;
 }
@@ -38,4 +39,5 @@
   margin: 0 0.5rem;
   padding: 0;
   font-size: 0.7rem;
+  color: #797979;
 }
