@@ -2,11 +2,15 @@ import React from 'react';
 import './videoItem.css'
 import { Link } from 'react-router-dom';
 
-const VideoItem = ({videoItem, display}) => {
+const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
+    const handleSelectItem = () => {
+        handleSelectVideo(videoItem.id);
+      }
+
     return (
         <li className={`videoItem ${display}`}>
-            <Link to="/watch">
-            <div className='item'>
+            <Link to={`/watch/${videoItem.id}`}>
+            <div className='item' onClick={handleSelectItem}>
                 <div className='thumnail'>
                     <img className='thumnail-img' src={videoItem.thumbnail_url} alt="videoThumnail" />
                 </div>

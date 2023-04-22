@@ -1,12 +1,16 @@
 import React from 'react';
-import './Header.css'
+import './vHeader.css'
 
-const VideoWatch_Header = () => {
+const VHeader = ({videoItem}) => {
+    if (!videoItem) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="videoHeader">
             <div className="leftVideoInfo">
                 <span className="Title">
-                    Title
+                    {videoItem.title}
                 </span>
                 <div>
                     <span className="categoryText">
@@ -23,4 +27,4 @@ const VideoWatch_Header = () => {
     );
 };
 
-export default VideoWatch_Header;
+export default VHeader;

@@ -6,16 +6,16 @@ import Profile from './component/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState} from 'react';
-// import {videoURL} from './lib/sampleAPI'
 import Watch from './page/Watch';
 import axios from "axios";
 
 let defaultVideos = JSON.parse(sessionStorage.getItem('defaultVideos')) || null;
+let selectedWatch = JSON.parse(sessionStorage.getItem('selectedWatch')) || null;
 
 function App() {
     const [videoItems, setVideoItems] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
-
+    const [selectedWatch, setSelectedWatch] = useState(null);
 
     // 비디오데이터
     const videoData = () => {
@@ -34,21 +34,47 @@ function App() {
         videoData();
     }, [] )
 
+    // useEffect (() => {
+    //     sessionStorage.setItem('defaultVideos', JSON.stringify(defaultVideos));
+    //     sessionStorage.setItem('selectedWatch', JSON.stringify(selectedWatch));
+    //   }, [selectVideo])
+
      // 다른 페이지에서 로고눌렀을 때 home으로 오는데, 30개 동영상 리스트는 session에서 가져올 수 있도록
     const clickLogo=() => {
         setVideoItems(defaultVideos);
     }
 
+    // const selectVideoItem = (video) => {
+    //     setSelectVideo(video.data.data._embedded.boardResponseList.id);
+    //     // selectedWatch=video;
+    //     console.log(video+"..")
+    //     window.scrollTo({
+    //       top:0,
+    //       behavior:'smooth'
+    //     })
+    //   }
+    // const handleSelectItem = () => {
+    //     selectVideoItem(videoItem.id);
+    // }
+
+    const handleSelectVideo = (videoId) => {
+        setSelectedWatch(videoId);
+        window.scrollTo({
+          top:0,
+          behavior:'smooth'
+        });
+      }
+    
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} />
                     <Routes>
-                        <Route path="/" element={<Home videoItems={videoItems} clickLogo={clickLogo} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
+                        <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
                         <Route path="/profile" element={<Profile oggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-                        <Route path="/watch" element={<Watch videoItems={videoItems}/>}/>
+                        <Route path="/watch/:id" element={<Watch handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                     </Routes>
             </BrowserRouter>
         </div>

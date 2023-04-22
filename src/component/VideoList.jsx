@@ -2,7 +2,7 @@ import React from 'react';
 import './videoList.css'
 import VideoItem from './VideoItem';
 
-const VideoList = ({videoItems, display}) => {
+const VideoList = ({ videoItems, display, handleSelectVideo, selectedWatch})  => {
     return (
         <ul className='videoList' >
             {   
@@ -11,7 +11,9 @@ const VideoList = ({videoItems, display}) => {
                     <VideoItem 
                         videoItem={videoItem}
                         key={videoItem.id} 
-                        display = {display}  />
+                        display = {display}
+                        handleSelectVideo={handleSelectVideo}
+                        selectedWatch={selectedWatch}  />
                 ))
             }
         </ul>
