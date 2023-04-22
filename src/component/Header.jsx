@@ -58,7 +58,7 @@ const Header = ({ loggedIn, setLoggedIn }) => {
     <div className="header">
       <Link to={"/"}>
         <div className="logoArea">
-          <img className="headerLogo" src={"asset/voilio.png"}></img>
+        <img className='headerLogo' src={process.env.PUBLIC_URL + '/asset/voilio.png'} />
         </div>
       </Link>
       <div className="search-InputArea">

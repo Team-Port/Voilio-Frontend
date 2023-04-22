@@ -73,3 +73,12 @@
   object-fit: contain;
   padding-right: 0.1rem;
 }
+
+@media (max-width: 1050px) {
+  .subscribe-title{
+    font-size: 0.8rem;
+  }
+  .ss-titleImg, .subscribeNum{
+    width: 15px;
+  }
+}
