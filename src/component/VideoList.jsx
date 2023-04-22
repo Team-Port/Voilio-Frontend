@@ -2,7 +2,7 @@ import React from 'react';
 import './videoList.css'
 import VideoItem from './VideoItem';
 
-const VideoList = ({videoItems, display}) => {
+const VideoList = ({ videoItems, display, handleSelectVideo, selectedWatch})  => {
     return (
         <ul className='videoList' >
             {   
@@ -10,8 +10,10 @@ const VideoList = ({videoItems, display}) => {
                 videoItems && videoItems.map(videoItem => (
                     <VideoItem 
                         videoItem={videoItem}
-                        key={VideoItem.id} 
-                        display = {display}  />
+                        key={videoItem.id} 
+                        display = {display}
+                        handleSelectVideo={handleSelectVideo}
+                        selectedWatch={selectedWatch}  />
                 ))
             }
         </ul>

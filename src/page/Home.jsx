@@ -3,7 +3,10 @@ import Sidebar from '../component/Sidebar';
 import InfoList from '../component/InfoList';
 import VideoList from '../component/VideoList';
 
-const Home = ({videoItems}) => {
+
+const Home = ({videoItems, handleSelectVideo, selectVideoItem}) => {
+
+      
     return (
         <div className='home-wrap'>
             <div className='left-sidebar-box'>
@@ -12,7 +15,9 @@ const Home = ({videoItems}) => {
             <div className='video-list'>
                 <VideoList
                     videoItems = {videoItems}
-                    display='list-h'/>
+                    display='list-h'
+                    selectVideoItem = {selectVideoItem}
+                    handleSelectVideo = {handleSelectVideo} />
             </div>
             <div className='right-sidebar-box'>
                 <InfoList/>

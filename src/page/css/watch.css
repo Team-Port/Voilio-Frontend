@@ -1,6 +1,18 @@
 .watch{
-    margin: 10px 10px 0px 10px;
+    margin: 0 1rem;
     padding: 10px 20px;
     border-radius: 20px;
+    background-color: #fff;
+    width: 100%;
+}
+
+ 
+@media (max-width: 880px) {
+    .right-sidebar-box{
+        display: none;
+    }
+}
+
+.watch * {
     background-color: #fff;
 }

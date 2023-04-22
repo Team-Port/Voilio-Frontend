@@ -1,0 +1,43 @@
+.videoHeader-container{
+  width: 100%;
+}
+
+.videoHeader-title h2{
+    font-size: 1.7rem;
+    text-align: left;
+    color: #000;
+    margin: 0;
+}
+
+@media (max-width: 880px) {
+  .videoHeader-title h2 {
+    font-size: 1rem;
+  }
+  .videoHeader-info p{
+    font-size: .5rem;
+  }
+}
+
+.videoHeader-info{
+  display: flex;
+  justify-content: space-between;
+  margin: 0.1rem 0;
+  align-items: center;
+}
+
+.category-box {
+  display: flex;
+}
+
+.category-box p{
+  font-size: 0.9rem;
+  margin: 0 0.5rem;
+  padding: 0;
+}
+
+.createAt p{
+  margin: 0 0.5rem;
+  padding: 0;
+  font-size: 0.7rem;
+  color: #797979;
+}

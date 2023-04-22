@@ -1,16 +1,18 @@
 import React from 'react';
 import './Video.css';
 
-const VideoWatch_Video = () => {
+const Video = ({videoItem}) => {
     return (
-        <div className='VideoWatch_Video'>
-            <div className="Rectangle-54"/>
-            
-            <div className="videoDes">
-                <span>hello</span>
+        <div className='video-container'>
+            <div className='playVideoBox'>
+                <iframe className="videoframe" type="text/html" title="비디오플레이어"
+                src={videoItem.video_url}></iframe>
             </div>
+            <div className='txtContainer'>
+                <p>{videoItem.content}</p>
+            </div>            
         </div>
     );
 };
 
-export default VideoWatch_Video;
+export default Video;
