@@ -18,7 +18,7 @@ const Join = () => {
 
     const registerAxios = () => {
         axios
-            .post("http://localhost:8080/api/v1/auth/signup", {
+            .post("http://voilio.site/api/v1/auth/signup", {
                 email : emailValue,
                 password : pwdValue,
                 nickname : nicknameValue

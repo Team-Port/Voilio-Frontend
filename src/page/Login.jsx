@@ -19,7 +19,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
 
     const onLogin = () => {
         axios
-          .post("http://localhost:8080/api/v1/auth/login", {
+          .post("http://voilio.site/api/v1/auth/login", {
             email : emailValue,
             password : pwdValue
           })
