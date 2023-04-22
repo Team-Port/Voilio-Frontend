@@ -1,0 +1,50 @@
+.upload-container{
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.tmp-thumb-img{
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.input-container{
+    background-color: rgb(232, 231, 231);
+    width: 600px;
+    height: 500px;
+    padding: 1rem 0;
+    border: none;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+.input-container *{
+    background-color: rgb(232, 231, 231);
+}
+
+.input-container p{
+    color: #505050;
+}
+
+.select-btn{
+    margin: 0.2rem 0;
+    background-color: none;
+}
+
+img, video{
+    margin: 1rem 0;
+}
+
+h2{
+    margin: 1rem 0;
+}
+
+.upload-wrap{
+    text-align: center;
+}
+
+.upload-summit-btn{
+    margin: 3rem 0;
+}
+
