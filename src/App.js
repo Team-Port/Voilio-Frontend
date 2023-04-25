@@ -21,6 +21,10 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [selectedWatch, setSelectedWatch] = useState(null);
 
+    const handleSetVideo = (data) =>{
+        setVideoItems(data);
+    }
+
     // 비디오데이터
     const videoData = () => {
         axios
@@ -59,7 +63,7 @@ function App() {
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} />
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} handleSetVideo={handleSetVideo} />
                     <Routes>
                         <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
