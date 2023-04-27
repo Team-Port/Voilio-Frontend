@@ -30,17 +30,13 @@ function App() {
           });
       }, []);
     
-    useEffect(() => {
+      useEffect(() => {
         videoData();
-    }, [videoData]);
+      }, [videoData]);
     
-    const updateVideoData = () => {
+      const updateVideoData = () => {
         videoData();
-     };
-    
-    const handleSetVideo = (data) =>{
-        setVideoItems(data);
-    }
+      };
 
     useEffect (() => {
         sessionStorage.setItem('defaultVideos', JSON.stringify(defaultVideos));
