@@ -5,6 +5,7 @@ import TextEditor from '../component/TextEditor'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { Link, useNavigate } from 'react-router-dom';
+import Loading from '../lib/Loading';
 
 
 
@@ -23,6 +24,8 @@ const UploadVideo = () => {
   const [content, setContent] = useState('');
   const [category1, setCategory1] = useState('');
   const [category2, setCategory2] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false); // 로딩 중임을 나타내는 변수
 
   const navigate = useNavigate();
 
@@ -61,6 +64,8 @@ const UploadVideo = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    setIsLoading(true);   // 요청이 시작됨을 나타내는 변수 변경
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
@@ -68,9 +73,6 @@ const UploadVideo = () => {
     formData.append('category2', category2);
     formData.append('video', videoFile);
     formData.append('thumbnail', imageFile);
-
-    console.log(category1);
-    console.log(category2);
 
     // get user_id from token in local storage
     const token = localStorage.getItem('jwtAuthToken');
@@ -88,75 +90,79 @@ const UploadVideo = () => {
     } catch (error) {
       console.error(error);
       alert("서버 오류로 생성이 정상적으로 되지 않았습니다. 다시 부탁드릴게요😭")
+    } finally {
+      setIsLoading(false); // 요청이 끝남을 나타내는 변수 변경
     }
   };
 
   return (
     <div className='upload-wrap'>
-      <div className='upload-container'>
-        <div>
-          <h2>영상 업로드</h2>
-          <div className='input-container'>
-            <input className='select-btn' type="file" accept="video/*" onChange={handleVideoFileChange} />
-            
-            <Dropzone onDrop={handleVideoDrop} accept="video/*" multiple={false}>
-              {({getRootProps, getInputProps}) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p>Drag & Drop 또는 클릭해서 파일을 업로드하세요.</p>
-                </div>
-              )}
-            </Dropzone>
-            {videoFile && (
-              <div>
-                <video src={URL.createObjectURL(videoFile)} controls width="550"></video>
-                <div>
-                  <p>파일 이름: {videoFileName}</p>
-                  <p>파일 확장자: {videoFileExtension}</p>
-                  <p>영상 길이: {videoDuration}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <h2>썸네일 이미지 업로드</h2>
+      {isLoading && <Loading />}
+        <div className='upload-container'>
+          <div>
+            <h2>영상 업로드</h2>
             <div className='input-container'>
-              <input className='select-btn' type="file" accept="image/*" onChange={handleImageFileChange} />
-              <Dropzone onDrop={handleImageDrop} accept="image/*" multiple={false}>
+              <input className='select-btn' type="file" accept="video/*" onChange={handleVideoFileChange} />
+              
+              <Dropzone onDrop={handleVideoDrop} accept="video/*" multiple={false}>
                 {({getRootProps, getInputProps}) => (
                   <div {...getRootProps()}>
-                  <input {...getInputProps()} />
+                    <input {...getInputProps()} />
                     <p>Drag & Drop 또는 클릭해서 파일을 업로드하세요.</p>
                   </div>
                 )}
               </Dropzone>
-              {imageFile && ( <div>
-                <img className='tmp-thumb-img' src={URL.createObjectURL(imageFile)} alt={imageFileName} width="550" />
+              {videoFile && (
+                <div>
+                  <video src={URL.createObjectURL(videoFile)} controls width="550"></video>
+                  <div>
+                    <p>파일 이름: {videoFileName}</p>
+                    <p>파일 확장자: {videoFileExtension}</p>
+                    <p>영상 길이: {videoDuration}</p>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
           </div>
-        </div>
 
-      </div>
-      {videoFile && imageFile && (
-        <>
-        <TextEditor
-          title={title}
-          setTitle={setTitle}
-          content={content}
-          setContent={setContent}
-          category1={category1}
-          setCategory1={setCategory1}
-          category2={category2}
-          setCategory2={setCategory2}
-          />
-        <div className='upload-summit-btn'>
-          <input className='join-btn' type="button" value="Upload" onClick={handleFormSubmit}/>
+          <div>
+            <h2>썸네일 이미지 업로드</h2>
+              <div className='input-container'>
+                <input className='select-btn' type="file" accept="image/*" onChange={handleImageFileChange} />
+                <Dropzone onDrop={handleImageDrop} accept="image/*" multiple={false}>
+                  {({getRootProps, getInputProps}) => (
+                    <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                      <p>Drag & Drop 또는 클릭해서 파일을 업로드하세요.</p>
+                    </div>
+                  )}
+                </Dropzone>
+                {imageFile && ( <div>
+                  <img className='tmp-thumb-img' src={URL.createObjectURL(imageFile)} alt={imageFileName} width="550" />
+              </div>
+            )}
+            </div>
+          </div>
+
         </div>
-        </>
-      )}
+        {videoFile && imageFile && (
+          <>
+          <TextEditor
+            title={title}
+            setTitle={setTitle}
+            content={content}
+            setContent={setContent}
+            category1={category1}
+            setCategory1={setCategory1}
+            category2={category2}
+            setCategory2={setCategory2}
+            />
+          <div className='upload-summit-btn'>
+            <input className='join-btn' type="button" value="Upload" onClick={handleFormSubmit}/>
+          </div>
+          </>
+        )}
+
     </div>
   );
 };
