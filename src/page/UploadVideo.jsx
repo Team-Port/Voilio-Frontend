@@ -9,7 +9,7 @@ import Loading from '../lib/Loading';
 
 
 
-const UploadVideo = () => {
+const UploadVideo = ({updateVideoData}) => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoFileName, setVideoFileName] = useState('');
   const [videoFileExtension, setVideoFileExtension] = useState('');
@@ -85,6 +85,7 @@ const UploadVideo = () => {
       const response = await axios.post('http://localhost:8080/api/v1/boards/create', formData);
       console.log(response.data);
       if(response.data.status === '201'){
+        updateVideoData()
         navigate("/");    // 추후 마이페이지로 이동
       }
     } catch (error) {
