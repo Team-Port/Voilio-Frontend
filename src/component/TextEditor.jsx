@@ -53,18 +53,30 @@ function TextEditor (props) {
             value={category1}
             onChange={handleInputChange}
           >
-            <option>기타</option>
+            <option>ETC</option>
             <option>IT</option>
-            <option>Dance</option>
+            <option>BACKEND</option>
+            <option>JAVA</option>
+            <option>PYTHON</option>
+            <option>KOTLIN</option>
+            <option>REACT</option>
+            <option>DANCE</option>
+            <option>LANGUAGE</option>
           </select>
           <select
             name='category2'
             value={category2}
             onChange={handleInputChange}
           >
-            <option>기타</option>
+            <option>ETC</option>
             <option>IT</option>
-            <option>Dance</option>
+            <option>BACKEND</option>
+            <option>JAVA</option>
+            <option>PYTHON</option>
+            <option>KOTLIN</option>
+            <option>REACT</option>
+            <option>DANCE</option>
+            <option>LANGUAGE</option>
           </select>
         </div>
       </div>
