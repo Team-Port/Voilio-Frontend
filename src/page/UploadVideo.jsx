@@ -2,18 +2,26 @@ import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import './css/uploadVideo.css';
 import TextEditor from '../component/TextEditor'
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+
 
 const UploadVideo = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoFileName, setVideoFileName] = useState('');
   const [videoFileExtension, setVideoFileExtension] = useState('');
   const [videoDuration, setVideoDuration] = useState('');
-  const [editorValue, setEditorValue] = useState('');
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileName, setImageFileName] = useState('');
   const [imageFileExtension, setImageFileExtension] = useState('');
   const [bothFilesUploaded, setBothFilesUploaded] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [category1, setCategory1] = useState('');
+  const [category2, setCategory2] = useState('');
+
 
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
@@ -45,6 +53,37 @@ const UploadVideo = () => {
     setImageFileName(files[0].name);
     setImageFileExtension(files[0].name.split('.').pop());
     if (videoFile) setBothFilesUploaded(true);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('category1', category1);
+    formData.append('category2', category2);
+    formData.append('video', videoFile);
+    formData.append('thumbnail', imageFile);
+
+    console.log(category1);
+    console.log(category2);
+    
+    // get user_id from token in local storage
+    const token = localStorage.getItem('jwtAuthToken');
+    const decodedToken = jwt_decode(token);
+    const userId = decodedToken.sub;
+    
+    formData.append('user_id', userId);
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/boards/create', formData);
+      console.log(response.data);
+      // Handle success
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
   };
 
   return (
@@ -98,9 +137,18 @@ const UploadVideo = () => {
       </div>
       {videoFile && imageFile && (
         <>
-        <TextEditor/>
+        <TextEditor
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          category1={category1}
+          setCategory1={setCategory1}
+          category2={category2}
+          setCategory2={setCategory2}
+          />
         <div className='upload-summit-btn'>
-          <input className='join-btn' type="button" value="Upload"></input>
+          <input className='join-btn' type="button" value="Upload" onClick={handleFormSubmit}/>
         </div>
         </>
       )}
