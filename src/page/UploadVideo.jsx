@@ -4,6 +4,8 @@ import './css/uploadVideo.css';
 import TextEditor from '../component/TextEditor'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 const UploadVideo = () => {
@@ -22,6 +24,7 @@ const UploadVideo = () => {
   const [category1, setCategory1] = useState('');
   const [category2, setCategory2] = useState('');
 
+  const navigate = useNavigate();
 
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
@@ -68,7 +71,7 @@ const UploadVideo = () => {
 
     console.log(category1);
     console.log(category2);
-    
+
     // get user_id from token in local storage
     const token = localStorage.getItem('jwtAuthToken');
     const decodedToken = jwt_decode(token);
@@ -79,10 +82,12 @@ const UploadVideo = () => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/boards/create', formData);
       console.log(response.data);
-      // Handle success
+      if(response.data.status === '201'){
+        navigate("/");    // 추후 마이페이지로 이동
+      }
     } catch (error) {
       console.error(error);
-      // Handle error
+      alert("서버 오류로 생성이 정상적으로 되지 않았습니다. 다시 부탁드릴게요😭")
     }
   };
 
