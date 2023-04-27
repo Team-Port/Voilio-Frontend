@@ -9,7 +9,6 @@ import './App.css';
 import {useEffect, useState, useCallback} from 'react';
 import Watch from './page/Watch';
 import axios from "axios";
-import {videoURL} from './lib/sampleAPI'
 import UploadVideo from './page/UploadVideo';
 
 
