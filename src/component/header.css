@@ -84,6 +84,7 @@
 @media (max-width: 1050px) {
   .logoArea{
     width: 5rem;
+    transition: 1s; 
     /* padding: 0 3rem 0 1.5rem; */
   }
 }
@@ -92,6 +93,12 @@
   .logoArea{
     width: 3rem;
     padding: 0 3rem 0 1.5rem;
+    transition: 1s; 
+  }
+  .topIcon{
+    width: 17px;
+    height: 17px;
+    transition: 1s;
   }
 }
 

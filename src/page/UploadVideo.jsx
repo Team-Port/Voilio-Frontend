@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 import './css/uploadVideo.css';
 import TextEditor from '../component/TextEditor'
@@ -6,14 +6,13 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../lib/Loading';
-
+import { useMemo } from 'react';
 
 
 const UploadVideo = ({updateVideoData}) => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoFileName, setVideoFileName] = useState('');
-  const [videoFileExtension, setVideoFileExtension] = useState('');
-  const [videoDuration, setVideoDuration] = useState('');
+  const [videoBlobUrl, setVideoBlobUrl] = useState(null);
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileName, setImageFileName] = useState('');
@@ -27,16 +26,27 @@ const UploadVideo = ({updateVideoData}) => {
 
   const [isLoading, setIsLoading] = useState(false); // 로딩 중임을 나타내는 변수
 
+
   const navigate = useNavigate();
 
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
     setVideoFile(file);
     setVideoFileName(file.name);
-    setVideoFileExtension(file.name.split('.').pop());
-    setVideoDuration(''); // 영상 길이 초기화
     if (imageFile) setBothFilesUploaded(true);
   };
+
+  useEffect(() => {
+    if (videoFile) {
+      const blobUrl = URL.createObjectURL(videoFile);
+      setVideoBlobUrl(blobUrl);
+    }
+    return () => {
+      if (videoBlobUrl) {
+        URL.revokeObjectURL(videoBlobUrl);
+      }
+    }
+  }, [videoFile]);
 
   const handleImageFileChange = (e) => {
     const file = e.target.files[0];
@@ -49,8 +59,6 @@ const UploadVideo = ({updateVideoData}) => {
   const handleVideoDrop = (files) => {
     setVideoFile(files[0]);
     setVideoFileName(files[0].name);
-    setVideoFileExtension(files[0].name.split('.').pop());
-    setVideoDuration(''); // 영상 길이 초기화
     if (imageFile) setBothFilesUploaded(true);
   };
 
@@ -104,7 +112,6 @@ const UploadVideo = ({updateVideoData}) => {
             <h2>영상 업로드</h2>
             <div className='input-container'>
               <input className='select-btn' type="file" accept="video/*" onChange={handleVideoFileChange} />
-              
               <Dropzone onDrop={handleVideoDrop} accept="video/*" multiple={false}>
                 {({getRootProps, getInputProps}) => (
                   <div {...getRootProps()}>
@@ -113,16 +120,11 @@ const UploadVideo = ({updateVideoData}) => {
                   </div>
                 )}
               </Dropzone>
-              {videoFile && (
-                <div>
-                  <video src={URL.createObjectURL(videoFile)} controls width="550"></video>
-                  <div>
-                    <p>파일 이름: {videoFileName}</p>
-                    <p>파일 확장자: {videoFileExtension}</p>
-                    <p>영상 길이: {videoDuration}</p>
-                  </div>
+                <div>            
+                  {videoBlobUrl && (
+                    <video className='tmp-preFile' src={videoBlobUrl} controls width="550" />
+                  )}
                 </div>
-              )}
             </div>
           </div>
 
@@ -139,7 +141,7 @@ const UploadVideo = ({updateVideoData}) => {
                   )}
                 </Dropzone>
                 {imageFile && ( <div>
-                  <img className='tmp-thumb-img' src={URL.createObjectURL(imageFile)} alt={imageFileName} width="550" />
+                  <img className='tmp-preFile' src={URL.createObjectURL(imageFile)} alt={imageFileName} width="550" />
               </div>
             )}
             </div>

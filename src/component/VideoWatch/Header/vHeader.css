@@ -12,9 +12,11 @@
 @media (max-width: 880px) {
   .videoHeader-title h2 {
     font-size: 1rem;
+    transition: 1s; 
   }
   .videoHeader-info p{
     font-size: .5rem;
+    transition: 1s; 
   }
 }
 
