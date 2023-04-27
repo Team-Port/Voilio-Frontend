@@ -28,7 +28,7 @@ const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
                             </span>
                         </span>
                         <span className='infoText'>
-                            <p className='channel'>{videoItem.updated_at}</p>
+                            <p className='channel'>{videoItem.user_id}</p>
                             <p className='publishDate'>{common.publishedDate(videoItem.created_at)}</p>
                         </span>
                     </div>
