@@ -52,9 +52,11 @@
 @media (max-width: 880px) {
   .sidebarMenu-box p {
     display: none;
+    transition: .2s; 
   }
   .pageMenu-box, .categoryMenu-box{
     width: 2rem;
+    transition: .2s; 
   }
 
 }

@@ -4,13 +4,43 @@ import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { useState, useCallback } from "react";
 import jwt_decode from "jwt-decode";
-
-
+import axios from "axios";
 import "./header.css";
 
-const Header = ({ loggedIn, setLoggedIn }) => {
+
+const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
   const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
+  const [search, setSearch] = useState('');
+
+
+  const onChangeSearch = (e) =>{
+    e.preventDefault();
+    setSearch(e.target.value);
+  }
+
+  const onSearch = () => {
+    if(search === '' || search === ' '){
+      alert('검색이 없는데용?')
+      return;
+    }
+
+    axios
+      .get("http://localhost:8080/api/v1/boards?search=" + search)
+      .then((response) => {
+        if (response.status === 200) {
+          handleSetVideo(response.data.data);
+        }
+
+      })
+      .catch((error) => {
+        if(error.response.status === 400){
+          alert("검색어에 맞는 게시글이 없어용ㅜㅜ");
+          return;
+        }
+        console.log(error);
+      });
+  }
 
   const handleLoginChange = useCallback(() => {
       const token = localStorage.getItem('jwtAuthToken');
@@ -53,9 +83,9 @@ const Header = ({ loggedIn, setLoggedIn }) => {
         </div>
       </Link>
       <div className="search-InputArea">
-        <input type="search" placeholder="검색" className="searchInput" />
+        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch}/>
         <div className="searchBtn-box">
-          <BsSearch className="topIcon-search" size="1.2rem"></BsSearch>
+          <BsSearch className="topIcon-search" size="1.2rem" onClick={onSearch}></BsSearch>
         </div>
       </div>
       <div className="topMenuArea">

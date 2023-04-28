@@ -6,10 +6,9 @@ import Join from './page/Join';
 import Profile from './component/Profile';
 import Header from './component/Header';
 import './App.css';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import Watch from './page/Watch';
 import axios from "axios";
-import {videoURL} from './lib/sampleAPI'
 import UploadVideo from './page/UploadVideo';
 
 
@@ -21,22 +20,27 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [selectedWatch, setSelectedWatch] = useState(null);
 
-    // 비디오데이터
-    const videoData = () => {
-        axios
-          .get("http://localhost:8080/api/v1/boards/lists")
+    const videoData = useCallback(() => {
+        axios.get("http://localhost:8080/api/v1/boards/lists")
           .then((response) => {
             setVideoItems(response.data.data._embedded.boardResponseList);
-        })
+          })
           .catch((error) => {
             console.log(error);
-        });
-    }
-
-    // 비디오는 한 번만 불러질 수 있도록 useEffect사용. useEffect안에서 videoData function을 바로 넣을 순 없다
-    useEffect (()=> {
+          });
+      }, []);
+    
+    useEffect(() => {
         videoData();
-    }, [] )
+    }, [videoData]);
+    
+    const updateVideoData = () => {
+        videoData();
+     };
+    
+    const handleSetVideo = (data) =>{
+        setVideoItems(data);
+    }
 
     useEffect (() => {
         sessionStorage.setItem('defaultVideos', JSON.stringify(defaultVideos));
@@ -59,14 +63,14 @@ function App() {
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} />
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} handleSetVideo={handleSetVideo} />
                     <Routes>
                         <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
                         <Route path="/watch/:id" element={<Watch handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
                         <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-                        <Route path="/upload" element={<UploadVideo/>}/>
+                        <Route path="/upload" element={<UploadVideo updateVideoData={updateVideoData}/>}/>
                     </Routes>
             </BrowserRouter>
         </div>
