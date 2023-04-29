@@ -3,6 +3,7 @@ import './videoList.css'
 import VideoItem from './VideoItem';
 
 const VideoList = ({ videoItems, display, handleSelectVideo, selectedWatch})  => {
+    console.log(videoItems)
     return (
         <ul className='videoList' >
             {   

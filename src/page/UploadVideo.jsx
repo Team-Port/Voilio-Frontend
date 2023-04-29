@@ -79,19 +79,44 @@ const UploadVideo = ({updateVideoData}) => {
     formData.append('content', content);
     formData.append('category1', category1);
     formData.append('category2', category2);
-    formData.append('video', videoFile);
-    formData.append('thumbnail', imageFile);
 
     // get user_id from token in local storage
     const token = localStorage.getItem('jwtAuthToken');
     const decodedToken = jwt_decode(token);
     const userId = decodedToken.sub;
-    
     formData.append('user_id', userId);
+
+
+  const timestamp = Date.now();
+  if(videoFile){
+    var videoFileExtension = videoFile.name.split('.').pop();
+    if(videoFileExtension === "mov") videoFileExtension = "mp4";
+    const newVideoName = userId + "_" + timestamp + "_v";
+
+    const newVideoFile = new File([videoFile], newVideoName + "." + videoFileExtension, {
+      type: videoFile.type,
+      lastModified: videoFile.lastModified,
+    });
+
+    formData.append('video', newVideoFile);
+  }
+    
+    
+  if(imageFile){
+    const imgFileExtension = imageFile.name.split('.').pop();
+    const newImgName = userId + "_" + timestamp + "_v";
+
+    const newImgFile = new File([imageFile], newImgName + "." + imgFileExtension, {
+      type: imageFile.type,
+      lastModified: imageFile.lastModified,
+    });
+
+    formData.append('thumbnail', newImgFile);
+  }
+   
 
     try {
       const response = await axios.post('http://localhost:8080/api/v1/boards/create', formData);
-      console.log(response.data);
       if(response.data.status === '201'){
         updateVideoData()
         navigate("/");    // 추후 마이페이지로 이동
