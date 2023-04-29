@@ -86,6 +86,8 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
     setMakingMenu(false);
   }
 
+  const nickname = sessionStorage.getItem('nickname');
+
   return (
     <div className="header">
       <Link to={"/"}>
@@ -112,7 +114,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
             <div className="private-toggle-menu">
               <ul className={isOpen ? "show-menu personal" : "hide-menu"} onMouseLeave={closeMenu}>
                 <li>
-                <Link to={"/profile"}> MyPage</Link>
+                <Link to={`/profile/@${nickname}`}> MyPage</Link>
                 </li>
                 <li onClick={logout}>Logout</li>
               </ul>

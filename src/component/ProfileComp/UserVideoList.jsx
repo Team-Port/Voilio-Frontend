@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Profile = () => {
+const UserVideoList = () => {
     return (
         <div>
-            <h2>PRofile</h2>
+            
         </div>
     );
 };
 
-export default Profile;
+export default UserVideoList;

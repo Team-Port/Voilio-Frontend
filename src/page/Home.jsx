@@ -4,7 +4,7 @@ import InfoList from '../component/InfoList';
 import VideoList from '../component/VideoList';
 
 
-const Home = ({videoItems, handleSelectVideo, selectVideoItem}) => {
+const Home = ({videoItems, handleSelectVideo}) => {
 
     return (
         <div className='home-wrap'>
@@ -15,7 +15,6 @@ const Home = ({videoItems, handleSelectVideo, selectVideoItem}) => {
                 <VideoList
                     videoItems = {videoItems}
                     display='list-h'
-                    selectVideoItem = {selectVideoItem}
                     handleSelectVideo = {handleSelectVideo} />
             </div>
             <div className='right-sidebar-box'>

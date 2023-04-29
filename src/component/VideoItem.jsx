@@ -3,7 +3,7 @@ import './videoItem.css'
 import { Link } from 'react-router-dom';
 import * as common from './../lib/common';
 
-const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
+const VideoItem = ({videoItem, display, handleSelectVideo}) => {
     const handleSelectItem = () => {
         handleSelectVideo(videoItem.id);
       }
@@ -28,7 +28,7 @@ const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
                             </span>
                         </span>
                         <span className='infoText'>
-                            <p className='channel'>{videoItem.user_id}</p>
+                            <p className='channel'>{videoItem.nickname}</p>
                             <p className='publishDate'>{common.publishedDate(videoItem.created_at)}</p>
                         </span>
                     </div>

@@ -1,6 +1,6 @@
 .videoList{
     display: flex;
-    width: 68vw;
+    /* width: 68vw; */
     flex-wrap: wrap;
     justify-content: center;
     padding-left: 0.3rem;
