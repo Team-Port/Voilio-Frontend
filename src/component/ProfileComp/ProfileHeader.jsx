@@ -15,7 +15,6 @@ const ProfileHeader = () => {
     return (
         <div className='profileHeader-container'>
             <p className='userNick'> {nickname} </p>
-            {/* <p className='userEmail'> {user.email}</p> */}
             <VideoList/>
         </div>
     );

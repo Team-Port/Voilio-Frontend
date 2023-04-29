@@ -82,7 +82,8 @@
 .tmpProfile-img{
   width: 5rem;
   height: 5rem;
-  margin: 0;
+  padding: .5rem 0;
+  border-bottom: solid 1.5px #bb2649;
 }
 
 .subscribe-box-profile p{
