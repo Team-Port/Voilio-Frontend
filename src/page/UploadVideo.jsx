@@ -50,7 +50,8 @@ const UploadVideo = ({updateVideoData}) => {
 
   const handleImageFileChange = (e) => {
     const file = e.target.files[0];
-    setImageFile(file);
+    cropImage(file);  // 이미지 자르기 함수 호출
+    // setImageFile(file);
     setImageFileName(file.name);
     setImageFileExtension(file.name.split('.').pop());
     if (videoFile) setBothFilesUploaded(true);
@@ -68,6 +69,52 @@ const UploadVideo = ({updateVideoData}) => {
     setImageFileExtension(files[0].name.split('.').pop());
     if (videoFile) setBothFilesUploaded(true);
   };
+
+  function cropImage(file) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+  
+    const img = new Image();
+    img.onload = function() {
+      const width = img.width;
+      const height = img.height;
+      const aspectRatio = 16 / 9;
+  
+      let x, y, w, h;
+  
+      if (width / height > aspectRatio) {
+        // 이미지의 가로 길이가 더 긴 경우
+        h = height;
+        w = h * aspectRatio;
+        x = (width - w) / 2;
+        y = 0;
+      } else {
+        // 이미지의 세로 길이가 더 긴 경우
+        w = width;
+        h = w / aspectRatio;
+        x = 0;
+        y = (height - h) / 2;
+      }
+  
+      canvas.width = w;
+      canvas.height = h;
+  
+      // 이미지를 canvas에 그림
+      ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+  
+      // canvas를 이미지 파일로 변환
+      canvas.toBlob(function(blob) {
+        const croppedFile = new File([blob], file.name, {
+          type: file.type,
+          lastModified: file.lastModified
+        });
+
+        setImageFile(croppedFile);
+      }, file.type, 1);
+    };
+  
+    img.src = URL.createObjectURL(file);
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -103,6 +150,7 @@ const UploadVideo = ({updateVideoData}) => {
     
     
   if(imageFile){
+
     const imgFileExtension = imageFile.name.split('.').pop();
     const newImgName = userId + "_" + timestamp + "_v";
 
