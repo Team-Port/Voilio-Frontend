@@ -51,7 +51,7 @@ const VideoWatch = ({selectedWatch}) => {
             </>
              ) : (
             <div>Loading...</div>
-             )};
+            )}
         </div>
     );
 };

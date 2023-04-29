@@ -21,12 +21,17 @@ const CommentList = ({selectedWatch, comments}) => {
         <div className="commentBox">
             <h2>Comments</h2>
             {userId ? ( 
-                <div className="commentInput">
-                    <div className="user">{userId} </div>
-                    <div className="user-commentInput"> 
-                        <input type='text'></input> 
-                        <button type='submit'> 전송</button>
+                <div className="commentInput-box">
+                    <div>
+                        <img src={process.env.PUBLIC_URL + '/asset/tmpProfile.png'}></img>
+                        <p className="nowuser"> {userId} </p>
                     </div>
+                    <input 
+                        type='text'
+                        placeholder="댓글 달기"
+                        className="commentInput" />
+
+                    <button type='submit'> 전송</button>
                 </div>
             ) : null }
             { comments && Object.values(comments).map(comment=> (

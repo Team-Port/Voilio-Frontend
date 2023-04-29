@@ -3,4 +3,30 @@
 }
 .comments-userBox{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-context{
+    margin-left: 1rem;
+    margin-bottom: .4rem;
+}
+
+.user {
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+}
+
+.user img{
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
+}
+
+.pubishedComment{
+    margin-right: rem;
+    font-size: .7rem;
+    color: #bcbcbc;
 }
