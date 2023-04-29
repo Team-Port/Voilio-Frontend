@@ -2,42 +2,42 @@ import React from 'react';
 import './VideoWatch.css';
 import VHeader from './Header/VHeader';
 import Video from './Video/Video';
-import Comment from './Comment/Comment';
+import CommentList from './Comment/CommentList';
 import axios from "axios";
 import {useEffect, useState} from 'react';
 
 const VideoWatch = ({selectedWatch}) => {
     const [videoItem, setVideoItem] = useState({});
-
-    // 비디오데이터
-    const oneVideoData = () => {
-        axios
-            .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
-            .then((response) => {
-                sessionStorage.setItem("videoItem", JSON.stringify(response.data.data));
-                setVideoItem(response.data.data);
-                console.log(response.data)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+    const [comments, setComments] = useState({});
 
     useEffect(() => {
         const storedVideoItem = sessionStorage.getItem(selectedWatch);
         if (storedVideoItem) {
-        setVideoItem(JSON.parse(storedVideoItem));
+            setVideoItem(JSON.parse(storedVideoItem));
         } else {
+            axios
+                .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
+                .then((response) => {
+                    setVideoItem(response.data.data);
+                    sessionStorage.setItem(selectedWatch, JSON.stringify(response.data.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    
         axios
-            .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
+            .get(`http://localhost:8080/api/v1/comments/${selectedWatch}/list`)
             .then((response) => {
-            setVideoItem(response.data.data);
-            sessionStorage.setItem(selectedWatch, JSON.stringify(response.data.data));
+                if(response.data.status === "304"){
+                    setComments(response.data.data)
+                    console.log(response.data.data)
+                }
             })
             .catch((error) => {
-            console.log(error);
+                console.log(error);
             });
-        }
+
     }, [selectedWatch]);
 
 
@@ -47,7 +47,7 @@ const VideoWatch = ({selectedWatch}) => {
             <>
                 <VHeader videoItem={videoItem}/>
                 <Video videoItem={videoItem}/>
-                <Comment/>
+                <CommentList selectedWatch={selectedWatch} comments={comments}/>
             </>
              ) : (
             <div>Loading...</div>

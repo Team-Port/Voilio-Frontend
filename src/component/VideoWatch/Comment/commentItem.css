@@ -1,0 +1,6 @@
+.comments-container{
+    border-bottom: 1px solid #bb2649;
+}
+.comments-userBox{
+    display: flex;
+}

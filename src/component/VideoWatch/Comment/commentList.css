@@ -1,0 +1,15 @@
+.commentBox h2{
+    color: #bb2649;
+}
+
+.commentInput{
+    display: flex;
+}
+.user-commentInput{
+    display: flex;
+}
+
+.user{
+    width: 4rem;
+    margin-right: .5rem;
+}
