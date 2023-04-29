@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useCallback } from "react";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import "./header.css";
 
 
@@ -12,6 +13,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
   const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
 
   const onChangeSearch = (e) =>{
@@ -19,7 +21,14 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
     setSearch(e.target.value);
   }
 
+  const handleOnKeyPress = (e) =>{
+    if(e.key === 'Enter'){
+      onSearch();
+    }
+  }
+
   const onSearch = () => {
+
     if(search === '' || search === ' '){
       alert('검색이 없는데용?')
       return;
@@ -29,7 +38,9 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
       .get("http://localhost:8080/api/v1/boards?search=" + search)
       .then((response) => {
         if (response.status === 200) {
+          console.log(response.status);
           handleSetVideo(response.data.data);
+          navigate('/search/'+search);
         }
 
       })
@@ -75,6 +86,8 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
     setMakingMenu(false);
   }
 
+  const nickname = sessionStorage.getItem('nickname');
+
   return (
     <div className="header">
       <Link to={"/"}>
@@ -83,7 +96,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
         </div>
       </Link>
       <div className="search-InputArea">
-        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch}/>
+        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch} onKeyDown={handleOnKeyPress}/>
         <div className="searchBtn-box">
           <BsSearch className="topIcon-search" size="1.2rem" onClick={onSearch}></BsSearch>
         </div>
@@ -101,7 +114,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
             <div className="private-toggle-menu">
               <ul className={isOpen ? "show-menu personal" : "hide-menu"} onMouseLeave={closeMenu}>
                 <li>
-                <Link to={"/profile"}> MyPage</Link>
+                <Link to={`/profile/@${nickname}`}> MyPage</Link>
                 </li>
                 <li onClick={logout}>Logout</li>
               </ul>

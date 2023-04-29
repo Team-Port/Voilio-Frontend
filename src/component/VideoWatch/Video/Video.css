@@ -18,10 +18,12 @@
 }
 
 .txtContainer{
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
     border-bottom: 1px solid #bb2649;
 }
 
-
+.video-container h3{
+    margin: 0.2rem 0;
+}
 /* iframe 사이즈 참고
 https://okayoon.tistory.com/entry/css%EB%A7%8C%EC%9C%BC%EB%A1%9C-%EB%B0%98%EC%9D%91%ED%98%95-%EB%B9%84%EB%94%94%EC%98%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0 */

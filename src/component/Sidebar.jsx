@@ -29,11 +29,11 @@ const Sidebar = () => {
             </div>
             <div>
               <img src={`${process.env.PUBLIC_URL}/asset/violin.png`} />
-              <p>Music</p>
+              <p>Backend</p>
             </div>
             <div>
               <img src={`${process.env.PUBLIC_URL}/asset/beauty.png`} />
-              <p>Beauty</p>
+              <p>Frontend</p>
             </div>
             <div>
               <img src={`${process.env.PUBLIC_URL}/asset/dance.png`} />
@@ -45,11 +45,11 @@ const Sidebar = () => {
             </div>
             <div>
               <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
-              <p>Exercise</p>
+              <p>Python</p>
             </div>
             <div>
               <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
-              <p>Anything</p>
+              <p>Java</p>
             </div>
           </div>
         </div>

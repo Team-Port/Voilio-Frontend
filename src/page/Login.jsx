@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './css/profile.css'
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../component/Sidebar';
@@ -8,44 +8,66 @@ import { BiShow, BiHide} from 'react-icons/bi'
 import jwt_decode from "jwt-decode";
 
 
-
 const Login = ({ loggedIn, setLoggedIn }) => {
     const [emailValue, setEmailValue] = useState("");
     const [pwdValue, setPwdValue] = useState("");
     const [message, setMessage] = useState("");
     const [showPswd, setShowPswd] = useState(false);
 
+    const [user, setUser] = useState({});
+    const [nick, setNick] = useState('');
+
     const navigate = useNavigate();
 
     const onLogin = () => {
         axios
-          .post("http://voilio.site/api/v1/auth/login", {
-            email : emailValue,
-            password : pwdValue
+          .post("http://localhost:8080/api/v1/auth/login", {
+            email: emailValue,
+            password: pwdValue,
           })
           .then((response) => {
             localStorage.setItem("jwtAuthToken", response.data.data.accessToken);
             const decodedToken = jwt_decode(response.data.data.accessToken);
             const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+      
             if (expirationTime < Date.now()) {
               localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
             } else {
               setLoggedIn(!loggedIn); // 로그인 상태 변경
             }
+      
             alert("또 만나네요! 반가워요✨");
             if (response.status === 200) {
+              const token = localStorage.getItem("jwtAuthToken");
+              const decodedToken = jwt_decode(token);
+              const userId = decodedToken.sub;
+              sessionStorage.setItem("userId", userId);
+
+              getUser();
               return navigate("/");
             }
           })
-          .catch((err) => {
-            console.log(err.response);
-            console.log(err.response.message);
-            if (err.response && err.response.status === 401) {
-                alert("이메일과 비밀번호가 일치하지 않습니다😅");
-              }
+          .catch((error) => {
+            console.log(error);
+            if (error.response && error.response.status === 401) {
+              alert("이메일과 비밀번호가 일치하지 않습니다😅");
+            }
           });
       };
       
+      const getUser = () => {
+        const userId = sessionStorage.getItem('userId')
+        axios
+          .get(`http://localhost:8080/api/v1/users/${userId}`)
+          .then((response) => {        
+            sessionStorage.setItem("nickname", response.data.data.nickname);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+    
+
     const onSubmitHandler = (event) => {
         event.preventDefault();
     }
@@ -53,6 +75,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
     const toggleShowPswd =()=>{
         setShowPswd(!showPswd);
     }
+
 
     return (
         <div className='profile-wrap'>

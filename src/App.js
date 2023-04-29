@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
 import Join from './page/Join';
-import Profile from './component/Profile';
+import Profile from './page/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState, useCallback} from 'react';
@@ -17,6 +17,7 @@ let selectWatch = JSON.parse(sessionStorage.getItem('selectWatch')) || null;
 
 function App() {
     const [videoItems, setVideoItems] = useState([]);
+    const [videoItemsByKW,setVideoItemByKW] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [selectedWatch, setSelectedWatch] = useState(null);
 
@@ -36,7 +37,7 @@ function App() {
     
     const updateVideoData = () => {
         videoData();
-     };
+    };
     
     const handleSetVideo = (data) =>{
         setVideoItems(data);
@@ -63,13 +64,14 @@ function App() {
     return(     // videoItems가 있어야 실행
         videoItems && <div className="App">
             <BrowserRouter>
-                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} handleSetVideo={handleSetVideo} />
+                <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} handleSetVideo={setVideoItemByKW} />
                     <Routes>
-                        <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
+                        <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo}/> }/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
                         <Route path="/watch/:id" element={<Watch handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
-                        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                        <Route path="/profile/:nickname" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>} />
+                        <Route path="/search/:keyword" element={<Home videoItems={videoItemsByKW} handleSelectVideo={handleSelectVideo} selectVideoItem={selectWatch}/>}/>
                         <Route path="/upload" element={<UploadVideo updateVideoData={updateVideoData}/>}/>
                     </Routes>
             </BrowserRouter>
