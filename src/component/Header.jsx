@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useCallback } from "react";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import "./header.css";
 
 
@@ -12,6 +13,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
   const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
 
   const onChangeSearch = (e) =>{
@@ -19,7 +21,14 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
     setSearch(e.target.value);
   }
 
+  const handleOnKeyPress = (e) =>{
+    if(e.key === 'Enter'){
+      onSearch();
+    }
+  }
+
   const onSearch = () => {
+
     if(search === '' || search === ' '){
       alert('검색이 없는데용?')
       return;
@@ -30,11 +39,12 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
       .then((response) => {
         if (response.status === 200) {
           handleSetVideo(response.data.data);
+          navigate('/search/'+search);
         }
 
       })
       .catch((error) => {
-        if(error.response.status === 400){
+        if(error.status === 400){
           alert("검색어에 맞는 게시글이 없어용ㅜㅜ");
           return;
         }
@@ -83,7 +93,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
         </div>
       </Link>
       <div className="search-InputArea">
-        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch}/>
+        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch} onKeyDown={handleOnKeyPress}/>
         <div className="searchBtn-box">
           <BsSearch className="topIcon-search" size="1.2rem" onClick={onSearch}></BsSearch>
         </div>
