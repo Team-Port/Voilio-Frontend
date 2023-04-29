@@ -22,7 +22,7 @@ function App() {
     const [selectedWatch, setSelectedWatch] = useState(null);
 
     const videoData = useCallback(() => {
-        axios.get("http://www.voilio.site:8080/api/v1/boards/lists")
+        axios.get("http://www.voilio.site/api/v1/boards/lists")
           .then((response) => {
             setVideoItems(response.data.data._embedded.boardResponseList);
           })

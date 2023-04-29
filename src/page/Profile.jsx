@@ -15,7 +15,7 @@ const Profile = (handleSelectVideo) => {
 
 
     const getMyVideo = () => {
-        axios.get(`http://www.voilio.site:8080/api/v1/boards/lists/@${nickname}`)
+        axios.get(`http://www.voilio.site/api/v1/boards/lists/@${nickname}`)
         .then((response) => {
             if(response.data.status ===  "200"){
                 setMyVideos(response.data.data._embedded.boardResponseList);
@@ -32,7 +32,7 @@ const Profile = (handleSelectVideo) => {
     }, []);
 
     const getUser = () => {
-        axios.get(`http://www.voilio.site:8080/api/v1/users/${userId}`)
+        axios.get(`http://www.voilio.site/api/v1/users/${userId}`)
         .then((response) => {
             if(response.data.status ===  "200"){
                 setUserInfo(response.data.data);

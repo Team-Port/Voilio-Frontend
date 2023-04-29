@@ -21,7 +21,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
 
     const onLogin = () => {
         axios
-          .post("http://www.voilio.site:8080/api/v1/auth/login", {
+          .post("http://www.voilio.site/api/v1/auth/login", {
             email: emailValue,
             password: pwdValue,
           })
@@ -58,7 +58,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
       const getUser = () => {
         const userId = sessionStorage.getItem('userId')
         axios
-          .get(`http://www.voilio.site:8080/api/v1/users/${userId}`)
+          .get(`http://www.voilio.site/api/v1/users/${userId}`)
           .then((response) => {        
             sessionStorage.setItem("nickname", response.data.data.nickname);
           })

@@ -164,7 +164,7 @@ const UploadVideo = ({updateVideoData}) => {
    
 
     try {
-      const response = await axios.post('http://www.voilio.site:8080/api/v1/boards/create', formData);
+      const response = await axios.post('http://www.voilio.site/api/v1/boards/create', formData);
       if(response.data.status === '201'){
         updateVideoData()
         navigate("/");    // 추후 마이페이지로 이동
