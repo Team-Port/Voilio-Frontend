@@ -1,6 +1,7 @@
 import React from 'react';
 import './videoItem.css'
 import { Link } from 'react-router-dom';
+import * as common from './../lib/common';
 
 const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
     const handleSelectItem = () => {
@@ -27,8 +28,8 @@ const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
                             </span>
                         </span>
                         <span className='infoText'>
-                            <p className='channel'>{videoItem.updated_at}</p>
-                            <p className='publishDate'>{videoItem.updated_at}</p>
+                            <p className='channel'>{videoItem.user_id}</p>
+                            <p className='publishDate'>{common.publishedDate(videoItem.created_at)}</p>
                         </span>
                     </div>
                 </div>

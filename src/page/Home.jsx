@@ -6,7 +6,6 @@ import VideoList from '../component/VideoList';
 
 const Home = ({videoItems, handleSelectVideo, selectVideoItem}) => {
 
-      
     return (
         <div className='home-wrap'>
             <div className='left-sidebar-box'>

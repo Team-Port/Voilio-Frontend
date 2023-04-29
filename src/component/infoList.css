@@ -77,8 +77,10 @@
 @media (max-width: 1050px) {
   .subscribe-title{
     font-size: 0.8rem;
+    transition: 1s; 
   }
   .ss-titleImg, .subscribeNum{
     width: 15px;
+    transition: 1s; 
   }
 }

@@ -10,3 +10,9 @@
 .videoList.list-h {
     flex-direction : column;
 }
+
+@media (max-width: 880px) {
+    .videoList{
+        width: 85%;
+    }
+}

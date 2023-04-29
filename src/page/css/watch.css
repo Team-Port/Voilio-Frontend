@@ -10,6 +10,7 @@
 @media (max-width: 880px) {
     .right-sidebar-box{
         display: none;
+        transition: .2s; 
     }
 }
 
