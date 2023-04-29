@@ -1,59 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './VideoWatch.css';
 import VHeader from './Header/VHeader';
 import Video from './Video/Video';
 import CommentList from './Comment/CommentList';
 import axios from "axios";
-import {useEffect, useState} from 'react';
 
-const VideoWatch = ({selectedWatch}) => {
-    const [videoItem, setVideoItem] = useState({});
-    const [comments, setComments] = useState({});
+const VideoWatch = ({ selectedWatch }) => {
+  const [videoItem, setVideoItem] = useState({});
+  const [comments, setComments] = useState({});
+  const [watchId, setWatchId] = useState(selectedWatch);
 
-    useEffect(() => {
-        const storedVideoItem = sessionStorage.getItem(selectedWatch);
-        if (storedVideoItem) {
-            setVideoItem(JSON.parse(storedVideoItem));
-        } else {
-            axios
-                .get(`http://localhost:8080/api/v1/boards/${selectedWatch}`)
-                .then((response) => {
-                    setVideoItem(response.data.data);
-                    sessionStorage.setItem(selectedWatch, JSON.stringify(response.data.data));
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+  const oneVideoData = useCallback(() => {
+    axios
+      .get(`http://localhost:8080/api/v1/boards/${watchId}`)
+      .then((response) => {
+        setVideoItem(response.data.data);
+        sessionStorage.setItem(watchId, JSON.stringify(response.data.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const commentsData = useCallback(() => {
+    axios
+      .get(`http://localhost:8080/api/v1/comments/${watchId}/list`)
+      .then((response) => {
+        if (response.data.status === "304") {
+          console.log(response.data.data)
         }
-    
-        axios
-            .get(`http://localhost:8080/api/v1/comments/${selectedWatch}/list`)
-            .then((response) => {
-                if(response.data.status === "304"){
-                    setComments(response.data.data)
-                    console.log(response.data.data)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-    }, [selectedWatch]);
+  useEffect(() => {
+    if (selectedWatch !== null) {
+      setWatchId(selectedWatch);
+    }
+  }, [selectedWatch]);
 
+  useEffect(() => {
+    if (watchId !== null) {
+      oneVideoData();
+      commentsData();
+    }
+  }, [watchId, oneVideoData, commentsData]);
 
-    return (
-       <div className='videoWatch'>
-             {videoItem ? (
-            <>
-                <VHeader videoItem={videoItem}/>
-                <Video videoItem={videoItem}/>
-                <CommentList selectedWatch={selectedWatch} comments={comments}/>
-            </>
-             ) : (
-            <div>Loading...</div>
-            )}
-        </div>
-    );
+  return (
+    <div className='videoWatch'>
+      {Object.keys(videoItem).length !== 0 ? (
+        <>
+          <VHeader videoItem={videoItem} />
+          <Video videoItem={videoItem} />
+          <CommentList comments={comments} />
+        </>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 };
 
 export default VideoWatch;

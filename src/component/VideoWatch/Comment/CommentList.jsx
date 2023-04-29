@@ -3,8 +3,8 @@ import './commentList.css'
 import jwt_decode from "jwt-decode";
 import CommentItem from './CommentItem';
 
-const CommentList = ({selectedWatch, comments}) => {
-    console.log(comments)
+const CommentList = ({ comments }) => {
+
     const token = localStorage.getItem('jwtAuthToken');
     let userId;
 
