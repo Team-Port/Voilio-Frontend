@@ -18,7 +18,7 @@ const Join = () => {
 
     const registerAxios = () => {
         axios
-            .post("http://voilio.site/api/v1/auth/signup", {
+            .post("http://www.voilio.site/api/v1/auth/signup", {
                 email : emailValue,
                 password : pwdValue,
                 nickname : nicknameValue
@@ -30,8 +30,11 @@ const Join = () => {
                     return navigate("/login");
                 }
             }).catch((err) => {
-            setMessage(err.response.message)
-            console.log(err)
+                console.log(err.request.status)
+                var errcode = err.request.status
+                if(errcode === 500){
+                    alert("이미 사용중인 이메일입니다😿")
+                }
         });
     }
 
