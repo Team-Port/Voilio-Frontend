@@ -7,7 +7,7 @@ import axios from 'axios';
 import UserVideoList from '../component/ProfileComp/UserVideoList';
 import VideoList from '../component/VideoList';
 
-const Profile = (handleSelectVideo) => {
+const Profile = ({handleSelectVideo, selectedWatch}) => {
     const [myVideos, setMyVideos] = useState({});
     const [userInfo, setUserInfo] = useState({});
     const userId = sessionStorage.getItem('userId');

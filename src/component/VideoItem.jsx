@@ -3,10 +3,10 @@ import './videoItem.css'
 import { Link } from 'react-router-dom';
 import * as common from './../lib/common';
 
-const VideoItem = ({videoItem, display, handleSelectVideo}) => {
+const VideoItem = ({videoItem, display, handleSelectVideo, selectedWatch}) => {
     const handleSelectItem = () => {
         handleSelectVideo(videoItem.id);
-      }
+    }
 
     return (
         <li className={`videoItem ${display}`}>

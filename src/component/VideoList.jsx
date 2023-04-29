@@ -2,7 +2,7 @@ import React from 'react';
 import './videoList.css'
 import VideoItem from './VideoItem';
 
-const VideoList = ({ videoItems, display, handleSelectVideo})  => {
+const VideoList = ({ videoItems, display, handleSelectVideo, selectedWatch})  => {
     // console.log(videoItems)
     return (
         <ul className='videoList' >

@@ -9,13 +9,11 @@ const ProfileHeader = () => {
     const userId = sessionStorage.getItem('userId');
     const nickname = sessionStorage.getItem('nickname');
 
-    
-    
+
 
     return (
         <div className='profileHeader-container'>
             <p className='userNick'> {nickname} </p>
-            <VideoList/>
         </div>
     );
 };
