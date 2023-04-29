@@ -10,7 +10,11 @@ import jwt_decode from "jwt-decode";
 const VideoWatch = ({ selectedWatch }) => {
     const [videoItem, setVideoItem] = useState({});
     const [comments, setComments] = useState({});
-    const [watchId, setWatchId] = useState(selectedWatch);
+    
+    if(selectedWatch != null){
+        sessionStorage.setItem('watchId', selectedWatch)
+    }
+    const watchId = sessionStorage.getItem('watchId');
 
     const [content, setContent] = useState('');
     var boardId = selectedWatch;
@@ -50,12 +54,6 @@ const VideoWatch = ({ selectedWatch }) => {
             console.log(error);
         });
     }, [watchId]);
-
-    useEffect(() => {
-        if (selectedWatch !== null) {
-        setWatchId(selectedWatch);
-        }
-    }, [selectedWatch]);
 
     useEffect(() => {
         if (watchId !== null) {
