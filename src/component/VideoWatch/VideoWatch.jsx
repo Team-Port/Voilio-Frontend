@@ -112,6 +112,7 @@ const VideoWatch = ({ selectedWatch }) => {
                             type='text'
                             placeholder="댓글 달기"
                             className="commentInput"
+                            value={content} // input 요소에 content 값을 binding
                             onChange={handleContentChange} />
 
                         <input className='commentSubmit' disabled={!content}  type="submit" value="전송" /> 
