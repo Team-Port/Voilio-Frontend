@@ -13,3 +13,9 @@
     margin: 0 .5rem;
     color: #5c5c5c;
 }
+
+.profileHeader-container{
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #bb2649;
+    margin-bottom: 2rem;
+}

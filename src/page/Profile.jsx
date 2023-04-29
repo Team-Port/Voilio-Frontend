@@ -9,6 +9,7 @@ import VideoList from '../component/VideoList';
 
 const Profile = (handleSelectVideo) => {
     const [myVideos, setMyVideos] = useState({});
+    const [userInfo, setUserInfo] = useState({});
     const userId = sessionStorage.getItem('userId');
     const nickname = sessionStorage.getItem('nickname');
 
@@ -27,7 +28,20 @@ const Profile = (handleSelectVideo) => {
 
     useEffect(() => {
         getMyVideo();
+        getUser();
     }, []);
+
+    const getUser = () => {
+        axios.get(`http://localhost:8080/api/v1/users/${userId}`)
+        .then((response) => {
+            if(response.data.status ===  "200"){
+                setUserInfo(response.data.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
 
     
     return (
@@ -48,7 +62,8 @@ const Profile = (handleSelectVideo) => {
             </div>           
 
             <div className='right-sidebar-box'>
-                <ProfileDetail/>
+                <ProfileDetail
+                    userInfo={userInfo}/>
             </div>      
         </div>
     );
