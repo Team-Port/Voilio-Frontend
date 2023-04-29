@@ -38,13 +38,14 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
       .get("http://localhost:8080/api/v1/boards?search=" + search)
       .then((response) => {
         if (response.status === 200) {
+          console.log(response.status);
           handleSetVideo(response.data.data);
           navigate('/search/'+search);
         }
 
       })
       .catch((error) => {
-        if(error.status === 400){
+        if(error.response.status === 400){
           alert("검색어에 맞는 게시글이 없어용ㅜㅜ");
           return;
         }
