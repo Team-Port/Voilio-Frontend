@@ -1,0 +1,15 @@
+.profileHeader-container{
+    display: block;
+    margin: 0 2rem;
+}
+
+.userNick{
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.userEmail{
+    font-size: 1.2rem;
+    margin: 0 .5rem;
+    color: #5c5c5c;
+}

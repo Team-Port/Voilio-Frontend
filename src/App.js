@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
 import Join from './page/Join';
-import Profile from './component/Profile';
+import Profile from './page/Profile';
 import Header from './component/Header';
 import './App.css';
 import {useEffect, useState, useCallback} from 'react';
@@ -65,11 +65,11 @@ function App() {
             <BrowserRouter>
                 <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} clickLogo={clickLogo} handleSetVideo={handleSetVideo} />
                     <Routes>
-                        <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
+                        <Route path="/" element={<Home videoItems={videoItems} handleSelectVideo={handleSelectVideo}/> }/>
                         <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                         <Route path="/join" element={<Join/>} />
                         <Route path="/watch/:id" element={<Watch handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>}/>
-                        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                        <Route path="/profile/:nickname" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} handleSelectVideo={handleSelectVideo} selectedWatch={selectedWatch}/>} />
                         <Route path="/upload" element={<UploadVideo updateVideoData={updateVideoData}/>}/>
                     </Routes>
             </BrowserRouter>

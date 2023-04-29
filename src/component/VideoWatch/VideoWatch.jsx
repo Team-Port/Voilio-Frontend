@@ -106,7 +106,7 @@ const VideoWatch = ({ selectedWatch }) => {
                     <div className="commentInput-box">
                         <div>
                             <img src={process.env.PUBLIC_URL + '/asset/tmpProfile.png'}></img>
-                            <p className="nowuser"> {userId} </p>
+                            <p className="nowuser"> {videoItem.nickname} </p>
                         </div>
                         <input 
                             type='text'
