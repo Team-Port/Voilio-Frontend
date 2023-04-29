@@ -32,7 +32,7 @@ const VideoWatch = ({ selectedWatch }) => {
 
     const oneVideoData = useCallback(() => {
         axios
-        .get(`http://localhost:8080/api/v1/boards/${watchId}`)
+        .get(`http://www.voilio.site:8080/api/v1/boards/${watchId}`)
         .then((response) => {
             setVideoItem(response.data.data);
             sessionStorage.setItem(watchId, JSON.stringify(response.data.data));
@@ -44,7 +44,7 @@ const VideoWatch = ({ selectedWatch }) => {
 
     const commentsData = useCallback(() => {
         axios
-        .get(`http://localhost:8080/api/v1/comments/${watchId}/list`)
+        .get(`http://www.voilio.site:8080/api/v1/comments/${watchId}/list`)
         .then((response) => {
             if (response.data.status === "304") {
                 setComments(response.data.data.reverse());
@@ -73,7 +73,7 @@ const VideoWatch = ({ selectedWatch }) => {
         //     alert("댓글에 값을 입력해주세요")
         // } else {
             e.preventDefault(); // 기본 동작 취소
-            axios.post('http://localhost:8080/api/v1/comments', {
+            axios.post('http://www.voilio.site:8080/api/v1/comments', {
                 userId,
                 boardId,
                 content,

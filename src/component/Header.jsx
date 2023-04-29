@@ -35,7 +35,7 @@ const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
     }
 
     axios
-      .get("http://localhost:8080/api/v1/boards?search=" + search)
+      .get("http://www.voilio.site:8080/api/v1/boards?search=" + search)
       .then((response) => {
         if (response.status === 200) {
           console.log(response.status);
