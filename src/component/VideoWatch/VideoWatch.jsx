@@ -43,7 +43,7 @@ const VideoWatch = ({ selectedWatch }) => {
         .get(`http://localhost:8080/api/v1/comments/${watchId}/list`)
         .then((response) => {
             if (response.data.status === "304") {
-                setComments(response.data.data);
+                setComments(response.data.data.reverse());
             }
         })
         .catch((error) => {
@@ -71,18 +71,23 @@ const VideoWatch = ({ selectedWatch }) => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // 기본 동작 취소
-        axios.post('http://localhost:8080/api/v1/comments', {
-            userId,
-            boardId,
-            content,
-        }).then((response) => {
-            if (response.data.status === "301") {
-                commentsData();
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+        // if (!content || content.trim() === '') {
+        //     alert("댓글에 값을 입력해주세요")
+        // } else {
+            e.preventDefault(); // 기본 동작 취소
+            axios.post('http://localhost:8080/api/v1/comments', {
+                userId,
+                boardId,
+                content,
+            }).then((response) => {
+                if (response.data.status === "301") {
+                    setContent(''); 
+                    commentsData();
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        // }
     };
 
     console.log(comments)
@@ -109,7 +114,7 @@ const VideoWatch = ({ selectedWatch }) => {
                             className="commentInput"
                             onChange={handleContentChange} />
 
-                        <input className='commentSubmit' type="submit" value="전송" /> 
+                        <input className='commentSubmit' disabled={!content}  type="submit" value="전송" /> 
                     </div>
                 </form>
             ) : null }
