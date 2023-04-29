@@ -70,7 +70,8 @@ const VideoWatch = ({ selectedWatch }) => {
         setContent(e.target.value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault(); // 기본 동작 취소
         axios.post('http://localhost:8080/api/v1/comments', {
             userId,
             boardId,
@@ -96,6 +97,7 @@ const VideoWatch = ({ selectedWatch }) => {
           <div className="commentBox">
             <h2>Comments</h2>
                 {userId ? ( 
+                <form onSubmit={handleSubmit}> {/* form 태그 등록 */}
                     <div className="commentInput-box">
                         <div>
                             <img src={process.env.PUBLIC_URL + '/asset/tmpProfile.png'}></img>
@@ -107,9 +109,10 @@ const VideoWatch = ({ selectedWatch }) => {
                             className="commentInput"
                             onChange={handleContentChange} />
 
-                        <button type='submit' onClick={handleSubmit}> 전송</button>
+                        <input className='commentSubmit' type="submit" value="전송" /> 
                     </div>
-                ) : null }
+                </form>
+            ) : null }
             </div>
           <CommentList comments={comments} watchId={watchId} userId={userId} />
         </>

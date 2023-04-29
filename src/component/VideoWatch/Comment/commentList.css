@@ -50,14 +50,14 @@
     outline: 1.6px solid  #bb2649;
 }
 
-.commentInput-box button {
+.commentSubmit{
     border: 1.8px solid #fff;
     border-radius: 15px;
     padding: .4rem 1rem;
     margin: 0 1rem;
 }
 
-.commentInput-box button:focus {
+.commentSubmit:focus {
     border: 1.8px solid  #bb2649;
     cursor: pointer;
     border-radius: 15px;
