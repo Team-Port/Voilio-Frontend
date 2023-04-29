@@ -1,5 +1,6 @@
 export function publishedDate(publishDateValue) {
     const publishDate=new Date(publishDateValue);
+    publishDate.setHours(publishDate.getHours()+9);
     const currentDate = new Date();
     const second = (currentDate.getTime() - publishDate.getTime()) / 1000;
 
