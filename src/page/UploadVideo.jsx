@@ -89,7 +89,8 @@ const UploadVideo = ({updateVideoData}) => {
 
   const timestamp = Date.now();
   if(videoFile){
-    const videoFileExtension = videoFile.name.split('.').pop();
+    var videoFileExtension = videoFile.name.split('.').pop();
+    if(videoFileExtension === "mov") videoFileExtension = "mp4";
     const newVideoName = userId + "_" + timestamp + "_v";
 
     const newVideoFile = new File([videoFile], newVideoName + "." + videoFileExtension, {
