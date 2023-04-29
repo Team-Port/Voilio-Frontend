@@ -2,7 +2,7 @@ import React from 'react';
 import './VideoWatch.css';
 import VHeader from './Header/VHeader';
 import Video from './Video/Video';
-import VideoWatch_Comment from './Comment/Comment';
+import Comment from './Comment/Comment';
 import axios from "axios";
 import {useEffect, useState} from 'react';
 
@@ -40,7 +40,6 @@ const VideoWatch = ({selectedWatch}) => {
         }
     }, [selectedWatch]);
 
-    
 
     return (
        <div className='videoWatch'>
@@ -48,7 +47,7 @@ const VideoWatch = ({selectedWatch}) => {
             <>
                 <VHeader videoItem={videoItem}/>
                 <Video videoItem={videoItem}/>
-                <VideoWatch_Comment/>
+                <Comment/>
             </>
              ) : (
             <div>Loading...</div>
