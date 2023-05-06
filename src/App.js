@@ -69,8 +69,8 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header
-            loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
+            // loggedIn={loggedIn}
+            // setLoggedIn={setLoggedIn}
             clickLogo={clickLogo}
           />
           <Routes>

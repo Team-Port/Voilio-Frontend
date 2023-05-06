@@ -17,7 +17,7 @@ import { HOST_URL } from "../lib/HostUrl";
 import { useRecoilState } from "recoil";
 import { isVideoItems } from "../store/video/isVideoItems";
 
-const Header = ({ loggedIn, setLoggedIn }) => {
+const Header = () => {
   const [isOpen, setMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [search, setSearch] = useState("");
@@ -76,16 +76,17 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
       if (expirationTime < Date.now()) {
         localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-        setLoggedIn(false);
-      } else setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
+      }
+      //     setLoggedIn(false);
+      //   } else setLoggedIn(true);
+      // } else {
+      //   setLoggedIn(false);
+      // }
     }
   }, []);
 
   const logout = () => {
     localStorage.removeItem("jwtAuthToken");
-    setLoggedIn(false);
   };
 
   const toggleMenu = () => {

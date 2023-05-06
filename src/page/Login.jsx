@@ -8,7 +8,7 @@ import { BiShow, BiHide } from "react-icons/bi";
 import jwt_decode from "jwt-decode";
 import { HOST_URL } from "../lib/HostUrl";
 
-const Login = ({ loggedIn, setLoggedIn }) => {
+const Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [pwdValue, setPwdValue] = useState("");
   const [message, setMessage] = useState("");
@@ -32,8 +32,6 @@ const Login = ({ loggedIn, setLoggedIn }) => {
 
         if (expirationTime < Date.now()) {
           localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-        } else {
-          setLoggedIn(!loggedIn); // 로그인 상태 변경
         }
 
         alert("또 만나네요! 반가워요✨");
