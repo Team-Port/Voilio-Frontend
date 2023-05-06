@@ -1,133 +1,167 @@
 import React from "react";
-import { BsChatRightHeart, BsSuitHeart, BsPersonCircle, BsSearch, BsCloudPlus } from "react-icons/bs";
+import {
+  BsChatRightHeart,
+  BsSuitHeart,
+  BsPersonCircle,
+  BsSearch,
+  BsCloudPlus,
+} from "react-icons/bs";
 import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { useState, useCallback } from "react";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "./header.css";
+import { HOST_URL } from "../lib/HostUrl";
 
-
-const Header = ({ loggedIn, setLoggedIn ,handleSetVideo}) => {
-  const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
-  const [isMakingOpen, setMakingMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
-  const [search, setSearch] = useState('');
+const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
+  const [isOpen, setMenu] = useState(false); // 메뉴의 초기값을 false로 설정
+  const [isMakingOpen, setMakingMenu] = useState(false); // 메뉴의 초기값을 false로 설정
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-
-  const onChangeSearch = (e) =>{
+  const onChangeSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
-  }
+  };
 
-  const handleOnKeyPress = (e) =>{
-    if(e.key === 'Enter'){
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
       onSearch();
     }
-  }
+  };
 
   const onSearch = () => {
-
-    if(search === '' || search === ' '){
-      alert('검색이 없는데용?')
+    if (search === "" || search === " ") {
+      alert("검색이 없는데용?");
       return;
     }
 
     axios
-      .get("http://www.voilio.site/api/v1/boards?search=" + search)
+      .get(`${HOST_URL}/api/v1/boards?search=${search}`)
       .then((response) => {
         if (response.status === 200) {
           console.log(response.status);
           handleSetVideo(response.data.data);
-          navigate('/search/'+search);
+          navigate("/search/" + search);
         }
-
       })
       .catch((error) => {
-        if(error.response.status === 400){
+        if (error.response.status === 400) {
           alert("검색어에 맞는 게시글이 없어용ㅜㅜ");
           return;
         }
         console.log(error);
       });
-  }
+  };
 
   const handleLoginChange = useCallback(() => {
-      const token = localStorage.getItem('jwtAuthToken');
-      if (token) {
-        const decodedToken = jwt_decode(token);
-        const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-        if (expirationTime < Date.now()) {
-          localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-          setLoggedIn(false);
-        }
-        else setLoggedIn(true);
-      } else {
+    const token = localStorage.getItem("jwtAuthToken");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+      if (expirationTime < Date.now()) {
+        localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
         setLoggedIn(false);
-      }
-    }, []);
+      } else setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("jwtAuthToken");
     setLoggedIn(false);
-  }
+  };
 
   const toggleMenu = () => {
-    setMenu(!isOpen);  // 기존 isOpen 값의 반대값으로
-  } 
+    setMenu(!isOpen); // 기존 isOpen 값의 반대값으로
+  };
 
-  const toggleMakingMenu = ()=> {
+  const toggleMakingMenu = () => {
     setMakingMenu(!isMakingOpen);
-  }
+  };
 
   const closeMenu = () => {
     setMenu(false);
     setMakingMenu(false);
-  }
+  };
 
-  const nickname = sessionStorage.getItem('nickname');
+  const nickname = sessionStorage.getItem("nickname");
 
   return (
     <div className="header">
       <Link to={"/"}>
         <div className="logoArea">
-        <img className='headerLogo' src={process.env.PUBLIC_URL + '/asset/voilio.png'} />
+          <img
+            className="headerLogo"
+            src={process.env.PUBLIC_URL + "/asset/voilio.png"}
+          />
         </div>
       </Link>
       <div className="search-InputArea">
-        <input type="search" placeholder="검색" className="searchInput" onChange={onChangeSearch} onKeyDown={handleOnKeyPress}/>
+        <input
+          type="search"
+          placeholder="검색"
+          className="searchInput"
+          onChange={onChangeSearch}
+          onKeyDown={handleOnKeyPress}
+        />
         <div className="searchBtn-box">
-          <BsSearch className="topIcon-search" size="1.2rem" onClick={onSearch}></BsSearch>
+          <BsSearch
+            className="topIcon-search"
+            size="1.2rem"
+            onClick={onSearch}
+          ></BsSearch>
         </div>
       </div>
       <div className="topMenuArea">
         {localStorage.getItem("jwtAuthToken") ? (
-        <div className="private-btn-container">
+          <div className="private-btn-container">
             <div className="right-header-btn">
-                <BsCloudPlus className="topIcon dropdown" size="1.65rem" onMouseEnter={toggleMakingMenu}></BsCloudPlus>
-                <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
-                <BsChatRightHeart className="topIcon" size="1.5rem"></BsChatRightHeart>
-                <BsPersonCircle className="topIcon" size="1.5rem" onMouseEnter={toggleMenu} ></BsPersonCircle>
+              <BsCloudPlus
+                className="topIcon dropdown"
+                size="1.65rem"
+                onMouseEnter={toggleMakingMenu}
+              ></BsCloudPlus>
+              <BsSuitHeart className="topIcon" size="1.5rem"></BsSuitHeart>
+              <BsChatRightHeart
+                className="topIcon"
+                size="1.5rem"
+              ></BsChatRightHeart>
+              <BsPersonCircle
+                className="topIcon"
+                size="1.5rem"
+                onMouseEnter={toggleMenu}
+              ></BsPersonCircle>
             </div>
 
             <div className="private-toggle-menu">
-              <ul className={isOpen ? "show-menu personal" : "hide-menu"} onMouseLeave={closeMenu}>
+              <ul
+                className={isOpen ? "show-menu personal" : "hide-menu"}
+                onMouseLeave={closeMenu}
+              >
                 <li>
-                <Link to={`/profile/@${nickname}`}> MyPage</Link>
+                  <Link to={`/profile/@${nickname}`}> MyPage</Link>
                 </li>
                 <li onClick={logout}>Logout</li>
               </ul>
             </div>
 
             <div className="private-toggle-menu">
-              <ul className={isMakingOpen ? "show-menu making" : "hide-menu"} onMouseLeave={closeMenu}>
-                <li> <Link to={"/upload"}>동영상 업로드</Link></li>
+              <ul
+                className={isMakingOpen ? "show-menu making" : "hide-menu"}
+                onMouseLeave={closeMenu}
+              >
+                <li>
+                  {" "}
+                  <Link to={"/upload"}>동영상 업로드</Link>
+                </li>
                 <li>게시물 업로드</li>
               </ul>
             </div>
           </div>
-
         ) : (
           <Link to={"/login"}>
             <SlLogin className="topIcon" size="1.5rem"></SlLogin>
