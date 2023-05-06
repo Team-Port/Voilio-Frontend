@@ -10,14 +10,14 @@ import Watch from "./page/Watch";
 import axios from "axios";
 import UploadVideo from "./page/UploadVideo";
 import { HOST_URL } from "./lib/HostUrl";
+import { useRecoilState } from "recoil";
+import { isVideoItems } from "./store/video/isVideoItems";
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
 const selectWatch = JSON.parse(sessionStorage.getItem("selectWatch")) || null;
 
 function App() {
-  const [videoItems, setVideoItems] = useState([]);
-  const [videoItemsByKW, setVideoItemByKW] = useState([]);
-  const [videoItemsByCategory, setVideoItemsByCategory] = useState([]);
+  const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
   const [loggedIn, setLoggedIn] = useState(false);
   const [selectedWatch, setSelectedWatch] = useState(null);
 
@@ -40,9 +40,9 @@ function App() {
     videoData();
   };
 
-  const handleSetVideo = (data) => {
-    setVideoItems(data);
-  };
+  // const handleSetVideo = (data) => {
+  //   setVideoItems(data);
+  // };
 
   useEffect(() => {
     sessionStorage.setItem("defaultVideos", JSON.stringify(defaultVideos));
@@ -71,19 +71,11 @@ function App() {
             loggedIn={loggedIn}
             setLoggedIn={setLoggedIn}
             clickLogo={clickLogo}
-            handleSetVideo={setVideoItemByKW}
           />
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  videoItems={videoItems}
-                  handleSelectVideo={handleSelectVideo}
-                  handleSetVideo={setVideoItemsByCategory}
-                />
-              }
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:category" element={<Home />} />
+            <Route path="/search/:keyword" element={<Home />} />
             <Route
               path="/login"
               element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
@@ -109,30 +101,10 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/search/:keyword"
-              element={
-                <Home
-                  videoItems={videoItemsByKW}
-                  handleSelectVideo={handleSelectVideo}
-                  selectVideoItem={selectWatch}
-                />
-              }
-            />
+
             <Route
               path="/upload"
               element={<UploadVideo updateVideoData={updateVideoData} />}
-            />
-            <Route
-              path="/category/:category"
-              element={
-                <Home
-                  videoItems={videoItemsByCategory}
-                  handleSelectVideo={handleSelectVideo}
-                  selectVideoItem={selectWatch}
-                  handleSetVideo={setVideoItemsByCategory}
-                />
-              }
             />
           </Routes>
         </BrowserRouter>

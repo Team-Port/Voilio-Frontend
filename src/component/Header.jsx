@@ -14,15 +14,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
 import { HOST_URL } from "../lib/HostUrl";
+import { useRecoilState } from "recoil";
+import { isVideoItems } from "../store/video/isVideoItems";
 
-const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
+const Header = ({ loggedIn, setLoggedIn }) => {
   const [isOpen, setMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [search, setSearch] = useState("");
+  const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
   const navigate = useNavigate();
 
   const onChangeSearch = (e) => {
-    e.preventDefault();
     setSearch(e.target.value);
   };
 
@@ -43,7 +45,7 @@ const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
       .then((response) => {
         if (response.status === 200) {
           console.log(response.status);
-          handleSetVideo(response.data.data);
+          setVideoItems(response.data.data);
           navigate("/search/" + search);
         }
       })

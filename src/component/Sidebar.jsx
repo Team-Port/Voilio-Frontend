@@ -4,8 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { HOST_URL } from "../lib/HostUrl";
 import { Button } from "@mui/material";
+import { useRecoilState } from "recoil";
+import { isVideoItems } from "../store/video/isVideoItems";
 
 const Sidebar = ({ handleSetVideo }) => {
+  const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
+
   const navigate = useNavigate();
 
   const onClickCateogry = (value) => {
@@ -14,7 +18,7 @@ const Sidebar = ({ handleSetVideo }) => {
       .get(`${HOST_URL}/api/v1/boards/lists/category?category=${value}`)
       .then((response) => {
         console.log(response.data);
-        handleSetVideo(response.data.data._embedded.boardResponseList);
+        setVideoItems(response.data.data._embedded.boardResponseList);
         navigate(`/category/${value}`);
       })
       .catch((e) => {
