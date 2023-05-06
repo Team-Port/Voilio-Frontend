@@ -13,11 +13,9 @@ const Sidebar = ({ handleSetVideo }) => {
   const navigate = useNavigate();
 
   const onClickCateogry = (value) => {
-    console.log(value);
     axios
       .get(`${HOST_URL}/api/v1/boards/lists/category?category=${value}`)
       .then((response) => {
-        console.log(response.data);
         setVideoItems(response.data.data._embedded.boardResponseList);
         navigate(`/category/${value}`);
       })
@@ -51,27 +49,27 @@ const Sidebar = ({ handleSetVideo }) => {
           <img src={`${process.env.PUBLIC_URL}/asset/IT.png`} />
           <p>IT</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("BACKEND")}>
           <img src={`${process.env.PUBLIC_URL}/asset/violin.png`} />
           <p>Backend</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("FRONTEND")}>
           <img src={`${process.env.PUBLIC_URL}/asset/beauty.png`} />
           <p>Frontend</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("DANCE")}>
           <img src={`${process.env.PUBLIC_URL}/asset/dance.png`} />
           <p>Dance</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("LANGUAGE")}>
           <img src={`${process.env.PUBLIC_URL}/asset/language.png`} />
           <p>Language</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("PYTHON")}>
           <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
           <p>Python</p>
         </div>
-        <div>
+        <div onClick={() => onClickCateogry("JAVA")}>
           <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
           <p>Java</p>
         </div>

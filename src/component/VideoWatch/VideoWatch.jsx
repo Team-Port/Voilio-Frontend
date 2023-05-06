@@ -8,17 +8,17 @@ import Loading from "../../lib/Loading";
 import jwt_decode from "jwt-decode";
 import { HOST_URL } from "../../lib/HostUrl";
 
-const VideoWatch = ({ selectedWatch }) => {
+const VideoWatch = ({ watchId }) => {
   const [videoItem, setVideoItem] = useState({});
   const [comments, setComments] = useState({});
 
-  if (selectedWatch != null) {
-    sessionStorage.setItem("watchId", selectedWatch);
-  }
-  const watchId = sessionStorage.getItem("watchId");
+  // if (selectedWatch != null) {
+  //   sessionStorage.setItem("watchId", selectedWatch);
+  // }
+  // const watchId = sessionStorage.getItem("watchId");
 
   const [content, setContent] = useState("");
-  var boardId = selectedWatch;
+  var boardId = watchId;
 
   const token = localStorage.getItem("jwtAuthToken");
   let userId;

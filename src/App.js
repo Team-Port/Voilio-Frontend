@@ -18,8 +18,9 @@ const selectWatch = JSON.parse(sessionStorage.getItem("selectWatch")) || null;
 
 function App() {
   const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [selectedWatch, setSelectedWatch] = useState(null);
+
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [selectedWatch, setSelectedWatch] = useState(null);
 
   const videoData = useCallback(() => {
     axios
@@ -34,7 +35,7 @@ function App() {
 
   useEffect(() => {
     videoData();
-  }, [videoData]);
+  }, []);
 
   const updateVideoData = () => {
     videoData();
@@ -44,23 +45,23 @@ function App() {
   //   setVideoItems(data);
   // };
 
-  useEffect(() => {
-    sessionStorage.setItem("defaultVideos", JSON.stringify(defaultVideos));
-    sessionStorage.setItem("selectWatch", JSON.stringify(selectWatch));
-  }, [selectedWatch]);
+  // useEffect(() => {
+  //   sessionStorage.setItem("defaultVideos", JSON.stringify(defaultVideos));
+  //   sessionStorage.setItem("selectWatch", JSON.stringify(selectWatch));
+  // }, [selectedWatch]);
 
   // 다른 페이지에서 로고눌렀을 때 home으로 오는데, 30개 동영상 리스트는 session에서 가져올 수 있도록
   const clickLogo = () => {
     setVideoItems(defaultVideos);
   };
 
-  const handleSelectVideo = (videoId) => {
-    setSelectedWatch(videoId);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  // const handleSelectVideo = (videoId) => {
+  //   setSelectedWatch(videoId);
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
 
   return (
     // videoItems가 있어야 실행
@@ -76,32 +77,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<Home />} />
             <Route path="/search/:keyword" element={<Home />} />
-            <Route
-              path="/login"
-              element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
-            />
+            <Route path="/login" element={<Login />} />
             <Route path="/join" element={<Join />} />
-            <Route
-              path="/watch/:id"
-              element={
-                <Watch
-                  handleSelectVideo={handleSelectVideo}
-                  selectedWatch={selectedWatch}
-                />
-              }
-            />
-            <Route
-              path="/profile/:nickname"
-              element={
-                <Profile
-                  loggedIn={loggedIn}
-                  setLoggedIn={setLoggedIn}
-                  handleSelectVideo={handleSelectVideo}
-                  selectedWatch={selectedWatch}
-                />
-              }
-            />
-
+            <Route path="/watch/:id" element={<Watch />} />
+            <Route path="/profile/:nickname" element={<Profile />} />
             <Route
               path="/upload"
               element={<UploadVideo updateVideoData={updateVideoData} />}

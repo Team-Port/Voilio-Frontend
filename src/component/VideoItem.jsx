@@ -4,12 +4,8 @@ import { Link } from "react-router-dom";
 import * as common from "./../lib/common";
 
 const VideoItem = ({ videoItem }) => {
-  //   const handleSelectItem = () => {
-  //     handleSelectVideo(videoItem.id);
-  //   };
-
   return (
-    <li className={`videoItem `}>
+    <li className={`videoItem`}>
       <Link to={`/watch/${videoItem.id}`}>
         <div className="item">
           <div className="thumnail">

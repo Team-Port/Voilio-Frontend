@@ -44,9 +44,8 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       .get(`${HOST_URL}/api/v1/boards?search=${search}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.status);
           setVideoItems(response.data.data);
-          navigate("/search/" + search);
+          navigate(`/search/${search}`);
         }
       })
       .catch((error) => {
@@ -54,6 +53,18 @@ const Header = ({ loggedIn, setLoggedIn }) => {
           alert("검색어에 맞는 게시글이 없어용ㅜㅜ");
           return;
         }
+        console.log(error);
+      });
+  };
+
+  const onClickLogo = () => {
+    axios
+      .get(`${HOST_URL}/api/v1/boards/lists`)
+      .then((response) => {
+        setVideoItems(response.data.data._embedded.boardResponseList);
+        navigate("/");
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -94,14 +105,13 @@ const Header = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <div className="header">
-      <Link to={"/"}>
-        <div className="logoArea">
-          <img
-            className="headerLogo"
-            src={process.env.PUBLIC_URL + "/asset/voilio.png"}
-          />
-        </div>
-      </Link>
+      <div className="logoArea" onClick={onClickLogo}>
+        <img
+          className="headerLogo"
+          src={process.env.PUBLIC_URL + "/asset/voilio.png"}
+        />
+      </div>
+
       <div className="search-InputArea">
         <input
           type="search"
