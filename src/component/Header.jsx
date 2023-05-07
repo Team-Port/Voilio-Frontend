@@ -69,24 +69,8 @@ const Header = () => {
       });
   };
 
-  const handleLoginChange = useCallback(() => {
-    const token = localStorage.getItem("jwtAuthToken");
-    if (token) {
-      const decodedToken = jwt_decode(token);
-      const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-      if (expirationTime < Date.now()) {
-        localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-      }
-      //     setLoggedIn(false);
-      //   } else setLoggedIn(true);
-      // } else {
-      //   setLoggedIn(false);
-      // }
-    }
-  }, []);
-
   const logout = () => {
-    localStorage.removeItem("jwtAuthToken");
+    sessionStorage.removeItem("jwtAuthToken");
   };
 
   const toggleMenu = () => {
@@ -130,7 +114,7 @@ const Header = () => {
         </div>
       </div>
       <div className="topMenuArea">
-        {localStorage.getItem("jwtAuthToken") ? (
+        {sessionStorage.getItem("jwtAuthToken") ? (
           <div className="private-btn-container">
             <div className="right-header-btn">
               <BsCloudPlus
