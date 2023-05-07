@@ -4,15 +4,15 @@ import ProfileDetail from "../component/ProfileComp/ProfileDetail";
 import ProfileHeader from "../component/ProfileComp/ProfileHeader";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserVideoList from "../component/ProfileComp/UserVideoList";
 import VideoList from "../component/VideoList";
 import { HOST_URL } from "../lib/HostUrl";
 
-const Profile = ({ handleSelectVideo, selectedWatch }) => {
+const Profile = () => {
   const [myVideos, setMyVideos] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const userId = sessionStorage.getItem("userId");
+  const userId = jwt_decode(sessionStorage.getItem("jwtAuthToken")).sub;
   const nickname = sessionStorage.getItem("nickname");
+  const [auth, setAuth] = useState(false);
 
   const getMyVideo = () => {
     axios
@@ -20,6 +20,11 @@ const Profile = ({ handleSelectVideo, selectedWatch }) => {
       .then((response) => {
         if (response.data.status === "200") {
           setMyVideos(response.data.data._embedded.boardResponseList);
+          if (
+            response.data.data._embedded.boardResponseList[0].user_id == userId
+          ) {
+            setAuth(true);
+          }
         }
       })
       .catch((error) => {
@@ -54,11 +59,7 @@ const Profile = ({ handleSelectVideo, selectedWatch }) => {
       <div>
         <ProfileHeader />
         <div className="video-list">
-          <VideoList
-            videoItems={myVideos}
-            display="list-h"
-            handleSelectVideo={handleSelectVideo}
-          />
+          <VideoList videoItems={myVideos} auth={auth} display="list-h" />
         </div>
       </div>
 

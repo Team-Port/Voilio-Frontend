@@ -8,14 +8,10 @@ import { BiShow, BiHide } from "react-icons/bi";
 import jwt_decode from "jwt-decode";
 import { HOST_URL } from "../lib/HostUrl";
 
-const Login = ({ loggedIn, setLoggedIn }) => {
+const Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [pwdValue, setPwdValue] = useState("");
-  const [message, setMessage] = useState("");
   const [showPswd, setShowPswd] = useState(false);
-
-  const [user, setUser] = useState({});
-  const [nick, setNick] = useState("");
 
   const navigate = useNavigate();
 
@@ -26,24 +22,20 @@ const Login = ({ loggedIn, setLoggedIn }) => {
         password: pwdValue,
       })
       .then((response) => {
-        localStorage.setItem("jwtAuthToken", response.data.data.accessToken);
-        const decodedToken = jwt_decode(response.data.data.accessToken);
-        const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-
-        if (expirationTime < Date.now()) {
-          localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-        } else {
-          setLoggedIn(!loggedIn); // 로그인 상태 변경
-        }
-
-        alert("또 만나네요! 반가워요✨");
         if (response.status === 200) {
-          const token = localStorage.getItem("jwtAuthToken");
-          const decodedToken = jwt_decode(token);
-          const userId = decodedToken.sub;
-          sessionStorage.setItem("userId", userId);
+          sessionStorage.setItem(
+            "jwtAuthToken",
+            response.data.data.accessToken
+          );
+          const decodedToken = jwt_decode(response.data.data.accessToken);
+          const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
 
-          getUser();
+          if (expirationTime < Date.now()) {
+            sessionStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
+          }
+
+          alert("또 만나네요! 반가워요✨");
+          getUser(decodedToken.sub);
           return navigate("/");
         }
       })
@@ -55,8 +47,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
       });
   };
 
-  const getUser = () => {
-    const userId = sessionStorage.getItem("userId");
+  const getUser = (userId) => {
     axios
       .get(`${HOST_URL}/api/v1/users/${userId}`)
       .then((response) => {

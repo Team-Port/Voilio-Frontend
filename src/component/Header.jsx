@@ -14,15 +14,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
 import { HOST_URL } from "../lib/HostUrl";
+import { useRecoilState } from "recoil";
+import { isVideoItems } from "../store/video/isVideoItems";
 
-const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
+const Header = () => {
   const [isOpen, setMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [isMakingOpen, setMakingMenu] = useState(false); // 메뉴의 초기값을 false로 설정
   const [search, setSearch] = useState("");
+  const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
   const navigate = useNavigate();
 
   const onChangeSearch = (e) => {
-    e.preventDefault();
     setSearch(e.target.value);
   };
 
@@ -42,9 +44,8 @@ const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
       .get(`${HOST_URL}/api/v1/boards?search=${search}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.status);
-          handleSetVideo(response.data.data);
-          navigate("/search/" + search);
+          setVideoItems(response.data.data);
+          navigate(`/search/${search}`);
         }
       })
       .catch((error) => {
@@ -56,23 +57,20 @@ const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
       });
   };
 
-  const handleLoginChange = useCallback(() => {
-    const token = localStorage.getItem("jwtAuthToken");
-    if (token) {
-      const decodedToken = jwt_decode(token);
-      const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-      if (expirationTime < Date.now()) {
-        localStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-        setLoggedIn(false);
-      } else setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+  const onClickLogo = () => {
+    axios
+      .get(`${HOST_URL}/api/v1/boards/lists`)
+      .then((response) => {
+        setVideoItems(response.data.data._embedded.boardResponseList);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const logout = () => {
-    localStorage.removeItem("jwtAuthToken");
-    setLoggedIn(false);
+    sessionStorage.removeItem("jwtAuthToken");
   };
 
   const toggleMenu = () => {
@@ -92,14 +90,13 @@ const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
 
   return (
     <div className="header">
-      <Link to={"/"}>
-        <div className="logoArea">
-          <img
-            className="headerLogo"
-            src={process.env.PUBLIC_URL + "/asset/voilio.png"}
-          />
-        </div>
-      </Link>
+      <div className="logoArea" onClick={onClickLogo}>
+        <img
+          className="headerLogo"
+          src={process.env.PUBLIC_URL + "/asset/voilio.png"}
+        />
+      </div>
+
       <div className="search-InputArea">
         <input
           type="search"
@@ -117,7 +114,7 @@ const Header = ({ loggedIn, setLoggedIn, handleSetVideo }) => {
         </div>
       </div>
       <div className="topMenuArea">
-        {localStorage.getItem("jwtAuthToken") ? (
+        {sessionStorage.getItem("jwtAuthToken") ? (
           <div className="private-btn-container">
             <div className="right-header-btn">
               <BsCloudPlus
