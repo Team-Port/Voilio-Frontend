@@ -28,7 +28,13 @@ const VideoItem = ({ videoItem, auth }) => {
         }
       });
     } else {
-      console.log("숨김");
+      axios
+        .patch(`${HOST_URL}/api/v1/boards/${boardId}/hide`)
+        .then((response) => {
+          if (response.status === 200) {
+            window.location.reload();
+          }
+        });
     }
   };
 
@@ -68,7 +74,6 @@ const VideoItem = ({ videoItem, auth }) => {
                 onClick={(option) => {
                   clickOption(option, videoItem.id);
                 }}
-                valu
               >
                 {option}
               </MenuItem>
