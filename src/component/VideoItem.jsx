@@ -10,7 +10,7 @@ import { HOST_URL } from "../lib/HostUrl";
 const ITEM_HEIGHT = 48;
 const options = ["숨김", "삭제"];
 
-const VideoItem = ({ videoItem, auth }) => {
+const VideoItem = ({ videoItem }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -40,7 +40,7 @@ const VideoItem = ({ videoItem, auth }) => {
 
   return (
     <li className={`videoItem`}>
-      {auth ? (
+      {videoItem.auth ? (
         <div>
           <IconButton
             aria-label="more"

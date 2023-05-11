@@ -81,10 +81,8 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/watch/:id" element={<Watch />} />
             <Route path="/profile/:nickname" element={<Profile />} />
-            <Route
-              path="/upload"
-              element={<UploadVideo updateVideoData={updateVideoData} />}
-            />
+            <Route path="/upload" element={<UploadVideo />} />
+            <Route path="/manage/:boardId" element={<UploadVideo />} />
           </Routes>
         </BrowserRouter>
       </div>
