@@ -97,13 +97,15 @@ const VideoItem = ({ videoItem }) => {
             />
           </div>
           <div className="metaData">
-            <div className="channelImg-box">
-              <img
-                className="channelImg"
-                src={videoItem.thumbnail_url}
-                alt="channelImg-thum"
-              />
-            </div>
+            <Link to={`/profile/@${videoItem.nickname}`}>
+              <div className="channelImg-box">
+                <img
+                  className="channelImg"
+                  src={videoItem.thumbnail_url}
+                  alt="channelImg-thum"
+                />
+              </div>
+            </Link>
             <div className="infoText-box">
               <span className="infoText">
                 <p className="title">{videoItem.title}</p>
