@@ -37,9 +37,9 @@ function App() {
     videoData();
   }, []);
 
-  const updateVideoData = () => {
-    videoData();
-  };
+  // const updateVideoData = () => {
+  //   videoData();
+  // };
 
   // const handleSetVideo = (data) => {
   //   setVideoItems(data);

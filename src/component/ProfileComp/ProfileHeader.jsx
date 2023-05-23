@@ -4,11 +4,6 @@ import VideoList from "../VideoList";
 import axios from "axios";
 
 const ProfileHeader = ({ nickname }) => {
-  // const [myVideo, setMyVideo] = useState({});
-  // const [user, setUser] = useState();
-  // const userId = sessionStorage.getItem('userId');
-  // const nickname = sessionStorage.getItem('nickname');
-
   return (
     <div className="profileHeader-container">
       <p className="userNick"> {nickname} </p>

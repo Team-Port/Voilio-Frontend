@@ -4,12 +4,14 @@ import "./css/uploadVideo.css";
 import TextEditor from "../component/TextEditor";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "../lib/Loading";
 import { useMemo } from "react";
 import { HOST_URL } from "../lib/HostUrl";
+import { isVideoItems } from "../store/video/isVideoItems";
+import { useSetRecoilState } from "recoil";
 
-const UploadVideo = ({ updateVideoData }) => {
+const UploadVideo = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoFileName, setVideoFileName] = useState("");
   const [videoBlobUrl, setVideoBlobUrl] = useState(null);
@@ -25,8 +27,10 @@ const UploadVideo = ({ updateVideoData }) => {
   const [category2, setCategory2] = useState("");
 
   const [isLoading, setIsLoading] = useState(false); // 로딩 중임을 나타내는 변수
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const navigate = useNavigate();
+  const boardId = useParams().boardId;
 
   const handleVideoFileChange = (e) => {
     const file = e.target.files[0];
@@ -35,10 +39,50 @@ const UploadVideo = ({ updateVideoData }) => {
     if (imageFile) setBothFilesUploaded(true);
   };
 
+  const handleVideoDrop = (files) => {
+    setVideoFile(files[0]);
+    setVideoFileName(files[0].name);
+    if (imageFile) setBothFilesUploaded(true);
+  };
+
   useEffect(() => {
+    if (!sessionStorage.getItem("jwtAuthToken")) {
+      alert("로그인이 되어있지 않습니다. 로그인 후 이용해주시길 바랍니다.");
+      navigate("/login");
+      return;
+    }
+
     if (videoFile) {
       const blobUrl = URL.createObjectURL(videoFile);
       setVideoBlobUrl(blobUrl);
+    }
+
+    if (boardId) {
+      axios
+        .get(`${HOST_URL}/api/v1/boards/${boardId}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.data.auth) {
+            alert("본 게시물의 권리가 없습니다.");
+            navigate("/");
+            return;
+          }
+          setVideoBlobUrl(response.data.data.video_url);
+          setImageFile(response.data.data.thumbnail_url);
+          setTitle(response.data.data.title);
+          setContent(response.data.data.content);
+          setCategory1(response.data.data.category1);
+          setCategory2(response.data.data.category2);
+          console.log(response);
+        })
+        .catch((err) => {
+          alert("로그인이 풀림.");
+          navigate("/login");
+          return;
+        });
     }
     return () => {
       if (videoBlobUrl) {
@@ -50,16 +94,9 @@ const UploadVideo = ({ updateVideoData }) => {
   const handleImageFileChange = (e) => {
     const file = e.target.files[0];
     cropImage(file); // 이미지 자르기 함수 호출
-    // setImageFile(file);
     setImageFileName(file.name);
     setImageFileExtension(file.name.split(".").pop());
     if (videoFile) setBothFilesUploaded(true);
-  };
-
-  const handleVideoDrop = (files) => {
-    setVideoFile(files[0]);
-    setVideoFileName(files[0].name);
-    if (imageFile) setBothFilesUploaded(true);
   };
 
   const handleImageDrop = (files) => {
@@ -122,6 +159,24 @@ const UploadVideo = ({ updateVideoData }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // if (boardId) {
+    //   setIsLoading(true);
+    //   axios
+    //     .put(`${HOST_URL}/api/v1/boards/update/${boardId}`, {
+    //       title: title,
+    //       content: content,
+    //       category1: category1,
+    //       category2: category2,
+    //       thumbnailFile: "thumbnail_url",
+    //     })
+    //     .then((response) => {
+    //       setIsLoading(false);
+    //       navigate(`/watch/${boardId}`);
+    //     })
+    //     .catch((err) => {
+    //       alert("문제가 생겼습니다.");
+    //     });
+    // }
     setIsLoading(true); // 요청이 시작됨을 나타내는 변수 변경
 
     const formData = new FormData();
@@ -130,14 +185,14 @@ const UploadVideo = ({ updateVideoData }) => {
     formData.append("category1", category1);
     formData.append("category2", category2);
 
-    // get user_id from token in local storage
-    const token = localStorage.getItem("jwtAuthToken");
+    // get user_id from token in session storage
+    const token = sessionStorage.getItem("jwtAuthToken");
     const decodedToken = jwt_decode(token);
     const userId = decodedToken.sub;
     formData.append("user_id", userId);
 
     const timestamp = Date.now();
-    if (videoFile) {
+    if (!boardId && videoFile) {
       var videoFileExtension = videoFile.name.split(".").pop();
       if (videoFileExtension === "mov") videoFileExtension = "mp4";
       const newVideoName = userId + "_" + timestamp + "_v";
@@ -171,19 +226,42 @@ const UploadVideo = ({ updateVideoData }) => {
     }
 
     try {
-      const response = await axios.post(
-        `${HOST_URL}/api/v1/boards/create`,
-        formData
-      );
+      let response;
+      if (boardId) {
+        response = await axios.put(
+          `${HOST_URL}/api/v1/boards/update/${boardId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+            },
+          }
+        );
+      } else {
+        response = await axios.post(
+          `${HOST_URL}/api/v1/boards/create`,
+          formData
+        );
+      }
+      console.log(response.data);
       if (response.data.status === "201") {
-        updateVideoData();
         navigate("/"); // 추후 마이페이지로 이동
+        window.location.reload();
+      } else if (response.data.status === "200") {
+        const nickname = sessionStorage.getItem("nickname");
+        if (nickname) {
+          navigate(`/profile/@${nickname}`);
+        }
       }
     } catch (error) {
       console.error(error);
-      alert(
-        "서버 오류로 생성이 정상적으로 되지 않았습니다. 다시 부탁드릴게요😭"
-      );
+      if (error.response.status === 401) {
+        alert("해당 게시물의 권한이 없습니다.");
+      } else {
+        alert(
+          "서버 오류로 생성이 정상적으로 되지 않았습니다. 다시 부탁드릴게요😭"
+        );
+      }
     } finally {
       setIsLoading(false); // 요청이 끝남을 나타내는 변수 변경
     }
@@ -252,7 +330,7 @@ const UploadVideo = ({ updateVideoData }) => {
               <div>
                 <img
                   className="tmp-preFile"
-                  src={URL.createObjectURL(imageFile)}
+                  src={imageFile}
                   alt={imageFileName}
                   width="550"
                 />
@@ -261,28 +339,24 @@ const UploadVideo = ({ updateVideoData }) => {
           </div>
         </div>
       </div>
-      {videoFile && imageFile && (
-        <>
-          <TextEditor
-            title={title}
-            setTitle={setTitle}
-            content={content}
-            setContent={setContent}
-            category1={category1}
-            setCategory1={setCategory1}
-            category2={category2}
-            setCategory2={setCategory2}
-          />
-          <div className="upload-summit-btn">
-            <input
-              className="join-btn"
-              type="button"
-              value="Upload"
-              onClick={handleFormSubmit}
-            />
-          </div>
-        </>
-      )}
+      <TextEditor
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        category1={category1}
+        setCategory1={setCategory1}
+        category2={category2}
+        setCategory2={setCategory2}
+      />
+      <div className="upload-summit-btn">
+        <input
+          className="join-btn"
+          type="button"
+          value="Upload"
+          onClick={handleFormSubmit}
+        />
+      </div>
     </div>
   );
 };

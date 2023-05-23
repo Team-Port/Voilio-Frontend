@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./videoItem.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as common from "./../lib/common";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
@@ -8,11 +8,13 @@ import axios from "axios";
 import { HOST_URL } from "../lib/HostUrl";
 
 const ITEM_HEIGHT = 48;
-const options = ["숨김", "삭제"];
+const options = ["숨김", "수정", "삭제"];
 
 const VideoItem = ({ videoItem }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,7 +29,7 @@ const VideoItem = ({ videoItem }) => {
           window.location.reload();
         }
       });
-    } else {
+    } else if (option.target.innerText === "숨김") {
       axios
         .patch(`${HOST_URL}/api/v1/boards/${boardId}/hide`)
         .then((response) => {
@@ -35,6 +37,8 @@ const VideoItem = ({ videoItem }) => {
             window.location.reload();
           }
         });
+    } else {
+      navigate(`/manage/${boardId}`);
     }
   };
 
