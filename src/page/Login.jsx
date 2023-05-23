@@ -123,15 +123,15 @@ const Login = () => {
             </div>
           </div>
           <div className="profile-btn-box">
+            <Link to={"/join"}>
+              <input className="join-btn" type="button" value="join"></input>
+            </Link>
             <input
               className="login-btn"
               type="submit"
               value="login"
               onClick={onLogin}
             ></input>
-            <Link to={"/join"}>
-              <input className="join-btn" type="button" value="join"></input>
-            </Link>
           </div>
         </form>
       </div>
