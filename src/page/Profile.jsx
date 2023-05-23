@@ -6,25 +6,23 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import VideoList from "../component/VideoList";
 import { HOST_URL } from "../lib/HostUrl";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const [myVideos, setMyVideos] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const userId = jwt_decode(sessionStorage.getItem("jwtAuthToken")).sub;
-  const nickname = sessionStorage.getItem("nickname");
-  const [auth, setAuth] = useState(false);
+  const nickname = useParams().nickname.substring(1);
 
   const getMyVideo = () => {
     axios
-      .get(`${HOST_URL}/api/v1/boards/lists/@${nickname}`)
+      .get(`${HOST_URL}/api/v1/boards/lists/@${nickname}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+        },
+      })
       .then((response) => {
         if (response.data.status === "200") {
           setMyVideos(response.data.data._embedded.boardResponseList);
-          if (
-            response.data.data._embedded.boardResponseList[0].user_id == userId
-          ) {
-            setAuth(true);
-          }
         }
       })
       .catch((error) => {
@@ -39,7 +37,7 @@ const Profile = () => {
 
   const getUser = () => {
     axios
-      .get(`${HOST_URL}/api/v1/users/${userId}`)
+      .get(`${HOST_URL}/api/v1/users/${nickname}`)
       .then((response) => {
         if (response.data.status === "200") {
           setUserInfo(response.data.data);
@@ -57,9 +55,9 @@ const Profile = () => {
       </div>
 
       <div>
-        <ProfileHeader />
+        <ProfileHeader nickname={nickname} />
         <div className="video-list">
-          <VideoList videoItems={myVideos} auth={auth} display="list-h" />
+          <VideoList videoItems={myVideos} display="list-h" />
         </div>
       </div>
 
