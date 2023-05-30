@@ -3,6 +3,8 @@ import "./videoItem.css";
 import { Link, useNavigate } from "react-router-dom";
 import * as common from "./../lib/common";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PublicIcon from "@mui/icons-material/Public";
+import PublicOffIcon from "@mui/icons-material/PublicOff";
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
 import { HOST_URL } from "../lib/HostUrl";
@@ -83,6 +85,7 @@ const VideoItem = ({ videoItem }) => {
               </MenuItem>
             ))}
           </Menu>
+          {videoItem.public ? <PublicIcon /> : <PublicOffIcon />}
         </div>
       ) : (
         <></>

@@ -158,25 +158,6 @@ const UploadVideo = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // if (boardId) {
-    //   setIsLoading(true);
-    //   axios
-    //     .put(`${HOST_URL}/api/v1/boards/update/${boardId}`, {
-    //       title: title,
-    //       content: content,
-    //       category1: category1,
-    //       category2: category2,
-    //       thumbnailFile: "thumbnail_url",
-    //     })
-    //     .then((response) => {
-    //       setIsLoading(false);
-    //       navigate(`/watch/${boardId}`);
-    //     })
-    //     .catch((err) => {
-    //       alert("문제가 생겼습니다.");
-    //     });
-    // }
     setIsLoading(true); // 요청이 시작됨을 나타내는 변수 변경
 
     const formData = new FormData();
@@ -274,24 +255,29 @@ const UploadVideo = () => {
         <div>
           <h2>영상 업로드</h2>
           <div className="input-container">
-            <input
-              className="select-btn"
-              type="file"
-              accept="video/*"
-              onChange={handleVideoFileChange}
-            />
-            <Dropzone
-              onDrop={handleVideoDrop}
-              accept="video/*"
-              multiple={false}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p>Drag & Drop 또는 클릭해서 파일을 업로드하세요.</p>
-                </div>
-              )}
-            </Dropzone>
+            {!boardId && (
+              <div>
+                <input
+                  className="select-btn"
+                  type="file"
+                  accept="video/*"
+                  onChange={handleVideoFileChange}
+                />
+                <Dropzone
+                  onDrop={handleVideoDrop}
+                  accept="video/*"
+                  multiple={false}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <p>Drag & Drop 또는 클릭해서 파일을 업로드하세요.</p>
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+            )}
+
             <div>
               {videoBlobUrl && (
                 <video
