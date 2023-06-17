@@ -12,6 +12,8 @@ import UploadVideo from "./page/UploadVideo";
 import { HOST_URL } from "./lib/HostUrl";
 import { useRecoilState } from "recoil";
 import { isVideoItems } from "./store/video/isVideoItems";
+import ChatRoomListPage from "./page/ChatRoomListPage";
+import ChatPage from "./page/ChatPage";
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
 const selectWatch = JSON.parse(sessionStorage.getItem("selectWatch")) || null;
@@ -83,6 +85,8 @@ function App() {
             <Route path="/profile/:nickname" element={<Profile />} />
             <Route path="/upload" element={<UploadVideo />} />
             <Route path="/manage/:boardId" element={<UploadVideo />} />
+            <Route path="/chatRooms" element={<ChatRoomListPage />} />
+            <Route path="/chatRooms/:roomId" element={<ChatPage />} />
           </Routes>
         </BrowserRouter>
       </div>
