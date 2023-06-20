@@ -37,9 +37,10 @@ const Profile = () => {
 
   const getUser = () => {
     axios
-      .get(`${HOST_URL}/api/v1/users/${nickname}`)
+      .get(`${HOST_URL}/api/v1/users/nickname/${nickname}`)
       .then((response) => {
         if (response.data.status === "200") {
+          console.log(response.data);
           setUserInfo(response.data.data);
         }
       })
