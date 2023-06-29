@@ -6,23 +6,17 @@ import { HOST_URL } from "../../lib/HostUrl";
 
 const ProfileDetail = ({ userInfo }) => {
   const onClickSubscribe = async () => {
-    // console.log(userInfo);
-    const token = sessionStorage.getItem("jwtAuthToken");
-    console.log(`Bearer ${token}`);
-    if (token) {
-      await axios
-        .post(`${HOST_URL}/api/v1/subscribes/${userInfo.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    await axios
+      .post(`${HOST_URL}/api/v1/subscribes/`, {
+        nickName: sessionStorage.getItem("nickname"),
+        subscribe_id: userInfo.id,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

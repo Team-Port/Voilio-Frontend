@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ChatRoomItem = ({ chatRoomItem }) => {
   return (
-    <li className={"chatRoom-" + chatRoomItem.roomId}>
-      <Link to={`/chatRooms/${chatRoomItem.roomId}`}>
-        <p>{chatRoomItem.name}</p>
+    <li className={"chatRoom-" + chatRoomItem[0].chatRoomUuid}>
+      <Link to={`/chatRooms/${chatRoomItem[0].chatRoomUuid}`}>
+        <p>{chatRoomItem[0].chatRoomName}</p>
       </Link>
     </li>
   );
