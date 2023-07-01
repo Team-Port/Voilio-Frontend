@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 import { HOST_URL, WS_BASE_URL } from "../lib/HostUrl";
 import ChatItem from "../component/ChatRoom/Chat";
-import axios from "axios";
+import "./css/chatPage.css";
 import { Box, FormControl, IconButton } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import VideocamIcon from "@mui/icons-material/Videocam";
 
 const peerConnectionConfig = {
   iceServers: [
@@ -31,7 +33,6 @@ const ChatPage = () => {
       brokerURL: `${WS_BASE_URL}/websocket`,
 
       onConnect: () => {
-        console.log("socket 연결 성공");
         socketSubscribe();
         sendMessage({
           type: "ENTER",
@@ -78,19 +79,10 @@ const ChatPage = () => {
 
   const handleWebSocketMessage = (message) => {
     const payload = JSON.parse(message.body);
-    if (payload) {
-      if (payload.type == "ENTER" || payload.type == "TALK") {
-        console.log("getMessage :", payload.type, "payload :", payload);
-        const handler = messageHandlers[payload.type];
-        if (handler) {
-          handler(payload);
-        }
-      } else if (payload.sender !== nickname) {
-        console.log("getMessage :", payload.type, "payload :", payload);
-        const handler = messageHandlers[payload.type];
-        if (handler) {
-          handler(payload);
-        }
+    if (payload && payload.sender !== nickname) {
+      const handler = messageHandlers[payload.type];
+      if (handler) {
+        handler(payload);
       }
     }
   };
@@ -101,10 +93,12 @@ const ChatPage = () => {
         setChatList((_chat_list) => [..._chat_list, message.message]);
       },
       TALK: (message) => {
-        setChatList((_chat_list) => [..._chat_list, message.message]);
+        setChatList((_chat_list) => [
+          ..._chat_list,
+          message.sender + "-" + message.message,
+        ]);
       },
       OFFER: async (message) => {
-        console.log(pcRef.current, socketRef.current);
         if (!(pcRef.current && socketRef.current)) {
           return;
         }
@@ -146,7 +140,6 @@ const ChatPage = () => {
 
   function sendMessage(message) {
     const jsonMessage = JSON.stringify(message);
-    console.log("SEND message", jsonMessage);
     socketRef.current.publish({
       destination: `/pub/chat/message`,
       body: jsonMessage,
@@ -155,13 +148,14 @@ const ChatPage = () => {
 
   const handleChange = (event) => {
     // 채팅 입력 시 state에 값 설정
+    console.log(event);
     setChat(event.target.value);
   };
 
-  const handleSubmit = (event, chat) => {
+  function handleSubmit() {
+    if (chat === "") return;
     // 보내기 버튼 눌렀을 때 publish
-    event.preventDefault();
-    console.log(event, chat);
+    setChatList((_chat_list) => [..._chat_list, chat]);
     sendMessage({
       type: "TALK",
       roomId: roomId,
@@ -169,7 +163,7 @@ const ChatPage = () => {
       message: chat,
     });
     setChat("");
-  };
+  }
 
   const onClickVideoChat = async () => {
     setMyWebCamStatus(true);
@@ -240,52 +234,56 @@ const ChatPage = () => {
 
   function handleTrackEvent(event) {
     if (peerWebCamRef.current) {
-      console.log("success track");
       const [stream] = event.streams;
       peerWebCamRef.current.srcObject = stream;
     }
   }
 
   return (
-    <div>
-      <button onClick={onClickVideoChat}>화상채팅</button>
-      {peerWebCamStatus && (
-        <button
-          onClick={() => {
-            setMyWebCamStatus(true);
-          }}
-        >
-          연결
-        </button>
-      )}
-      {myWebCamRef && (
-        <Box>
+    <div className="chat-page-wrap">
+      {myWebCamStatus && (
+        <Box className="webcam-box">
           <video id="myWebCam" autoPlay playsInline ref={myWebCamRef} />
-        </Box>
-      )}
-      {peerWebCamRef && (
-        <Box>
+
           <video id="peerWebCam" autoPlay playsInline ref={peerWebCamRef} />
         </Box>
       )}
-
-      <ul className="chat-list">
-        {chatList &&
-          Object.values(chatList).map((chatItem, idx) => (
-            <ChatItem key={idx} message={chatItem} />
-          ))}
-      </ul>
-      <form onSubmit={(event) => handleSubmit(event, chat)}>
-        <div>
+      <div className={"chat-wrap" + (myWebCamStatus ? "-cam" : "")}>
+        <div className={"chat-header-wrap" + (myWebCamStatus ? "-cam" : "")}>
+          <div className={"chat-header" + (myWebCamStatus ? "-cam" : "")}>
+            {peerWebCamStatus ? (
+              <VideocamIcon
+                sx={{ color: "#35AB4A" }}
+                onClick={() => {
+                  setMyWebCamStatus(true);
+                }}
+              />
+            ) : (
+              <VideocamIcon onClick={onClickVideoChat} />
+            )}
+          </div>
+        </div>
+        <div className={"chat-box" + (myWebCamStatus ? "-cam" : "")}>
+          <ul className="chat-list">
+            {chatList &&
+              Object.values(chatList).map((chatItem, idx) => (
+                <ChatItem key={idx} message={chatItem} />
+              ))}
+          </ul>
+        </div>
+        <div className={"chat-input-box" + (myWebCamStatus ? "-cam" : "")}>
           <input
+            placeholder="Enter Message"
             type={"text"}
-            name={"chatInput"}
+            className="chat-input"
             onChange={handleChange}
             value={chat}
           />
+          <div className={"send-icon-box" + (myWebCamStatus ? "-cam" : "")}>
+            <SendIcon onClick={handleSubmit} />
+          </div>
         </div>
-        <input type={"submit"} value={"의견 보내기"} />
-      </form>
+      </div>
     </div>
   );
 };

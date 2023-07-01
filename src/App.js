@@ -39,31 +39,10 @@ function App() {
     videoData();
   }, []);
 
-  // const updateVideoData = () => {
-  //   videoData();
-  // };
-
-  // const handleSetVideo = (data) => {
-  //   setVideoItems(data);
-  // };
-
-  // useEffect(() => {
-  //   sessionStorage.setItem("defaultVideos", JSON.stringify(defaultVideos));
-  //   sessionStorage.setItem("selectWatch", JSON.stringify(selectWatch));
-  // }, [selectedWatch]);
-
   // 다른 페이지에서 로고눌렀을 때 home으로 오는데, 30개 동영상 리스트는 session에서 가져올 수 있도록
   const clickLogo = () => {
     setVideoItems(defaultVideos);
   };
-
-  // const handleSelectVideo = (videoId) => {
-  //   setSelectedWatch(videoId);
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // };
 
   return (
     // videoItems가 있어야 실행

@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Sidebar from "../component/Sidebar";
-import InfoList from "../component/InfoList";
-import VideoList from "../component/VideoList";
-import { useRecoilValue } from "recoil";
-import { isVideoItems } from "../store/video/isVideoItems";
 import { HOST_URL } from "../lib/HostUrl";
 import axios from "axios";
 import ChatRoomItem from "../component/ChatRoom/ChatRoomItem";
 import SubscriberItem from "../component/ChatRoom/SubscriberItem";
+import Sidebar from "../component/Sidebar";
+import InfoList from "../component/InfoList";
+import "./css/ChatRoomListPage.css";
 
 const ChatRoomListPage = () => {
   const [chatRoomItems, setChatRoomItems] = useState([]);
@@ -27,10 +25,7 @@ const ChatRoomListPage = () => {
         },
       })
       .then((response) => {
-        if (response.data) {
-          setChatRoomItems(response.data);
-        }
-        console.log(response.data);
+        setChatRoomItems(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -46,19 +41,31 @@ const ChatRoomListPage = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {subscribeers &&
-          Object.values(subscribeers).map((subscirberItem, idx) => (
-            <SubscriberItem key={idx} subscriberItem={subscirberItem} />
-          ))}
-      </ul>
-      <ul className="chatRoomList">
-        {chatRoomItems &&
-          Object.values(chatRoomItems).map((chatRoomItem, idx) => (
-            <ChatRoomItem key={idx} chatRoomItem={chatRoomItem} />
-          ))}
-      </ul>
+    <div className="chatRoom-list-wrap">
+      <div className="left-sidebar-box">
+        <Sidebar />
+      </div>
+      <div className="video-list" display="list-h">
+        <ul className="videoList">
+          {subscribeers &&
+            Object.values(subscribeers).map((subscirberItem, idx) => (
+              <SubscriberItem key={idx} subscriberItem={subscirberItem} />
+            ))}
+        </ul>
+        <ul className="chatRoomList">
+          {chatRoomItems &&
+            Object.values(chatRoomItems).map((chatRoomItem) => (
+              <ChatRoomItem
+                key={chatRoomItem.chatRoomUuid}
+                chatRoomItem={chatRoomItem}
+              />
+            ))}
+        </ul>
+      </div>
+
+      <div className="right-sidebar-box">
+        <InfoList />
+      </div>
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./css/ChatRoomItem.css";
 
 const ChatRoomItem = ({ chatRoomItem }) => {
   return (
-    <li className={"chatRoom-" + chatRoomItem[0].chatRoomUuid}>
-      <Link to={`/chatRooms/${chatRoomItem[0].chatRoomUuid}`}>
-        <p>{chatRoomItem[0].chatRoomName}</p>
+    <li className={"chatRoom-item"}>
+      <Link to={`/chatRooms/${chatRoomItem.chatRoomUuid}`}>
+        <p>{chatRoomItem.chatRoomName}</p>
       </Link>
     </li>
   );
