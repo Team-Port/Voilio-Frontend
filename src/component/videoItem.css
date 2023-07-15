@@ -1,0 +1,70 @@
+.videoItem{
+    width: calc(40% - 8px);
+    margin: 0 1rem 1rem 1rem;
+}
+
+.videoItem.list-h{
+    flex:1 1 35%
+}
+
+.thumnail-img{
+    width: 100%;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.thumnail-img:hover{
+    border-radius: 0%;
+}
+
+.metaData{
+    display: flex;
+    text-align:left;
+    padding: 0.3em;
+    flex:1 1 70%;
+}
+
+.channelImg{
+    flex:0 0 36px;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: contain;
+    cursor: pointer;
+    margin-top: 0.1rem;
+}
+
+.infoText-box{
+    width: 100%;
+}
+
+.infoText{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title{
+    margin: 0.2rem;
+}
+
+.category{
+    margin: 0.2rem;
+    color: #a8a7a7;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.channel{
+    margin: 0.2rem;
+    color: #464646;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.publishDate{
+    margin: 0.2rem;
+    color: #bcbcbc;
+    font-size: 0.5rem;
+}

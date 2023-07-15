@@ -1,0 +1,18 @@
+.videoList{
+    display: flex;
+    /* width: 68vw; */
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0.3rem;
+    margin: 0;
+}
+
+.videoList.list-h {
+    flex-direction : column;
+}
+
+@media (max-width: 880px) {
+    .videoList{
+        width: 85%;
+    }
+}
