@@ -7,21 +7,19 @@ import axios from "axios";
 import Loading from "../../lib/Loading";
 import jwt_decode from "jwt-decode";
 import { HOST_URL } from "../../lib/HostUrl";
+import { useNavigate } from "react-router-dom";
 
 const VideoWatch = ({ watchId }) => {
   const [videoItem, setVideoItem] = useState({});
   const [comments, setComments] = useState({});
-
-  // if (selectedWatch != null) {
-  //   sessionStorage.setItem("watchId", selectedWatch);
-  // }
-  // const watchId = sessionStorage.getItem("watchId");
-
+  const [auth, setAuth] = useState(false);
   const [content, setContent] = useState("");
   var boardId = watchId;
 
   const token = localStorage.getItem("jwtAuthToken");
   let userId;
+  const navigate = useNavigate();
+
   if (token) {
     try {
       const decodedToken = jwt_decode(token);
@@ -33,13 +31,19 @@ const VideoWatch = ({ watchId }) => {
 
   const oneVideoData = useCallback(() => {
     axios
-      .get(`${HOST_URL}/api/v1/boards/${watchId}`)
+      .get(`${HOST_URL}/api/v1/boards/${watchId}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+        },
+      })
       .then((response) => {
         setVideoItem(response.data.data);
+        setAuth(response.data.data.auth);
         sessionStorage.setItem(watchId, JSON.stringify(response.data.data));
       })
       .catch((error) => {
-        console.log(error);
+        alert("문제가 생겼습니다.");
+        navigate("/");
       });
   }, [watchId]);
 
@@ -68,9 +72,6 @@ const VideoWatch = ({ watchId }) => {
   };
 
   const handleSubmit = (e) => {
-    // if (!content || content.trim() === '') {
-    //     alert("댓글에 값을 입력해주세요")
-    // } else {
     e.preventDefault(); // 기본 동작 취소
     axios
       .post(`${HOST_URL}/api/v1/comments`, {
@@ -90,13 +91,11 @@ const VideoWatch = ({ watchId }) => {
     // }
   };
 
-  console.log(comments);
-
   return (
     <div className="videoWatch">
       {Object.keys(videoItem).length !== 0 ? (
         <>
-          <VHeader videoItem={videoItem} />
+          <VHeader videoItem={videoItem} auth={auth} />
           <Video videoItem={videoItem} />
           <div className="commentBox">
             <h2>Comments</h2>

@@ -1,0 +1,15 @@
+.chatRoom-item{
+    background-color: white;
+    margin: 10px;
+    width: 40vw;
+    height: 4vh;
+    border-radius: 0.63rem;
+    position: relative;
+}
+.chatRoom-item p{
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -140%);
+}

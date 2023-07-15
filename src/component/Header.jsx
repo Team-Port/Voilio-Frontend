@@ -5,6 +5,7 @@ import {
   BsPersonCircle,
   BsSearch,
   BsCloudPlus,
+  BsFillCcCircleFill,
 } from "react-icons/bs";
 import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
@@ -16,6 +17,7 @@ import "./header.css";
 import { HOST_URL } from "../lib/HostUrl";
 import { useRecoilState } from "recoil";
 import { isVideoItems } from "../store/video/isVideoItems";
+import { Box } from "@mui/material";
 
 const Header = () => {
   const [isOpen, setMenu] = useState(false); // 메뉴의 초기값을 false로 설정
@@ -67,6 +69,10 @@ const Header = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const goToChat = () => {
+    navigate("/chatRooms");
   };
 
   const logout = () => {
@@ -132,6 +138,11 @@ const Header = () => {
                 size="1.5rem"
                 onMouseEnter={toggleMenu}
               ></BsPersonCircle>
+              <BsFillCcCircleFill
+                className="topIcon"
+                size="1.5rem"
+                onMouseEnter={goToChat}
+              ></BsFillCcCircleFill>
             </div>
 
             <div className="private-toggle-menu">

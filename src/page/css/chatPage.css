@@ -1,0 +1,105 @@
+.chat-box{
+    width: 40vw;
+    height: 40vh;
+    overflow: scroll;
+    background-color: #F9DEE5;
+}
+
+.chat-wrap{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-color: white;
+    border-radius: 0.63rem;
+}
+
+.chat-input-box{
+    border-radius: 0.63rem;
+    height: 35px;
+    position: relative;
+    display: flex;
+}
+.chat-input-box input{
+    width: 35vw;
+    border-bottom-left-radius: 0.63rem;
+    height: 30px;
+    border: none;
+    padding-left: 1rem;
+}
+.chat-input-box div{
+    position: absolute;
+    top:5px;
+    right:20px;
+}
+
+.chat-header-wrap{
+    position:relative;
+    height: 35px;
+}
+.chat-header{
+    position: absolute;
+    top:7px;
+    right:20px;
+}
+
+/* ===================== */
+
+.chat-box-cam{
+    width: 25vw;
+    height: 80vh;
+    overflow: scroll;
+    background-color: #F9DEE5;
+}
+
+.chat-wrap-cam{
+    right: 0%;
+    bottom: 0%;
+    position: absolute;
+    background-color: white;
+    border-radius: 0.63rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.chat-input-box-cam{
+    border-radius: 0.63rem;
+    height: 35px;
+    position: relative;
+    display: flex;
+}
+.chat-input-box-cam input{
+    width: 18vw;
+    border-bottom-left-radius: 0.63rem;
+    height: 30px;
+    border: none;
+    padding-left: 1vw;
+}
+.chat-input-box-cam div{
+    position: absolute;
+    top:5px;
+    right:20px;
+}
+
+.chat-header-wrap-cam{
+    position:relative;
+    height: 35px;
+}
+.chat-header-cam{
+    position: absolute;
+    top:7px;
+    right:20px;
+}
+
+.webcam-box{
+    height:80vh;
+    display: flex;
+    align-items: center;
+}
+
+.webcam-box video{
+    width: 35vw;
+    border-radius: 0.63rem;
+    float:left;
+    margin:0.5rem;
+}
