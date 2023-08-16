@@ -46,9 +46,6 @@ const ChatRoomListPage = () => {
         <Sidebar />
       </div>
       <div className="chatroom-wrap">
-        {/* <button onClick={createChatRoom}> 
-          방 만들기
-        </button> */}
         <ul className="chat-room-list">
           {subscribeers &&
             Object.values(subscribeers).map((subscirberItem, idx) => (

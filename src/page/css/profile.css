@@ -39,6 +39,7 @@
 .login-btn , .join-btn {
     cursor: pointer;
     border: none;
+    border-radius: 30px;
     font-size: 2rem;
     padding: 0.5rem 2rem;
     color: #929292;
@@ -53,7 +54,6 @@
     background-color: #bb2649;
     padding: 0.5rem 2rem;
     transition: all.5s;
-
 }
 
 .welcome-box{
