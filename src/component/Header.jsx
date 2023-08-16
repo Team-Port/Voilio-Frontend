@@ -66,6 +66,9 @@ const Header = () => {
         navigate("/");
       })
       .catch((error) => {
+        if (error.response || error.response.status === 400) {
+          navigate("/");
+        }
         console.log(error);
       });
   };
