@@ -5,19 +5,25 @@
     background-color: #F9DEE5;
 }
 
-.chat-wrap{
+.chat-page-wrap {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 2rem;
+}
+
+/* .chat-wrap{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
     background-color: white;
     border-radius: 0.63rem;
-}
+} */
 
 .chat-input-box{
     border-radius: 0.63rem;
     height: 35px;
-    position: relative;
+    /* position: relative; */
     display: flex;
 }
 .chat-input-box input{
@@ -53,13 +59,10 @@
 }
 
 .chat-wrap-cam{
-    right: 0%;
-    bottom: 0%;
-    position: absolute;
     background-color: white;
     border-radius: 0.63rem;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
+    margin: 1rem;
+    height: 70%;
 }
 
 .chat-input-box-cam{

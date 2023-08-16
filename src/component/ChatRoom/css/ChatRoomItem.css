@@ -1,11 +1,16 @@
 .chatRoom-item{
     background-color: white;
-    margin: 10px;
-    width: 40vw;
-    height: 4vh;
+    margin: 2rem 3rem;
+    width: 50vw;
+    height: 4.5vh;
     border-radius: 0.63rem;
     position: relative;
 }
+
+.chatRoom-item:hover{
+    background-color: #fedde5;
+}
+
 .chatRoom-item p{
     position: absolute;
     top: 50%;

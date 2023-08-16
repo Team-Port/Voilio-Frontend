@@ -4,6 +4,7 @@ import InfoList from "../component/InfoList";
 import VideoList from "../component/VideoList";
 import { useRecoilValue } from "recoil";
 import { isVideoItems } from "../store/video/isVideoItems";
+import NewMemberBox from "../component/NewMemberBox";
 
 const Home = () => {
   const videoItems = useRecoilValue(isVideoItems);
@@ -18,6 +19,7 @@ const Home = () => {
       </div>
       <div className="right-sidebar-box">
         <InfoList />
+        <NewMemberBox />
       </div>
     </div>
   );

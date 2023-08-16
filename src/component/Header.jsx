@@ -5,7 +5,6 @@ import {
   BsPersonCircle,
   BsSearch,
   BsCloudPlus,
-  BsFillCcCircleFill,
 } from "react-icons/bs";
 import { SlLogin } from "react-icons/sl";
 import { Link } from "react-router-dom";
@@ -132,17 +131,13 @@ const Header = () => {
               <BsChatRightHeart
                 className="topIcon"
                 size="1.5rem"
+                onClick={goToChat}
               ></BsChatRightHeart>
               <BsPersonCircle
                 className="topIcon"
                 size="1.5rem"
                 onMouseEnter={toggleMenu}
               ></BsPersonCircle>
-              <BsFillCcCircleFill
-                className="topIcon"
-                size="1.5rem"
-                onMouseEnter={goToChat}
-              ></BsFillCcCircleFill>
             </div>
 
             <div className="private-toggle-menu">

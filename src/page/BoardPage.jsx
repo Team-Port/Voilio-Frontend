@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "../component/Sidebar";
 import InfoList from "../component/InfoList";
 import Board from "../component/Board/Board";
+import NewMemberBox from "../component/NewMemberBox";
 
 const BoardPage = () =>{
     return(
@@ -14,6 +15,7 @@ const BoardPage = () =>{
             </div>
             <div className='right-sidebar-box'>
                 <InfoList></InfoList>
+                <NewMemberBox/>
             </div>
         </div>
     );
