@@ -146,6 +146,12 @@ const ChatPage = () => {
     });
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(); // Enter 키가 눌리면 handleSubmit 호출
+    }
+  };
+
   const handleChange = (event) => {
     // 채팅 입력 시 state에 값 설정
     console.log(event);
@@ -278,8 +284,9 @@ const ChatPage = () => {
             className="chat-input"
             onChange={handleChange}
             value={chat}
+            onKeyPress={handleKeyPress}
           />
-          <div className={"send-icon-box" + (myWebCamStatus ? "-cam" : "")}>
+          <div className={"send-icon-box " + (myWebCamStatus ? "-cam" : "")}>
             <SendIcon onClick={handleSubmit} />
           </div>
         </div>

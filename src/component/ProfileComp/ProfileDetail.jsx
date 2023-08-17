@@ -11,7 +11,7 @@ const ProfileDetail = ({ userInfo }) => {
     if (isSubscribed) {
       // 이미 팔로우한 상태라면 언팔로우 요청
       await axios
-        .post(`${HOST_URL}/api/v1/unsubscribes/`, {
+        .post(`${HOST_URL}/api/v1/subscribes/unsubscribe`, {
           nickname: sessionStorage.getItem("nickname"),
           subscribeId: userInfo.id,
         })
@@ -42,12 +42,14 @@ const ProfileDetail = ({ userInfo }) => {
   };
 
   const checkSubscribe = async () => {
+    console.log(userInfo.id)
     await axios
-      .post(`${HOST_URL}/api/v1/subscribes/`, {
+      .post(`${HOST_URL}/api/v1/subscribes/check`, {
         nickname: sessionStorage.getItem("nickname"),
         subscribeId: userInfo.id,
       })
       .then((res) => {
+        console.log(res.data)
         if (res.data.data === true) {
           setIsSubscribed(true); // 팔로우 상태 업데이트
         } else {
@@ -57,8 +59,10 @@ const ProfileDetail = ({ userInfo }) => {
   };
 
   useEffect(() => {
-    checkSubscribe();
-  }, [userInfo, isSubscribed]); 
+    if (userInfo && userInfo.id) { // userInfo.id가 존재할 때만 checkSubscribe를 호출
+      checkSubscribe();
+    }
+  }, [userInfo, isSubscribed]);
 
   return (
     <div className="infoMenu-box">
