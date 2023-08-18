@@ -16,7 +16,6 @@ const ProfileDetail = ({ userInfo }) => {
           subscribeId: userInfo.id,
         })
         .then((res) => {
-          console.log(res);
           alert(`${userInfo.nickname}님 팔로우를 취소합니다.`);
           setIsSubscribed(false); // 언팔로우 상태 업데이트
         })
@@ -49,7 +48,6 @@ const ProfileDetail = ({ userInfo }) => {
         subscribeId: userInfo.id,
       })
       .then((res) => {
-        console.log(res.data)
         if (res.data.data === true) {
           setIsSubscribed(true); // 팔로우 상태 업데이트
         } else {
