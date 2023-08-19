@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HOST_URL } from "../../lib/HostUrl";
+import './../ChatRoom/css/ChatRoomItem.css'
 
 const SubscriberItem = ({ subscriberItem }) => {
   const navigator = useNavigate();
@@ -35,8 +36,8 @@ const SubscriberItem = ({ subscriberItem }) => {
   };
 
   return (
-    <li className={"chatRoom-" + subscriberItem.subscribe_id}>
-      <button onClick={goToChat}>
+    <li className={"chatbtn-wrap chatRoom-" + subscriberItem.subscribe_id}>
+      <button onClick={goToChat} className="subscribeToChat-btn">
         <p>{subscriberItem.subscribe_nickname}</p>
       </button>
     </li>

@@ -5,7 +5,7 @@ import ChatRoomItem from "../component/ChatRoom/ChatRoomItem";
 import SubscriberItem from "../component/ChatRoom/SubscriberItem";
 import Sidebar from "../component/Sidebar";
 import InfoList from "../component/InfoList";
-import "./css/ChatRoomListPage.css";
+import NewMemberBox from "../component/NewMemberBox";
 
 const ChatRoomListPage = () => {
   const [chatRoomItems, setChatRoomItems] = useState([]);
@@ -41,12 +41,12 @@ const ChatRoomListPage = () => {
   }, []);
 
   return (
-    <div className="chatRoom-list-wrap">
+    <div className="home-wrap">
       <div className="left-sidebar-box">
         <Sidebar />
       </div>
-      <div className="video-list" display="list-h">
-        <ul className="videoList">
+      <div className="chatroom-wrap">
+        <ul className="chat-room-list">
           {subscribeers &&
             Object.values(subscribeers).map((subscirberItem, idx) => (
               <SubscriberItem key={idx} subscriberItem={subscirberItem} />
@@ -65,6 +65,7 @@ const ChatRoomListPage = () => {
 
       <div className="right-sidebar-box">
         <InfoList />
+        <NewMemberBox/>
       </div>
     </div>
   );

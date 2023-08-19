@@ -6,6 +6,7 @@ import VideoWatch from "../component/VideoWatch/VideoWatch";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { HOST_URL } from "../lib/HostUrl";
+import NewMemberBox from "../component/NewMemberBox";
 
 const Watch = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const Watch = () => {
       </div>
       <div className="right-sidebar-box">
         <InfoList />
+        <NewMemberBox/>
       </div>
     </div>
   );
