@@ -21,6 +21,7 @@ const Home = () => {
         <InfoList />
         <NewMemberBox />
       </div>
+      <div className="text-red-600">gd</div>
     </div>
   );
 };
