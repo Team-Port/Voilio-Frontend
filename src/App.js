@@ -14,6 +14,7 @@ import { useRecoilState } from "recoil";
 import { isVideoItems } from "./store/video/isVideoItems";
 import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
+import Landing from "./page/Landing";
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
 const selectWatch = JSON.parse(sessionStorage.getItem("selectWatch")) || null;
@@ -55,6 +56,7 @@ function App() {
             clickLogo={clickLogo}
           />
           <Routes>
+            <Route path="/new-portal/landing" element={<Landing />} />
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<Home />} />
             <Route path="/search/:keyword" element={<Home />} />
