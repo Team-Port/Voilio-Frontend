@@ -17,7 +17,7 @@ const Header = () => {
           src="/asset/new-logo.svg"
         />
       </div>
-      <div className="relative h-full py-[15px] left-[250px] flex-shrink-0">
+      <div className="relative h-full py-[15px] left-[235px] flex-shrink-0">
         <div className="flex h-full items-center px-[18px] rounded-[63px] border-[0.5px] border-[#6E6E6E]">
           <img className="w-[25px]" src="/asset/Icon_magnifier.svg" />
           <input
