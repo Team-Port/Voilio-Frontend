@@ -26,7 +26,7 @@ const LoginNew = () => {
               <div className="text-sm font-semibold">E-mail</div>
               <div className="border-[1px] border-[#E2E8F0] rounded-[4px] px-[12px] py-[16px] bg-white">
                 <input
-                  className="outline-none w-full"
+                  className="w-full outline-none"
                   placeholder="이메일을 입력해 주세요."
                 />
               </div>
@@ -35,10 +35,10 @@ const LoginNew = () => {
               <div className="text-sm font-semibold">Password</div>
               <div className="flex flex-row border-[1px] border-[#E2E8F0] rounded-[4px] px-[12px] py-[16px] bg-white">
                 <input
-                  className="outline-none w-full"
+                  className="w-full outline-none"
                   placeholder="비밀번호를 입력해 주세요."
                 />
-                <img className="m-[0px]" src="/asset/eye-off.svg" />
+                <img className="m-[0px]" src="/asset/Icon_eyeOff.svg" />
               </div>
             </div>
           </div>
