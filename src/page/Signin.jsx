@@ -27,7 +27,7 @@ const Signin = () => {
               <div className="border-[1px] border-[#E2E8F0] rounded-[4px] px-[12px] py-[16px] bg-white">
                 <input
                   className="w-full outline-none"
-                  placeholder="이메일을 입력해 주세요."
+                  placeholder="아이디로 사용할 이메일을 입력해 주세요."
                 />
               </div>
             </div>
