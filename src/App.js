@@ -15,6 +15,7 @@ import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
 import "./styles/globalStyles.css";
 import Header from "./component/ new-portal/Header";
+import LoginNew from "./page/LoginNew";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -64,6 +65,10 @@ function App() {
           <Route path="/chatRooms" element={<ChatRoomListPage />} />
           <Route path="/chatRooms/:roomId" element={<ChatPage />} />
           <Route path="/new-portal" element={<New />} />
+          <Route
+            path="/new-portal/login"
+            element={<LoginNew hideHeader={true} />}
+          />
         </Routes>
       </BrowserRouter>
     )

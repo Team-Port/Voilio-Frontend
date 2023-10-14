@@ -1,4 +1,10 @@
+import { useLocation } from "react-router-dom";
+
 const Header = () => {
+  const location = useLocation();
+  const hideHeader = location.pathname === "/new-portal/login";
+
+  if (hideHeader) return null;
   return (
     <div className="bg-white">
       <div className="relative flex flex-row w-full h-[76px]">
@@ -23,7 +29,6 @@ const Header = () => {
           <img src="/asset/Icon_mypage.svg" />
         </div>
       </div>
-      <div className="bg-[#F5F5F7] h-[100vh]" />
     </div>
   );
 };
