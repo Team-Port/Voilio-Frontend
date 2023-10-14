@@ -70,6 +70,14 @@ function App() {
             element={<LoginNew hideHeader={true} />}
           />
         </Routes>
+        <img
+          className="fixed bottom-0 w-full m-0"
+          src="../asset/bg-gradation.svg"
+        />
+        <img
+          className="fixed m-0 right-0 bottom-0 h-[60%]"
+          src="../asset/bg-word.svg"
+        />
       </BrowserRouter>
     )
   );
