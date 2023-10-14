@@ -15,6 +15,8 @@ import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
 import "./styles/globalStyles.css";
 import Header from "./component/ new-portal/Header";
+import LoginNew from "./page/LoginNew";
+import Signin from "./page/Signin";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -50,7 +52,20 @@ function App() {
     // videoItems가 있어야 실행
     videoItems && (
       <BrowserRouter>
-        <Header />
+        {window.location.pathname !== "/new-portal/login" &&
+          window.location.pathname !== "/new-portal/signin" && (
+            <>
+              <Header />
+              <img
+                className="fixed bottom-0 w-full m-0"
+                src="../asset/bg-gradation.svg"
+              />
+              <img
+                className="fixed m-0 right-0 bottom-0 h-[60%]"
+                src="../asset/bg-word.svg"
+              />
+            </>
+          )}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category/:category" element={<Home />} />
@@ -64,6 +79,14 @@ function App() {
           <Route path="/chatRooms" element={<ChatRoomListPage />} />
           <Route path="/chatRooms/:roomId" element={<ChatPage />} />
           <Route path="/new-portal" element={<New />} />
+          <Route
+            path="/new-portal/login"
+            element={<LoginNew hideHeader={true} />}
+          />
+          <Route
+            path="/new-portal/signin"
+            element={<Signin hideHeader={true} />}
+          />
         </Routes>
       </BrowserRouter>
     )
