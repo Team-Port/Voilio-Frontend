@@ -1,0 +1,45 @@
+.chatRoom-item{
+    background-color: white;
+    margin: 2rem 3rem;
+    width: 50vw;
+    height: 4.5vh;
+    border-radius: 0.63rem;
+    position: relative;
+}
+
+.chatRoom-item:hover{
+    background-color: #fedde5;
+}
+
+.chatRoom-item p{
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -140%);
+}
+
+.subscribeToChat-btn{
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    padding: 0.3rem 2rem;
+    color: #616161;
+    margin: 0.8rem;
+    font-size: 1rem;
+    background-color: #dcdcdc;
+  }
+
+.subscribeToChat-btn:hover{
+  border: 1px solid #bb2649;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color: #ffffff;
+  background-color: #bb2649;
+  padding: 0.3rem 2rem;
+  transition: all.5s;
+}
+
+.chatbtn-wrap{
+    display: flex;
+}
