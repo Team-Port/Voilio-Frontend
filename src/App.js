@@ -17,6 +17,7 @@ import "./styles/globalStyles.css";
 import Header from "./component/ new-portal/Header";
 import LoginNew from "./page/LoginNew";
 import Signin from "./page/Signin";
+import Sidebar from "./component/ new-portal/Sidebar";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -64,6 +65,7 @@ function App() {
                 className="fixed m-0 right-0 bottom-0 h-[60%]"
                 src="../asset/bg-word.svg"
               />
+              <Sidebar />
             </>
           )}
         <Routes>
