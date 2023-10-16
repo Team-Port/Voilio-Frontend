@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <div className="w-full h-[85px] bg-white flex flex-row">
+    <div className="fixed w-full h-[85px] bg-white flex flex-row">
       <div className="flex flex-row">
         <img
           className="absolute left-0 m-0"
