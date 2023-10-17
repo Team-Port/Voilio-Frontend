@@ -4,8 +4,7 @@ import Home from "./page/Home";
 import Login from "./page/Login";
 import Join from "./page/Join";
 import Profile from "./page/Profile";
-import Header from "./component/Header";
-import "./App.css";
+import New from "./page/New";
 import Watch from "./page/Watch";
 import axios from "axios";
 import UploadVideo from "./page/UploadVideo";
@@ -15,6 +14,9 @@ import { isVideoItems } from "./store/video/isVideoItems";
 import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
 import Landing from "./page/Landing";
+import "./styles/globalStyles.css";
+import Header from "./component/ new-portal/Header";
+
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
 const selectWatch = JSON.parse(sessionStorage.getItem("selectWatch")) || null;
@@ -48,29 +50,26 @@ function App() {
   return (
     // videoItems가 있어야 실행
     videoItems && (
-      <div className="App">
-        <BrowserRouter>
-          <Header
-            // loggedIn={loggedIn}
-            // setLoggedIn={setLoggedIn}
-            clickLogo={clickLogo}
-          />
-          <Routes>
-            <Route path="/new-portal/landing" element={<Landing />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/category/:category" element={<Home />} />
-            <Route path="/search/:keyword" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/join" element={<Join />} />
-            <Route path="/watch/:id" element={<Watch />} />
-            <Route path="/profile/:nickname" element={<Profile />} />
-            <Route path="/upload" element={<UploadVideo />} />
-            <Route path="/manage/:boardId" element={<UploadVideo />} />
-            <Route path="/chatRooms" element={<ChatRoomListPage />} />
-            <Route path="/chatRooms/:roomId" element={<ChatPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/new-portal" element={<Landing />} />
+          <Route path="/new-portal" element={<Home />} />
+          <Route path="/new-portal/:category" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:category" element={<Home />} />
+          <Route path="/search/:keyword" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/join" element={<Join />} />
+          <Route path="/watch/:id" element={<Watch />} />
+          <Route path="/profile/:nickname" element={<Profile />} />
+          <Route path="/upload" element={<UploadVideo />} />
+          <Route path="/manage/:boardId" element={<UploadVideo />} />
+          <Route path="/chatRooms" element={<ChatRoomListPage />} />
+          <Route path="/chatRooms/:roomId" element={<ChatPage />} />
+          <Route path="/new-portal" element={<New />} />
+        </Routes>
+      </BrowserRouter>
     )
   );
 }
