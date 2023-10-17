@@ -3,5 +3,6 @@ body {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background-color: "#F5F5F7";
+  background-color: #f5f5f7;
+  height: "100vh";
 }
