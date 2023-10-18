@@ -54,7 +54,8 @@ function App() {
     videoItems && (
       <BrowserRouter>
         {window.location.pathname !== "/new-portal/login" &&
-          window.location.pathname !== "/new-portal/signin" && (
+          window.location.pathname !== "/new-portal/signin" &&
+          window.location.pathname !== "/new-portal/landing" && (
             <>
               <Header />
               <img
@@ -68,7 +69,7 @@ function App() {
             </>
           )}
         <Routes>
-          <Route path="/new-portal" element={<Landing />} />
+          <Route path="/new-portal/landing" element={<Landing />} />
           <Route path="/new-portal" element={<Home />} />
           <Route path="/new-portal/:category" element={<Home />} />
           <Route path="/" element={<Home />} />

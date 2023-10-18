@@ -11,108 +11,97 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-[182.04px] h-[490px] left-[20px] relative">
-      <div className="w-[182.04px] h-[490px] left-0 top-0 absolute">
-        <div
-          className={`w-[182.04px] h-[33px] left-0 top-[200px] absolute transition-transform ${
-            selectedCategory === "Following" ? "translate-y-48" : ""
-          }`}
-        >
-          <div className="w-[182.04px] h-[200px] left-0 top-0 absolute text-center text-neutral-700 text-3xl font-normal font-['Titillium Web']">
-            Following
-          </div>
-        </div>
-        <div
-          className={`w-[182.04px] h-[33px] left-0 top-[100px] absolute transition-transform ${
-            selectedCategory === "Library" ? "translate-y-44" : ""
-          }`}
-        >
-          <div className="w-[182.04px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-3xl font-normal font-['Titillium Web']">
-            Library
-          </div>
-        </div>
-        <div
-          className="w-[182.04px] h-[33px] left-0 top-0 absolute cursor-pointer"
-          onClick={() =>
-            setSelectedCategory(
-              selectedCategory === "Category" ? null : "Category"
-            )
-          }
-        >
-          <div
-            className={`w-[182.04px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-3xl font-bold font-['Titillium Web'] ${
-              selectedCategory === "Category" ? "font-bold" : ""
-            }`}
-          >
-            <div className="mt-2 border-b-2 border-neutral-300 ">Category</div>
-          </div>
-          {selectedCategory === "Category" && (
-            <div className="flex flex-col gap-2 absolute top-[33px] left-12 bg-white shadow-lg p-2 rounded">
-              <div
-                onClick={() => setSelectedCategory("All")}
-                className={`cursor-pointer ${
-                  selectedCategory === "All" ? "font-bold" : ""
-                }`}
-              >
-                All
-              </div>
-              <div
-                onClick={() => setSelectedCategory("IT")}
-                className={`cursor-pointer ${
-                  selectedCategory === "IT" ? "font-bold" : ""
-                }`}
-              >
-                IT
-              </div>
-              <div
-                onClick={() => setSelectedCategory("Design")}
-                className={`cursor-pointer ${
-                  selectedCategory === "Design" ? "font-bold" : ""
-                }`}
-              >
-                Design
-              </div>
-              <div
-                onClick={() => setSelectedCategory("Dance")}
-                className={`cursor-pointer ${
-                  selectedCategory === "Dance" ? "font-bold" : ""
-                }`}
-              >
-                Dance
-              </div>
-              <div
-                onClick={() => setSelectedCategory("Exercise")}
-                className={`cursor-pointer ${
-                  selectedCategory === "Exercise" ? "font-bold" : ""
-                }`}
-              >
-                Exercise
-              </div>
-              <div
-                onClick={() => setSelectedCategory("Language")}
-                className={`cursor-pointer ${
-                  selectedCategory === "Language" ? "font-bold" : ""
-                }`}
-              >
-                Language
-              </div>
-              <div
-                onClick={() => setSelectedCategory("Sales")}
-                className={`cursor-pointer ${
-                  selectedCategory === "Sales" ? "font-bold" : ""
-                }`}
-              >
-                Sales
-              </div>
-            </div>
-          )}
+    <div className="w-[140px] h-[500px] relative">
+      <div className="w-[140px] h-[33px] left-0 top-[457px] absolute mt-[10px]">
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-['Titillium Web']">
+          Following
         </div>
       </div>
-      {selectedCategory && (
-        <div className="w-[182.04px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-3xl font-bold font-['Titillium Web']">
-          Selected Category: {selectedCategory}
+      <div className="w-[140px] h-[33px] left-0 top-[397px] absolute">
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-['Titillium Web']">
+          Library
         </div>
-      )}
+      </div>
+      <div className="w-[140px] h-[369.90px] left-0 top-0 absolute">
+        <div className="w-[123.68px] h-[32.90px] top-[337px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Sales" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Sales")}
+          >
+            Sales
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[292px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Language"
+                ? "bg-white rounded font-bold"
+                : ""
+            }`}
+            onClick={() => handleCategoryClick("Language")}
+          >
+            Language
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[247px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Exercise"
+                ? "bg-white rounded font-bold"
+                : ""
+            }`}
+            onClick={() => handleCategoryClick("Exercise")}
+          >
+            Exercise
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[202px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Dance" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Dance")}
+          >
+            Dance
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[157px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Design" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Design")}
+          >
+            Design
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[112px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "IT" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("IT")}
+          >
+            IT
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[67px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-neutral-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "All" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("All")}
+          >
+            All
+          </div>
+        </div>
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-bold font-['Titillium Web']">
+          Category
+          <div className="w-[140px] h-[0px] mt-3 border border-neutral-700"></div>
+        </div>
+      </div>
     </div>
   );
 };
