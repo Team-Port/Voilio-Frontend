@@ -18,6 +18,7 @@ import "./styles/globalStyles.css";
 import Header from "./component/ new-portal/Header";
 import LoginNew from "./page/LoginNew";
 import Signin from "./page/Signin";
+import Sidebar from "./component/Sidebar";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -58,6 +59,7 @@ function App() {
           window.location.pathname !== "/new-portal/landing" && (
             <>
               <Header />
+              <Sidebar />
               <img
                 className="fixed bottom-0 w-full m-0"
                 src="../asset/bg-gradation.svg"
