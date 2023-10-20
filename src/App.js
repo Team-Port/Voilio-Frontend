@@ -18,6 +18,7 @@ import Header from "./component/ new-portal/Header";
 import LoginNew from "./page/LoginNew";
 import Signin from "./page/Signin";
 import Sidebar from "./component/ new-portal/Sidebar";
+import UploadVideoNew from "./page/UploadVideoNew";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -89,6 +90,7 @@ function App() {
             path="/new-portal/signin"
             element={<Signin hideHeader={true} />}
           />
+          <Route path="/new-portal/upload" element={<UploadVideoNew />} />
         </Routes>
       </BrowserRouter>
     )
