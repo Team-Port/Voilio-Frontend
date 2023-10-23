@@ -16,9 +16,9 @@ import ChatPage from "./page/ChatPage";
 import Landing from "./page/Landing";
 import "./styles/globalStyles.css";
 import Header from "./component/ new-portal/Header";
+import Sidebar from "./component/ new-portal/Sidebar";
 import LoginNew from "./page/LoginNew";
 import Signin from "./page/Signin";
-import Sidebar from "./component/Sidebar";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -63,10 +63,6 @@ function App() {
               <img
                 className="fixed bottom-0 w-full m-0"
                 src="../asset/bg-gradation.svg"
-              />
-              <img
-                className="fixed m-0 right-0 bottom-0 h-[60%]"
-                src="../asset/bg-word.svg"
               />
             </>
           )}
