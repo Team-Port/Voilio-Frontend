@@ -13,10 +13,13 @@ import { useRecoilState } from "recoil";
 import { isVideoItems } from "./store/video/isVideoItems";
 import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
+import Landing from "./page/Landing";
 import "./styles/globalStyles.css";
-import Header from "./component/ new-portal/Header";
 import LoginNew from "./page/LoginNew";
 import Signin from "./page/Signin";
+import Header from "./component/ new-portal/Header";
+import Sidebar from "./component/ new-portal/Sidebar";
+import VideoDetailPage from "./page/VideoDetailPage";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -53,20 +56,21 @@ function App() {
     videoItems && (
       <BrowserRouter>
         {window.location.pathname !== "/new-portal/login" &&
-          window.location.pathname !== "/new-portal/signin" && (
+          window.location.pathname !== "/new-portal/signin" &&
+          window.location.pathname !== "/new-portal/landing" && (
             <>
               <Header />
+              <Sidebar />
               <img
                 className="fixed bottom-0 w-full m-0"
                 src="../asset/bg-gradation.svg"
               />
-              <img
-                className="fixed m-0 right-0 bottom-0 h-[60%]"
-                src="../asset/bg-word.svg"
-              />
             </>
           )}
         <Routes>
+          <Route path="/new-portal/landing" element={<Landing />} />
+          <Route path="/new-portal" element={<Home />} />
+          <Route path="/new-portal/:category" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/category/:category" element={<Home />} />
           <Route path="/search/:keyword" element={<Home />} />
@@ -78,6 +82,8 @@ function App() {
           <Route path="/manage/:boardId" element={<UploadVideo />} />
           <Route path="/chatRooms" element={<ChatRoomListPage />} />
           <Route path="/chatRooms/:roomId" element={<ChatPage />} />
+
+          {/* --- New Portal ---*/}
           <Route path="/new-portal" element={<New />} />
           <Route
             path="/new-portal/login"
@@ -86,6 +92,10 @@ function App() {
           <Route
             path="/new-portal/signin"
             element={<Signin hideHeader={true} />}
+          />
+          <Route
+            path="/new-portal/video-detail"
+            element={<VideoDetailPage />}
           />
         </Routes>
       </BrowserRouter>
