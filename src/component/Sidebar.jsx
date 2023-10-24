@@ -1,77 +1,105 @@
-import React from "react";
-import "./sidebar.css";
-import axios from "axios";
-import { useNavigate } from "react-router";
-import { HOST_URL } from "../lib/HostUrl";
-import { Button } from "@mui/material";
-import { useRecoilState } from "recoil";
-import { isVideoItems } from "../store/video/isVideoItems";
+import React, { useState } from "react";
+import "../../src/styles/tailwind.css";
 
-const Sidebar = ({ handleSetVideo }) => {
-  const [videoItems, setVideoItems] = useRecoilState(isVideoItems);
+const Sidebar = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const navigate = useNavigate();
-
-  const onClickCateogry = (value) => {
-    axios
-      .get(`${HOST_URL}/api/v1/boards/lists/category?category=${value}`)
-      .then((response) => {
-        setVideoItems(response.data.data._embedded.boardResponseList);
-        navigate(`/category/${value}`);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const handleCategoryClick = (category) => {
+    setSelectedCategory((prevCategory) =>
+      prevCategory === category ? null : category
+    );
   };
 
   return (
-    <div className="sidebarMenu-box">
-      <div className="pageMenu-box">
-        <div>
-          <img src={`${process.env.PUBLIC_URL}/asset/home.png`} />
-          <p>Home</p>
-        </div>
-        <div>
-          <img src={`${process.env.PUBLIC_URL}/asset/highlight.png`} />
-          <p>보관</p>
-        </div>
-        <div>
-          <img src={`${process.env.PUBLIC_URL}/asset/target.png`} />
-          <p>구독</p>
-        </div>
-        <div>
-          <img src={`${process.env.PUBLIC_URL}/asset/chart.png`} />
-          <p>통계</p>
+    <div className="w-[140px] h-[500px] relative">
+      <div className="w-[140px] h-[33px] left-0 top-[457px] absolute mt-[10px]">
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-['Titillium Web']">
+          Following
         </div>
       </div>
-      <div className="categoryMenu-box">
-        <div onClick={() => onClickCateogry("IT")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/IT.png`} />
-          <p>IT</p>
+      <div className="w-[140px] h-[33px] left-0 top-[397px] absolute">
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-['Titillium Web']">
+          Library
         </div>
-        <div onClick={() => onClickCateogry("BACKEND")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/violin.png`} />
-          <p>Backend</p>
+      </div>
+      <div className="w-[140px] h-[369.90px] left-0 top-0 absolute">
+        <div className="w-[123.68px] h-[32.90px] top-[337px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Sales" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Sales")}
+          >
+            Sales
+          </div>
         </div>
-        <div onClick={() => onClickCateogry("FRONTEND")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/beauty.png`} />
-          <p>Frontend</p>
+        <div className="w-[123.68px] h-[32.90px] top-[292px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Language"
+                ? "bg-white rounded font-bold"
+                : ""
+            }`}
+            onClick={() => handleCategoryClick("Language")}
+          >
+            Language
+          </div>
         </div>
-        <div onClick={() => onClickCateogry("DANCE")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/dance.png`} />
-          <p>Dance</p>
+        <div className="w-[123.68px] h-[32.90px] top-[247px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Exercise"
+                ? "bg-white rounded font-bold"
+                : ""
+            }`}
+            onClick={() => handleCategoryClick("Exercise")}
+          >
+            Exercise
+          </div>
         </div>
-        <div onClick={() => onClickCateogry("LANGUAGE")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/language.png`} />
-          <p>Language</p>
+        <div className="w-[123.68px] h-[32.90px] top-[202px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Dance" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Dance")}
+          >
+            Dance
+          </div>
         </div>
-        <div onClick={() => onClickCateogry("PYTHON")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
-          <p>Python</p>
+        <div className="w-[123.68px] h-[32.90px] top-[157px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "Design" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("Design")}
+          >
+            Design
+          </div>
         </div>
-        <div onClick={() => onClickCateogry("JAVA")}>
-          <img src={`${process.env.PUBLIC_URL}/asset/exercise.png`} />
-          <p>Java</p>
+        <div className="w-[123.68px] h-[32.90px] top-[112px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-zinc-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "IT" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("IT")}
+          >
+            IT
+          </div>
+        </div>
+        <div className="w-[123.68px] h-[32.90px] top-[67px] absolute cursor-pointer">
+          <div
+            className={`w-[123.68px] h-[32.90px] left-0 top-0 absolute text-center text-neutral-500 text-xl font-['Titillium Web'] ${
+              selectedCategory === "All" ? "bg-white rounded font-bold" : ""
+            }`}
+            onClick={() => handleCategoryClick("All")}
+          >
+            All
+          </div>
+        </div>
+        <div className="w-[140px] h-[33px] left-0 top-0 absolute text-center text-neutral-700 text-2xl font-bold font-['Titillium Web']">
+          Category
+          <div className="w-[140px] h-[0px] mt-3 border border-neutral-700"></div>
         </div>
       </div>
     </div>
