@@ -4,6 +4,7 @@ const Signin = () => {
       <img
         className="absolute flex-shrink top-[-30px] left-[-3px] w-[18%]"
         src="/asset/new-logo.svg"
+        alt="new-logo.svg"
       />
       <div className="h-[100vh] px-[12%] w-1/2 items-center justify-center flex">
         <div className="flex flex-col w-full">
@@ -38,7 +39,11 @@ const Signin = () => {
                   className="w-full outline-none"
                   placeholder="비밀번호를 입력해 주세요."
                 />
-                <img className="m-[0px]" src="/asset/Icon_eyeOff.svg" />
+                <img
+                  className="m-[0px]"
+                  src="/asset/Icon_eyeOff.svg"
+                  alt="Icon_eyeOff"
+                />
               </div>
             </div>
             <div className="text-[#1E293B] flex flex-col gap-[8px]">
@@ -48,7 +53,11 @@ const Signin = () => {
                   className="w-full outline-none"
                   placeholder="비밀번호를 한 번 더 입력해 주세요."
                 />
-                <img className="m-[0px]" src="/asset/Icon_eyeOff.svg" />
+                <img
+                  className="m-[0px]"
+                  src="/asset/Icon_eyeOff.svg"
+                  alt="Icon_eveOff"
+                />
               </div>
             </div>
             <div className="text-[#1E293B] flex flex-col gap-[8px]">
@@ -58,7 +67,11 @@ const Signin = () => {
                   className="w-full outline-none"
                   placeholder="채널 이름으로 사용할 닉네임을 입력해 주세요."
                 />
-                <img className="m-[0px]" src="/asset/Icon_random.svg" />
+                <img
+                  className="m-[0px]"
+                  src="/asset/Icon_random.svg"
+                  alt="Icon_random"
+                />
               </div>
             </div>
           </div>
@@ -70,6 +83,7 @@ const Signin = () => {
       <img
         className="m-[0px] h-[100vh] w-1/2 object-cover"
         src="/asset/login-bg.svg"
+        alt="login-bg"
       />
     </div>
   );

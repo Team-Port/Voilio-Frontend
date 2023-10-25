@@ -16,10 +16,11 @@ import ChatPage from "./page/ChatPage";
 import Landing from "./page/Landing";
 import "./styles/globalStyles.css";
 import LoginNew from "./page/LoginNew";
-import Signin from "./page/Signin";
 import Header from "./component/ new-portal/Header";
+import Signin from "./page/Signin";
 import Sidebar from "./component/ new-portal/Sidebar";
-import VideoDetailPage from "./page/VideoDetailPage";
+import UploadVideoNew from "./page/UploadVideoNew";
+import UploadPostNew from "./page/UploadPostNew";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -62,8 +63,12 @@ function App() {
               <Header />
               <Sidebar />
               <img
-                className="fixed bottom-0 w-full m-0"
+                className="fixed bottom-0 z-0 w-full m-0"
                 src="../asset/bg-gradation.svg"
+              />
+              <img
+                className="fixed m-0 right-0 bottom-0 h-[60%] z-0"
+                src="../asset/bg-word.svg"
               />
             </>
           )}
@@ -93,10 +98,8 @@ function App() {
             path="/new-portal/signin"
             element={<Signin hideHeader={true} />}
           />
-          <Route
-            path="/new-portal/video-detail"
-            element={<VideoDetailPage />}
-          />
+          <Route path="/new-portal/upload-video" element={<UploadVideoNew />} />
+          <Route path="/new-portal/upload-post" element={<UploadPostNew />} />
         </Routes>
       </BrowserRouter>
     )

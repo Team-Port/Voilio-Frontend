@@ -3,8 +3,10 @@ module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        almendra: ["Almendra", "sans-serif"],
+      screens: {
+        md: "925px",
+        lg: "1210px",
+        xl: "1490px",
       },
     },
   },
