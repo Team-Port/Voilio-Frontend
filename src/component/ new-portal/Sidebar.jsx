@@ -58,6 +58,7 @@ const categories = [
 
 const Menu = () => {
   const [activeMenu, setActiveMenu] = useState(1);
+  const [activeCategory, setActiveCategory] = useState(1);
 
   const makeMenus = () => {
     if (!menus || menus.length === 0) return [];
@@ -68,7 +69,10 @@ const Menu = () => {
           return (
             <button
               className="flex gap-[15px] w-full flex-col"
-              onClick={() => setActiveMenu(menu.id)}
+              onClick={() => {
+                setActiveMenu(menu.id);
+                activeMenu !== 1 && setActiveCategory(null);
+              }}
               key={menu.id}
             >
               <div
@@ -81,7 +85,10 @@ const Menu = () => {
               {menu.value === "category" && (
                 <>
                   <div className="w-[140px] h-[1px] bg-black" />
-                  <Category />
+                  <Category
+                    activeCategory={activeCategory}
+                    setActiveCategory={setActiveCategory}
+                  />
                 </>
               )}
             </button>
@@ -94,9 +101,7 @@ const Menu = () => {
   return makeMenus();
 };
 
-const Category = () => {
-  const [activeCategory, setActiveCategory] = useState(1);
-
+const Category = ({ activeCategory, setActiveCategory }) => {
   const makeCategories = () => {
     if (!categories || categories.length === 0) return [];
     return (
