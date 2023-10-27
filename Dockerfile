@@ -5,13 +5,12 @@ WORKDIR /frontend
 COPY ./package.json /frontend/
 COPY ./package-lock.json /frontend/
 
-RUN npm install -g react-scripts
-RUN npm install
+RUN npm install --silent
+RUN npm install react-scripts -g --silent
 
 COPY . /frontend/
 
-RUN npm run build 
-
-CMD ["npm", "run", "start"]
+# start app
+CMD ["npm", "start"]
 
 EXPOSE 3000
