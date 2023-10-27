@@ -1,4 +1,70 @@
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import axios from "axios";
+
+import jwt_decode from "jwt-decode";
+import { HOST_URL } from "../../lib/HostUrl";
+
+import AuthInput from "../../component/ new-portal/AuthInput";
+import ServiceIntro from "../../component/ new-portal/ServiceIntro";
+
 const Login = () => {
+  const [emailValue, setEmailValue] = useState("");
+  const [pwdValue, setPwdValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const loginAxios = () => {
+    axios
+      .post(`${HOST_URL}/api/v1/auth/login`, {
+        email: emailValue,
+        password: pwdValue,
+      })
+      .then((response) => {
+        console.log(response);
+        alert("반가워요!");
+        if (response.status === 200) {
+          sessionStorage.setItem(
+            "jwtAuthToken",
+            response.data.data.replace("Bearer ", "")
+          );
+          const decodedToken = jwt_decode(
+            response.data.data.replace("Bearer ", "")
+          );
+          const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
+
+          if (expirationTime < Date.now()) {
+            sessionStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
+          }
+
+          getUser(decodedToken.sub);
+          console.log("before navigation");
+          return navigate("/new-portal");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response && error.response.status === 401) {
+          alert("E-mail 또는 비밀번호를 확인해 주세요.");
+        }
+      });
+  };
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+  };
+
+  const getUser = (userId) => {
+    axios
+      .get(`${HOST_URL}/api/v1/users/${userId}`)
+      .then((response) => {
+        sessionStorage.setItem("nickname", response.data.data.nickname);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
       <img
@@ -8,51 +74,35 @@ const Login = () => {
       />
       <div className="h-[100vh] px-[12%] w-1/2 items-center justify-center flex">
         <div className="flex flex-col w-full">
-          <div className="text-[#1E293B] font-bold text-4xl mb-[16px]">
-            Welcome Voilio
-          </div>
-          <div className="text-[#475569] mb-[40px]">
-            <li>
-              Voilio는{" "}
-              <span className="text-[#FF6A8C]">
-                영상 기반 포트폴리오 공유 웹사이트
-              </span>
-              예요.
-            </li>
-            <li>로그인을 하면 다양한 영상을 공유해서 나를 알릴 수 있어요.</li>
-            <li>다양한 분야의 사람들, 채용 담당자들과 DM을 해보세요.</li>
-          </div>
-          <div className="flex flex-col gap-[16px] mb-[32px]">
-            <div className="text-[#1E293B] flex flex-col gap-[8px]">
-              <div className="text-sm font-semibold">E-mail</div>
-              <div className="border-[1px] border-[#E2E8F0] rounded-[4px] px-[12px] py-[16px] bg-white">
-                <input
-                  className="w-full outline-none"
-                  placeholder="이메일을 입력해 주세요."
-                />
-              </div>
+          <ServiceIntro />
+          <form onSubmit={onSubmitHandler}>
+            <div className="flex flex-col gap-[16px] mb-[32px]">
+              <AuthInput
+                formTitle="E-mail"
+                placeholder="이메일을 입력해 주세요."
+                value={emailValue}
+                setValue={setEmailValue}
+              />
+              <AuthInput
+                formTitle="Password"
+                placeholder="비밀번호를 입력해 주세요."
+                icon="/asset/Icon_eyeOff.svg"
+                value={pwdValue}
+                setValue={setPwdValue}
+              />
             </div>
-            <div className="text-[#1E293B] flex flex-col gap-[8px]">
-              <div className="text-sm font-semibold">Password</div>
-              <div className="flex flex-row border-[1px] border-[#E2E8F0] rounded-[4px] px-[12px] py-[16px] bg-white">
-                <input
-                  className="w-full outline-none"
-                  placeholder="비밀번호를 입력해 주세요."
-                />
-                <img
-                  className="m-[0px]"
-                  src="/asset/Icon_eyeOff.svg"
-                  alt="Icon_eyeOff"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center px-[24px] py-[16px] mb-[29px] bg-[#FACAD5] rounded-[4px] text-white font-bold">
-            Login
-          </div>
+            <button
+              className="flex w-full justify-center px-[24px] py-[16px] mb-[29px] bg-[#FACAD5] rounded-[4px] text-white font-bold"
+              onClick={loginAxios}
+            >
+              Login
+            </button>
+          </form>
           <div className="flex flex-row gap-[5px]">
             <span className="text-[#475569]">회원이 아니신가요?</span>
-            <span className="text-[#FF6A8C] font-bold">Join</span>
+            <Link to="/new-portal/signin" className="text-[#FF6A8C] font-bold">
+              Join
+            </Link>
           </div>
         </div>
       </div>

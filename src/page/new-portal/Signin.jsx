@@ -79,7 +79,7 @@ const Signin = () => {
                 setValue={setConfirmPwdValue}
               />
               <AuthInput
-                formTitle="Password"
+                formTitle="Nickname"
                 placeholder="채널 이름으로 사용할 닉네임을 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
                 value={nicknameValue}
