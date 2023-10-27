@@ -21,6 +21,7 @@ import Signin from "./page/Signin";
 import Sidebar from "./component/ new-portal/Sidebar";
 import UploadVideoNew from "./page/UploadVideoNew";
 import UploadPostNew from "./page/UploadPostNew";
+import VideoDetailPage from "./page/VideoDetailPage";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -89,7 +90,6 @@ function App() {
           <Route path="/chatRooms/:roomId" element={<ChatPage />} />
 
           {/* --- New Portal ---*/}
-          <Route path="/new-portal" element={<New />} />
           <Route
             path="/new-portal/login"
             element={<LoginNew hideHeader={true} />}
@@ -100,6 +100,10 @@ function App() {
           />
           <Route path="/new-portal/upload-video" element={<UploadVideoNew />} />
           <Route path="/new-portal/upload-post" element={<UploadPostNew />} />
+          <Route
+            path="/new-portal/video-detail"
+            element={<VideoDetailPage />} // 추후 '/video/:id' 형식으로 바꿀 예정
+          />
         </Routes>
       </BrowserRouter>
     )
