@@ -1,9 +1,14 @@
-FROM node AS builder
+FROM node:latest
 
 WORKDIR /frontend
-COPY ./package.json ./
-COPY ./package-lock.json ./
+
+COPY ./package.json ./frontend
+COPY ./package-lock.json ./frontend
+
 RUN npm install
 
-COPY /frontend ./frontend
+COPY / ./
+
 RUN npm run build
+
+EXPOSE 3000
