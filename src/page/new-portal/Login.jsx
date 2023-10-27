@@ -40,7 +40,6 @@ const Login = () => {
           }
 
           getUser(decodedToken.sub);
-          console.log("before navigation");
           return navigate("/new-portal");
         }
       })
