@@ -1,6 +1,7 @@
 FROM node:latest as build
 
 WORKDIR /frontend
+ENV PATH /frontend/node_modules/.bin:$PATH
 
 COPY ./package.json /frontend/
 COPY ./package-lock.json /frontend/
