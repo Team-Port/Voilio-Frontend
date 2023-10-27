@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../src/styles/tailwind.css";
 import "../../src/styles/globalStyles.css";
@@ -7,6 +7,11 @@ import Header from "../component/ new-portal/Header";
 // import { relative } from "path";
 
 const Landing = () => {
+  const [clicked, setClicked] = useState(false);
+
+  const handleClick = () => {
+    setClicked(!clicked);
+  };
   return (
     <div className="">
       <div className="flex flex-col bg-white relative z-0">
@@ -57,7 +62,8 @@ const Landing = () => {
             <img
               src="/asset/start.svg"
               alt="start service"
-              className="z-40 w-[11%] h-auto absolute bottom-[20px]"
+              onClick={handleClick}
+              className="z-40 w-[11%] h-auto absolute bottom-[20px] pointer-cursor"
             />
           </Link>
         </div>
