@@ -128,7 +128,7 @@ const Comment = ({ comments }) => {
   );
 };
 
-const VideoDetailPage = () => {
+const Detail = () => {
   return (
     <div className="pl-[230px] pt-[110px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="flex flex-row h-[100vh] col-span-5 z-10">
@@ -190,4 +190,4 @@ const VideoDetailPage = () => {
   );
 };
 
-export default VideoDetailPage;
+export default Detail;

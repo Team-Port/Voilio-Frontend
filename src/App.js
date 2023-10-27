@@ -4,7 +4,6 @@ import Home from "./page/Home";
 import Login from "./page/Login";
 import Join from "./page/Join";
 import Profile from "./page/Profile";
-import New from "./page/New";
 import Watch from "./page/Watch";
 import axios from "axios";
 import UploadVideo from "./page/UploadVideo";
@@ -13,15 +12,9 @@ import { useRecoilState } from "recoil";
 import { isVideoItems } from "./store/video/isVideoItems";
 import ChatRoomListPage from "./page/ChatRoomListPage";
 import ChatPage from "./page/ChatPage";
-import Landing from "./page/Landing";
-import "./styles/globalStyles.css";
-import LoginNew from "./page/LoginNew";
+
 import Header from "./component/ new-portal/Header";
-import Signin from "./page/Signin";
 import Sidebar from "./component/ new-portal/Sidebar";
-import UploadVideoNew from "./page/UploadVideoNew";
-import UploadPostNew from "./page/UploadPostNew";
-import VideoDetailPage from "./page/VideoDetailPage";
 
 const defaultVideos =
   JSON.parse(sessionStorage.getItem("defaultVideos")) || null;
@@ -74,9 +67,6 @@ function App() {
             </>
           )}
         <Routes>
-          <Route path="/new-portal/landing" element={<Landing />} />
-          <Route path="/new-portal" element={<Home />} />
-          <Route path="/new-portal/:category" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/category/:category" element={<Home />} />
           <Route path="/search/:keyword" element={<Home />} />
@@ -88,22 +78,6 @@ function App() {
           <Route path="/manage/:boardId" element={<UploadVideo />} />
           <Route path="/chatRooms" element={<ChatRoomListPage />} />
           <Route path="/chatRooms/:roomId" element={<ChatPage />} />
-
-          {/* --- New Portal ---*/}
-          <Route
-            path="/new-portal/login"
-            element={<LoginNew hideHeader={true} />}
-          />
-          <Route
-            path="/new-portal/signin"
-            element={<Signin hideHeader={true} />}
-          />
-          <Route path="/new-portal/upload-video" element={<UploadVideoNew />} />
-          <Route path="/new-portal/upload-post" element={<UploadPostNew />} />
-          <Route
-            path="/new-portal/video-detail"
-            element={<VideoDetailPage />} // 추후 '/video/:id' 형식으로 바꿀 예정
-          />
         </Routes>
       </BrowserRouter>
     )
