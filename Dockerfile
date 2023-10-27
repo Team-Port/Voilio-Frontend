@@ -2,13 +2,13 @@ FROM node:latest
 
 WORKDIR /frontend
 
-COPY ./package.json ./frontend
-COPY ./package-lock.json ./frontend
+COPY ./package.json /frontend/
+COPY ./package-lock.json /frontend/
 
 RUN npm install
 
-COPY / ./
+COPY . /frontend/
 
-RUN npm run build
+RUN npm run build 
 
 EXPOSE 3000
