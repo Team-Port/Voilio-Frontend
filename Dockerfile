@@ -5,6 +5,7 @@ WORKDIR /frontend
 COPY ./package.json /frontend/
 COPY ./package-lock.json /frontend/
 
+RUN npm install -g react-scripts
 RUN npm install
 
 COPY . /frontend/
