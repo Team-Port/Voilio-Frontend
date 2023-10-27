@@ -56,6 +56,9 @@ const VideoItem = () => {
   //     navigate(`/manage/${boardId}`);
   //   }
   // };
+  // const VideoData =() =>{
+  //   axios.get(`${HOST_URL}/api/v1/`)
+  // }
 
   return (
     <div className="w-full h-full flex px-3">
