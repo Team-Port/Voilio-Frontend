@@ -62,7 +62,6 @@ const VideoItem = () => {
 
   return (
     <div className="w-full h-full flex px-3">
-      {/* <div className="w-full h-full grid grid-cols-3 grid-row-3 gap-4 pl-[20px] pr-[40px]"> */}
       <div className="w-full h-full ">
         <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px]">
           <div className="flex justify-between items-center px-[23px] my-[10px]">
@@ -115,7 +114,6 @@ const VideoItem = () => {
             </div>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </div>
   );
