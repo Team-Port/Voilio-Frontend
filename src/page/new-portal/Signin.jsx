@@ -13,6 +13,9 @@ const Signin = () => {
   const [confirmPwdValue, setConfirmPwdValue] = useState("");
   const [nicknameValue, setNicknameValue] = useState("");
 
+  const [showPwd, setShowPwd] = useState(false);
+  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+
   const navigate = useNavigate();
 
   const signinAxios = () => {
@@ -46,6 +49,11 @@ const Signin = () => {
     }
   };
 
+  const handleEventClick = () => {
+    // random nickname 생성으로 대체될 함수
+    alert("hey👋");
+  };
+
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
       <img
@@ -61,29 +69,32 @@ const Signin = () => {
               <AuthInput
                 formTitle="E-mail"
                 placeholder="아이디로 사용할 이메일을 입력해 주세요."
-                value={emailValue}
                 setValue={setEmailValue}
               />
               <AuthInput
                 formTitle="Password"
                 placeholder="비밀번호를 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
-                value={pwdValue}
+                anotherIcon="/asset/Icon_eyeOn.svg"
                 setValue={setPwdValue}
+                event={showPwd}
+                setEvent={setShowPwd}
               />
               <AuthInput
                 formTitle="Password Check"
                 placeholder="비밀번호를 한 번 더 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
-                value={confirmPwdValue}
+                anotherIcon="/asset/Icon_eyeOn.svg"
                 setValue={setConfirmPwdValue}
+                event={showConfirmPwd}
+                setEvent={setShowConfirmPwd}
               />
               <AuthInput
                 formTitle="Nickname"
                 placeholder="채널 이름으로 사용할 닉네임을 입력해 주세요."
-                icon="/asset/Icon_eyeOff.svg"
-                value={nicknameValue}
+                icon="/asset/Icon_random.svg"
                 setValue={setNicknameValue}
+                setEvent={handleEventClick}
               />
             </div>
             <button
