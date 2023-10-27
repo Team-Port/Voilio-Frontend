@@ -1,6 +1,6 @@
-import TextEditor from "../component/ new-portal/TextEditor";
+import TextEditor from "../../component/ new-portal/TextEditor";
 
-const UploadVideo = () => {
+const VideoPicker = () => {
   return (
     <div className="relative flex justify-center flex-1">
       <img
@@ -28,7 +28,7 @@ const UploadVideo = () => {
   );
 };
 
-const UploadThumbnail = () => {
+const ThumbnailPicker = () => {
   return (
     <div className="relative flex justify-center flex-1">
       <img
@@ -56,13 +56,13 @@ const UploadThumbnail = () => {
   );
 };
 
-const UploadVideoNew = () => {
+const UploadVideo = () => {
   return (
     <div className="pl-[250px] pr-[30px] pt-[115px]">
       <div className="flex flex-col">
         <div className="flex flex-row gap-[30px]">
-          <UploadVideo />
-          <UploadThumbnail />
+          <VideoPicker />
+          <ThumbnailPicker />
         </div>
         <TextEditor />
       </div>
@@ -70,4 +70,4 @@ const UploadVideoNew = () => {
   );
 };
 
-export default UploadVideoNew;
+export default UploadVideo;

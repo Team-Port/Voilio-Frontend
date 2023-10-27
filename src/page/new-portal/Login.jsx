@@ -1,4 +1,4 @@
-const LoginNew = () => {
+const Login = () => {
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
       <img
@@ -65,4 +65,4 @@ const LoginNew = () => {
   );
 };
 
-export default LoginNew;
+export default Login;
