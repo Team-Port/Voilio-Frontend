@@ -1,14 +1,13 @@
 import React from "react";
-import "../../src/styles/tailwind.css";
-import InfoList from "../component/InfoList";
-import VideoList from "../component/VideoList";
+import InfoList from "../../component/InfoList";
+import VideoList from "../../component/VideoList";
 import { useRecoilValue } from "recoil";
-import { isVideoItems } from "../store/video/isVideoItems";
-import NewMemberBox from "../component/NewMemberBox";
-import VideoItem from "../component/VideoItem";
-import Filter from "../component/ new-portal/Filter";
-import Sidebar from "../component/ new-portal/Sidebar";
-import Header from "../component/ new-portal/Header";
+import { isVideoItems } from "../../store/video/isVideoItems";
+import NewMemberBox from "../../component/NewMemberBox";
+import VideoItem from "../../component/VideoItem";
+import Filter from "../../component/ new-portal/Filter";
+import Sidebar from "../../component/ new-portal/Sidebar";
+import Header from "../../component/ new-portal/Header";
 
 const Home = () => {
   const videoItems = useRecoilValue(isVideoItems);

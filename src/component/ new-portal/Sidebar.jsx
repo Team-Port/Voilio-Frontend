@@ -1,99 +1,130 @@
 import { useState } from "react";
 
-const menus = [
-  {
-    id: 1,
-    name: "Category",
-    value: "category",
-  },
+const menues = [
+  // {
+  //   id: 1,
+  //   name: "Category",
+  //   value: "category",
+  // },
   {
     id: 2,
-    name: "Library",
-    value: "library",
-  },
-  {
-    id: 3,
-    name: "Following",
-    value: "following",
-  },
-];
-
-const categories = [
-  {
-    id: 1,
     name: "All",
     value: "all",
   },
   {
-    id: 2,
+    id: 3,
     name: "IT",
     value: "all",
   },
   {
-    id: 3,
+    id: 4,
     name: "Design",
     value: "design",
   },
   {
-    id: 4,
+    id: 5,
     name: "Dance",
     value: "dance",
   },
   {
-    id: 5,
+    id: 6,
     name: "Exercise",
     value: "exercise",
   },
   {
-    id: 6,
+    id: 7,
     name: "Language",
     value: "language",
   },
   {
-    id: 7,
+    id: 8,
     name: "Sales",
     value: "sales",
+  },
+  {
+    id: 9,
+    name: "Library",
+    value: "library",
+  },
+  {
+    id: 10,
+    name: "Following",
+    value: "following",
   },
 ];
 
 const Menu = () => {
   const [activeMenu, setActiveMenu] = useState(1);
   const [activeCategory, setActiveCategory] = useState(1);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const makeMenus = () => {
-    if (!menus || menus.length === 0) return [];
+    if (!menues || menues.length === 0) return [];
     return (
-      <div className="flex flex-col gap-[30px]">
-        {menus.map((menu) => {
+      <div className="flex flex-col gap-[20px]">
+        <div className="flex gap-[15px] w-full flex-col">
+          <div className="flex justify-center w-full text-2xl">Category</div>
+          <div className="w-[140px] h-[1px] bg-black" />
+        </div>
+        {menues.map((menu) => {
           const isActive = menu.id === activeMenu;
           return (
             <button
               className="flex gap-[15px] w-full flex-col"
               onClick={() => {
                 setActiveMenu(menu.id);
-                activeMenu !== 1 && setActiveCategory(null);
+                menu.id !== 1 && setActiveCategory(null);
+                if (menu.value === "following") {
+                  setShowDropdown(!showDropdown);
+                } else {
+                  setShowDropdown(false); // Following이 아닌 다른 메뉴 클릭 시 dropdown 닫기
+                }
               }}
               key={menu.id}
             >
               <div
-                className={`flex justify-center w-full text-2xl ${
-                  isActive ? "font-bold" : ""
-                }`}
+                className={`flex justify-center w-full ${
+                  menu.id === 9 || menu.id === 10 ? "text-2xl" : "text-xl"
+                } ${isActive ? "font-bold" : ""}`}
               >
                 {menu.name}
               </div>
-              {menu.value === "category" && (
-                <>
-                  <div className="w-[140px] h-[1px] bg-black" />
-                  <Category
-                    activeCategory={activeCategory}
-                    setActiveCategory={setActiveCategory}
-                  />
-                </>
+              {menu.value === "library" && (
+                <div className="w-[140px] h-[1px] bg-black mt-[8px]" />
+              )}
+              {menu.value === "sales" && (
+                <div className="w-[140px] h-[1px] bg-black" />
               )}
             </button>
           );
         })}
+        {showDropdown && (
+          <div className="relative flex w-[134px] text-center">
+            <div className="right-0 z-10  w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div
+                className="py-1 text-center"
+                role="none"
+                style={{ maxHeight: "150px", overflowY: "auto" }}
+              >
+                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
+                  User 1
+                </div>
+                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
+                  User 2
+                </div>
+                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
+                  User 3
+                </div>
+                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
+                  User 4
+                </div>
+                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
+                  User 5
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -101,38 +132,9 @@ const Menu = () => {
   return makeMenus();
 };
 
-const Category = ({ activeCategory, setActiveCategory }) => {
-  const makeCategories = () => {
-    if (!categories || categories.length === 0) return [];
-    return (
-      <div className="flex flex-col w-full gap-[12px]">
-        {categories.map((category) => {
-          const isActive = category.id === activeCategory;
-          return (
-            <button
-              onClick={() => setActiveCategory(category.id)}
-              key={category.id}
-            >
-              <div
-                className={`flex w-full justify-center text-xl ${
-                  isActive ? "font-bold" : ""
-                }`}
-              >
-                {category.name}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    );
-  };
-
-  return makeCategories();
-};
-
 const Sidebar = () => {
   return (
-    <div className="fixed flex justify-center items-center mt-[110px] ml-[10px] w-[180px]">
+    <div className="fixed flex justify-center items-center mt-[110px] ml-[10px] w-[180px] z-20">
       <div className="flex items-center justify-center">
         <Menu />
       </div>

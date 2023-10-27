@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../src/styles/tailwind.css";
-import "../../src/styles/globalStyles.css";
-import Home from "./Home";
-import Header from "../component/ new-portal/Header";
-// import { relative } from "path";
 
 const Landing = () => {
   const [clicked, setClicked] = useState(false);
@@ -14,13 +9,13 @@ const Landing = () => {
   };
   return (
     <div className="">
-      <div className="flex flex-col bg-white relative z-0">
+      <div className="relative z-0 flex flex-col bg-white">
         <div className="z-10 flex justify-between text-neutral-500 text-[40px] font-almendra font-bold my-7 px-20 absolute w-[100%]">
           <div className="">video</div>
           <div className="">portfolio</div>
           <div className="">service</div>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <img
             src="/asset/gradient.png"
             alt="gradient"
