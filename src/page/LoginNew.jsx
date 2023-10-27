@@ -4,6 +4,7 @@ const LoginNew = () => {
       <img
         className="absolute flex-shrink top-[-30px] left-[-3px] w-[18%]"
         src="/asset/new-logo.svg"
+        alt="new-logo"
       />
       <div className="h-[100vh] px-[12%] w-1/2 items-center justify-center flex">
         <div className="flex flex-col w-full">
@@ -38,7 +39,11 @@ const LoginNew = () => {
                   className="w-full outline-none"
                   placeholder="비밀번호를 입력해 주세요."
                 />
-                <img className="m-[0px]" src="/asset/Icon_eyeOff.svg" />
+                <img
+                  className="m-[0px]"
+                  src="/asset/Icon_eyeOff.svg"
+                  alt="Icon_eyeOff"
+                />
               </div>
             </div>
           </div>
@@ -54,6 +59,7 @@ const LoginNew = () => {
       <img
         className="m-[0px] h-[100vh] w-1/2 object-cover"
         src="/asset/login-bg.svg"
+        alt="login-bg"
       />
     </div>
   );

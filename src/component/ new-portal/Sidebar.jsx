@@ -132,7 +132,7 @@ const Category = ({ activeCategory, setActiveCategory }) => {
 
 const Sidebar = () => {
   return (
-    <div className="fixed flex justify-center items-center mt-[100px] ml-[10px] w-[180px]">
+    <div className="fixed flex justify-center items-center mt-[110px] ml-[10px] w-[180px]">
       <div className="flex items-center justify-center">
         <Menu />
       </div>
