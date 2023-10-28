@@ -1,5 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function useOutSideRef() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // 현재 document에서 mousedown 이벤트가 동작하면 호출되는 함수입니다.
+      if (ref.current && !ref.current.contains(event.target)) {
+        console.log(`div 외부 클릭을 감지!`);
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  });
+
+  return ref;
+}
 
 const SearchBar = () => {
   return (
@@ -15,20 +35,74 @@ const SearchBar = () => {
           type="text"
           placeholder="Search anything ..."
         />
-        <img className="" src="/asset/Icon_option.svg" alt="Icon_option" />
+        <img
+          className="hover:cursor-pointer"
+          src="/asset/Icon_option.svg"
+          alt="Icon_option"
+        />
       </div>
     </div>
   );
 };
 
-const Header = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [showUploadType, setShowUploadType] = useState(null);
+const UploadModal = ({ navigate, showModal, setShowModal }) => {
+  const modalRef = useRef();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = (event) => {
+    if (modalRef && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else {
+      setShowModal(true);
+    }
+  };
 
   return (
-    <div className="fixed w-full h-[85px] bg-white flex flex-row z-20">
+    <div
+      ref={modalRef}
+      className="absolute px-[13px] z-30 py-[8px] mt-[10px] border-gray-300 border-[1px] bg-white rounded-[8px]"
+    >
+      <button
+        className="hover:cursor-pointer"
+        onClick={() => {
+          setShowModal(false);
+          navigate("/new-portal/upload-video");
+        }}
+      >
+        동영상 업로드하기
+      </button>
+      <div className="bg-gray-300 h-[1px] my-[5px]" />
+      <button
+        className="hover:cursor-pointer"
+        onClick={() => {
+          setShowModal(false);
+          navigate("/new-portal/upload-post");
+        }}
+      >
+        게시글 업로드하기
+      </button>
+    </div>
+  );
+};
+
+const Header = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
+  const outsideRef = useOutSideRef();
+
+  return (
+    <div
+      className="fixed w-full h-[85px] bg-white flex flex-row z-20"
+      ref={outsideRef}
+    >
       <div className="flex flex-row">
         <img
           className="absolute left-0 m-0"
@@ -49,30 +123,14 @@ const Header = () => {
             className="hover:cursor-pointer"
             src="/asset/Icon_upload.svg"
             alt="Icon_upload"
-            onClick={() => setShowUploadType(!showUploadType)}
+            onClick={() => setShowModal(true)}
           />
-          {showUploadType && (
-            <div className="absolute px-[13px] py-[8px] mt-[10px] border-gray-300 border-[1px] z-10 bg-white rounded-[8px]">
-              <button
-                className="hover:cursor-pointer"
-                onClick={() => {
-                  navigate("/new-portal/upload-video");
-                  setShowUploadType(!showUploadType);
-                }}
-              >
-                동영상 업로드하기
-              </button>
-              <div className="bg-gray-300 h-[1px] my-[5px]" />
-              <button
-                className="hover:cursor-pointer"
-                onClick={() => {
-                  navigate("/new-portal/upload-post");
-                  setShowUploadType(!showUploadType);
-                }}
-              >
-                게시글 업로드하기
-              </button>
-            </div>
+          {showModal && (
+            <UploadModal
+              navigate={navigate}
+              showModal={showModal}
+              setShowModal={setShowModal}
+            />
           )}
         </div>
         <img
