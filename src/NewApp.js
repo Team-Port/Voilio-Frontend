@@ -18,8 +18,7 @@ const NewApp = () => {
     <BrowserRouter>
       {window.location.pathname !== "/new-portal/login" &&
         window.location.pathname !== "/new-portal/signin" &&
-        window.location.pathname !== "/new-portal/landing" &&
-        window.location.pathname !== "/new-portal" && (
+        window.location.pathname !== "/new-portal/landing" && (
           <>
             <Header />
             <Sidebar />
