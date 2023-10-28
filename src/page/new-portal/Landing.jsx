@@ -53,14 +53,15 @@ const Landing = () => {
           />
         </div>
         <div className="flex justify-center pr-[165px]">
-          <Link to={"/new-portal"}>
-            <img
-              src="/asset/start.svg"
-              alt="start service"
-              onClick={handleClick}
-              className="z-40 w-[11%] h-auto absolute bottom-[20px] pointer-cursor"
-            />
-          </Link>
+          <img
+            src="/asset/start.svg"
+            alt="start service"
+            onClick={() => {
+              handleClick();
+              window.location.href = "/new-portal";
+            }}
+            className="z-40 w-[11%] ml-[170px] h-auto absolute bottom-[20px] hover:cursor-pointer"
+          />
         </div>
       </div>
     </div>
