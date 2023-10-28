@@ -6,9 +6,7 @@ function useOutSideRef() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      // 현재 document에서 mousedown 이벤트가 동작하면 호출되는 함수입니다.
       if (ref.current && !ref.current.contains(event.target)) {
-        console.log(`div 외부 클릭을 감지!`);
       }
     }
     document.addEventListener("click", handleClickOutside);
@@ -24,17 +22,19 @@ function useOutSideRef() {
 const SearchBar = () => {
   return (
     <div className="relative h-full py-[15px] left-[235px] flex-shrink-0">
-      <div className="flex h-full items-center px-[18px] rounded-[63px] border-[0.5px] border-[#6E6E6E]">
+      <div className="flex h-full w-full items-center px-[18px] rounded-[63px] border-[0.5px] border-[#6E6E6E]">
         <img
           className="w-[25px]"
           src="/asset/Icon_magnifier.svg"
           alt="Icon_magnifier"
         />
-        <input
-          className="text-[20px] ml-[11px] mr-[150px] w-full outline-none"
-          type="text"
-          placeholder="Search anything ..."
-        />
+        <div className="w-full">
+          <input
+            className="text-[20px] w-[95%] ml-[11px] mr-[150px] outline-none"
+            type="text"
+            placeholder="Search anything ..."
+          />
+        </div>
         <img
           className="hover:cursor-pointer"
           src="/asset/Icon_option.svg"
