@@ -1,84 +1,39 @@
 import React, { useState, useEffect } from "react";
-import "../../src/styles/tailwind.css";
-import "./videoItem.css";
-import { Link, useNavigate } from "react-router-dom";
-import * as common from "./../lib/common";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import PublicIcon from "@mui/icons-material/Public";
-import PublicOffIcon from "@mui/icons-material/PublicOff";
-import { Box, IconButton, Menu, MenuItem } from "@mui/material";
+import "../../../src/styles/tailwind.css";
 import axios from "axios";
-import { HOST_URL } from "../lib/HostUrl";
+import { HOST_URL } from "../../lib/HostUrl";
 
-// const ITEM_HEIGHT = 48;
-// const options = ["숨김", "수정", "삭제"];
-const items = [
-  {
-    id: 1,
-    category: "카테고리",
-    date: "1달 전",
-    views: "3.4k",
-    thumbnail: "/asset/thumbnail.png",
-    profile: "/asset/sample.png",
-    title: "Title이 길면 slicing을 ...",
-    author: "노마드코더",
-  },
-];
-
-const VideoItem = () => {
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const open = Boolean(anchorEl);
-  // const navigate = useNavigate();
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const clickOption = (option, boardId) => {
-  //   if (option.target.innerText === "삭제") {
-  //     axios.delete(`${HOST_URL}/api/v1/boards/${boardId}`).then((respone) => {
-  //       if (respone.status === 200) {
-  //         window.location.reload();
-  //       }
-  //     });
-  //   } else if (option.target.innerText === "숨김") {
-  //     axios
-  //       .patch(`${HOST_URL}/api/v1/boards/${boardId}/hide`)
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           window.location.reload();
-  //         }
-  //       });
-  //   } else {
-  //     navigate(`/manage/${boardId}`);
-  //   }
-  // };
-  // const VideoData =() =>{
-  //   axios.get(`${HOST_URL}/api/v1/`)
-  // }
+const VideoItem = ({ item }) => {
   const [data, setData] = useState(null);
   const [title, setTitle] = useState(null);
-  // const [name, setName] = useState(null);
+  const [content, setContent] = useState(null);
   const [category1, setCategory1] = useState(null);
   const [category2, setCategory2] = useState(null);
+  const categoryColors = {
+    IT: "#85AED3",
+    Design: "#FACAD5",
+    Dance: "#EAB191",
+    Exercise: "#A9D8B6",
+    Language: "#CFB8E1",
+    Sales: "#E1DE89",
+  };
+  const category1Color = categoryColors[item.category1] || "#c7c7c7";
+  const category2Color = categoryColors[item.category2] || "#c7c7c7";
   const [createDate, setCreateDate] = useState(null);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
-
-    if (jwtToken) {
+    const boardId = item.id;
+    if (jwtToken && boardId) {
       axios
-        .get(`${HOST_URL}/api/v1/boards/1`, {
+        .get(`${HOST_URL}/api/v1/boards/${boardId}`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
         })
         .then((response) => {
           setData(response.data);
           if (response.status === 200) {
             setTitle(response.data.data.title);
-            // setName(response.data.data.name);
+            setContent(response.data.data.content);
             setCategory1(response.data.data.category1);
             setCategory2(response.data.data.category2);
             const createAt = new Date(response.data.data.createAt);
@@ -92,12 +47,12 @@ const VideoItem = () => {
           console.log("게시글을 불러오는데 실패했습니다.");
         });
     }
-  }, []);
+  }, [item]);
 
   return (
     <div className="w-full h-full flex px-3">
       <div className="w-full h-full ">
-        <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px]">
+        <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px] ">
           <div className="flex justify-between items-center px-[23px] my-[10px]">
             <div className="flex">
               <div className="w-[69px] h-[22px] bg-slate-400 rounded-[20px] mr-[3px]">
@@ -118,7 +73,7 @@ const VideoItem = () => {
               <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
                 <img
                   className="w-[16px] h-[16px] justify-center m-1"
-                  src="/asset/eyeicon.png"
+                  src="/asset/icon_eye.svg"
                   alt="eyeicon"
                 />
                 조회수
@@ -142,8 +97,11 @@ const VideoItem = () => {
               <div className="text-black text-[20px] font-semibol">
                 {title || "Loading..."}
               </div>
-              <div className="text-neutral-700 text-[17px] font-norma">
-                작성자 이름
+              <div className="text-neutral-700 text-[17px] font-normal ">
+                {content && content.length > 15
+                  ? `${content.slice(0, 15)}...`
+                  : content || "Loading..."}
+                {/* {content || "Loading..."} */}
               </div>
             </div>
           </div>
