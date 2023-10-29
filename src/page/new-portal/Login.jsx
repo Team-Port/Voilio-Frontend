@@ -12,6 +12,7 @@ const Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [pwdValue, setPwdValue] = useState("");
 
+  const [showId, setShowId] = useState(true);
   const [showPwd, setShowPwd] = useState(false);
 
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Login = () => {
           }
 
           getUser(decodedToken.sub);
-          return navigate("/new-portal");
+          return (window.location.href = "/new-portal");
         }
       })
       .catch((error) => {
@@ -61,6 +62,7 @@ const Login = () => {
         console.log(error);
       });
   };
+  console.log(showId);
 
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
@@ -78,6 +80,8 @@ const Login = () => {
                 formTitle="E-mail"
                 placeholder="이메일을 입력해 주세요."
                 setValue={setEmailValue}
+                event={showId}
+                setEvent={setShowId}
               />
               <AuthInput
                 formTitle="Password"
