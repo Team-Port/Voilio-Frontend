@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 import ReactQuill from "react-quill";
+import ReactSelect from "react-select";
+import { components } from "react-select";
 
 const modules = {
   toolbar: {
@@ -55,19 +59,64 @@ const modules = {
   },
 };
 
-const TextEditor = () => {
+const TextEditor = ({
+  categories,
+  editorHtml,
+  handleCategoryChange,
+  handleEditorChange,
+}) => {
+  const Option = (props) => {
+    return (
+      <div>
+        <components.Option {...props}>
+          <input
+            type="checkbox"
+            checked={props.isSelected}
+            onChange={() => null}
+          />{" "}
+          <label>{props.label}</label>
+        </components.Option>
+      </div>
+    );
+  };
+
+  const category = [
+    { value: "IT", label: "IT" },
+    { value: "design", label: "Design" },
+    { value: "dance", label: "Dance" },
+    { value: "exercise", label: "Exercise" },
+    { value: "language", label: "Language" },
+    { value: "sales", label: "Sales" },
+  ];
+
   return (
     <div className="flex flex-col z-10 mt-[30px] mx-[0px] xl:mx-[70px] gap-[30px]">
-      <input
-        className="outline-none border-b-[1px] bg-white bg-opacity-0 border-[#CCCCCC] px-[10px] py-[10px]"
-        placeholder="제목"
-      />
-      <ReactQuill className="h-[500px]" value={null} modules={modules} />
-      <div className="flex justify-end mt-[40px] mb-[30px]">
-        <button className="px-[14px] py-[5px] rounded-[10px] border-[1px] flex justify-center border-black z-10 bg-white">
-          등록
-        </button>
+      <div className="flex flex-row gap-[10px] items-center">
+        <input
+          className="flex-grow outline-none border-b-[1px] bg-white bg-opacity-0 border-[#CCCCCC] px-[10px] py-[10px]"
+          placeholder="제목"
+        />
+        <ReactSelect
+          className="w-[35%] lg:w-[30%] xl:w-[26%] outline-none"
+          placeholder="카테고리를 선택하세요."
+          options={category}
+          isMulti
+          closeMenuOnSelect={true}
+          hideSelectedOptions={false}
+          components={{
+            Option,
+          }}
+          onChange={handleCategoryChange}
+          allowSelectAll={true}
+          value={categories}
+        />
       </div>
+      <ReactQuill
+        className="h-[500px]"
+        value={editorHtml}
+        modules={modules}
+        onChange={handleEditorChange}
+      />
     </div>
   );
 };
