@@ -14,8 +14,6 @@ const Home = () => {
 
   return (
     <div>
-      <Sidebar />
-      <Header />
       <div className="pl-[230px] pt-[100px]">
         {" "}
         {/* 이렇게 설정하면 현재는 위치가 맞지 않으나, 모든 페이지에 header와 sidebar 때문에 padding을 설정해 주어야 할 것 같습니다!*/}

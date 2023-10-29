@@ -12,6 +12,8 @@ const Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [pwdValue, setPwdValue] = useState("");
 
+  const [showPwd, setShowPwd] = useState(false);
+
   const navigate = useNavigate();
 
   const loginAxios = () => {
@@ -38,7 +40,6 @@ const Login = () => {
           }
 
           getUser(decodedToken.sub);
-          console.log("before navigation");
           return navigate("/new-portal");
         }
       })
@@ -48,10 +49,6 @@ const Login = () => {
           alert("E-mail 또는 비밀번호를 확인해 주세요.");
         }
       });
-  };
-
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
   };
 
   const getUser = (userId) => {
@@ -75,20 +72,21 @@ const Login = () => {
       <div className="h-[100vh] px-[12%] w-1/2 items-center justify-center flex">
         <div className="flex flex-col w-full">
           <ServiceIntro />
-          <form onSubmit={onSubmitHandler}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className="flex flex-col gap-[16px] mb-[32px]">
               <AuthInput
                 formTitle="E-mail"
                 placeholder="이메일을 입력해 주세요."
-                value={emailValue}
                 setValue={setEmailValue}
               />
               <AuthInput
                 formTitle="Password"
                 placeholder="비밀번호를 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
-                value={pwdValue}
+                anotherIcon="/asset/Icon_eyeOn.svg"
                 setValue={setPwdValue}
+                event={showPwd}
+                setEvent={setShowPwd}
               />
             </div>
             <button
