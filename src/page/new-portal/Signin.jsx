@@ -13,6 +13,7 @@ const Signin = () => {
   const [confirmPwdValue, setConfirmPwdValue] = useState("");
   const [nicknameValue, setNicknameValue] = useState("");
 
+  const [showValue, setShowValue] = useState(true);
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
 
@@ -70,6 +71,8 @@ const Signin = () => {
                 formTitle="E-mail"
                 placeholder="아이디로 사용할 이메일을 입력해 주세요."
                 setValue={setEmailValue}
+                event={showValue}
+                setEvent={setShowValue}
               />
               <AuthInput
                 formTitle="Password"
@@ -93,7 +96,9 @@ const Signin = () => {
                 formTitle="Nickname"
                 placeholder="채널 이름으로 사용할 닉네임을 입력해 주세요."
                 icon="/asset/Icon_random.svg"
+                anotherIcon="/asset/Icon_random.svg"
                 setValue={setNicknameValue}
+                event={showValue}
                 setEvent={handleEventClick}
               />
             </div>
