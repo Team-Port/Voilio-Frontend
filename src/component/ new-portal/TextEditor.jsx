@@ -62,6 +62,7 @@ const modules = {
 const TextEditor = ({
   categories,
   editorHtml,
+  handleTitleChange,
   handleCategoryChange,
   handleEditorChange,
 }) => {
@@ -95,6 +96,7 @@ const TextEditor = ({
         <input
           className="flex-grow outline-none border-b-[1px] bg-white bg-opacity-0 border-[#CCCCCC] px-[10px] py-[10px]"
           placeholder="제목"
+          onChange={handleTitleChange}
         />
         <ReactSelect
           className="w-[35%] lg:w-[30%] xl:w-[26%] outline-none"

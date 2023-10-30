@@ -13,6 +13,10 @@ const UploadPost = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
   const handleCategoryChange = (selected) => {
     if (selected.length <= 2) {
       setCategories(selected);
@@ -48,6 +52,7 @@ const UploadPost = () => {
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -73,14 +78,18 @@ const UploadPost = () => {
     <div className="pl-[220px] pr-[30px] pt-[84px]">
       <div className="flex flex-col">
         <TextEditor
+          title={title}
+          setTitle={setTitle}
           categories={categories}
           editorHtml={editorHtml}
+          handleTitleChange={handleTitleChange}
           handleCategoryChange={handleCategoryChange}
           handleEditorChange={handleEditorChange}
         />
         <div className="flex justify-end mt-[70px] mr-[0px] xl:mr-[70px] mb-[30px]">
           <button
             className="px-[14px] py-[5px] rounded-[10px] border-[1px] flex justify-center border-black z-10 bg-white"
+            type="submit"
             onClick={handleFormSubmit}
           >
             등록
