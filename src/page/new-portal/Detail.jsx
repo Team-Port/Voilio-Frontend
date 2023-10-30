@@ -41,7 +41,7 @@ const CommentBox = ({ activeId, setActiveId, comment }) => {
 
   return (
     <div
-      className={`flex flex-col gap-[15px] px-[20px] py-[12px]
+      className={`flex flex-col px-[20px] py-[12px]
       ${isActive ? "bg-[#F3F3F3]" : ""}`}
     >
       <div className="flex flex-row items-center">
@@ -51,8 +51,10 @@ const CommentBox = ({ activeId, setActiveId, comment }) => {
           {format(new Date(comment.createdAt), "yyyy.M.d")}
         </div>
       </div>
-      <div className={isActive ? "" : "line-clamp-4"}>{comment.text}</div>
-      <div className="flex flex-row gap-[20px]">
+      <div className={`mt-[10px] ${isActive ? "" : "line-clamp-4"}`}>
+        {comment.text}
+      </div>
+      <div className="flex flex-row gap-[20px] mt-[15px]">
         <img className="m-0" src="/asset/Icon_heart.svg" />
         <img
           className="m-0"
@@ -76,6 +78,7 @@ const CommentBox = ({ activeId, setActiveId, comment }) => {
     </div>
   );
 };
+
 const SubCommentBox = ({ subcomment, isActive }) => {
   if (isActive)
     return (
@@ -150,11 +153,11 @@ const Detail = () => {
             </div>
             <div className="flex flex-row gap-[10px]">
               <div className="flex flex-row items-center gap-[5px]">
-                <img className="mt-[18px]" src="/asset/Icon_eye.svg" />
+                <img className="mt-[4px]" src="/asset/Icon_eye.svg" />
                 <div className="text-[#8F8F8F]">3.4k</div>
               </div>
               <div className="flex flex-row items-center gap-[5px]">
-                <img className="mt-[19px]" src="/asset/Icon_heart.svg" />
+                <img className="mt-[5px]" src="/asset/Icon_heart.svg" />
                 <div className="text-[#8F8F8F]">1234</div>
               </div>
             </div>
