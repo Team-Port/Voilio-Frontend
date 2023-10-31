@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../src/styles/tailwind.css";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+// import { error } from "console";
 
 const VideoItem = ({ item }) => {
   const [data, setData] = useState(null);
@@ -20,6 +21,8 @@ const VideoItem = ({ item }) => {
   const category1Color = categoryColors[item.category1] || "#c7c7c7";
   const category2Color = categoryColors[item.category2] || "#c7c7c7";
   const [createDate, setCreateDate] = useState(null);
+  const [imageUrl, setimageUrl] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(null);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
@@ -40,6 +43,8 @@ const VideoItem = ({ item }) => {
             const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
             const day = createAt.getDate();
             setCreateDate(`${month}월 ${day}일`);
+            // setimageUrl(response.data.data.profile);
+            setThumbnailUrl(response.data.data.thumbnailUrl);
             console.log(response.data);
           }
         })
@@ -48,6 +53,26 @@ const VideoItem = ({ item }) => {
         });
     }
   }, [item]);
+  useEffect(() => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
+    const user_id = item.id;
+    if (jwtToken && user_id) {
+      axios
+        .get(`${HOST_URL}/api/v1/users/${user_id}`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+        })
+        .then((response) => {
+          setData(response.data);
+          if (response.status === 200) {
+            setimageUrl(response.data.data.imageUrl);
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log("프로필을 불러오는데 실패했습니다.");
+        });
+    }
+  }, [item.id]);
 
   return (
     <div className="w-full h-full flex px-3">
@@ -83,19 +108,22 @@ const VideoItem = ({ item }) => {
           <div className="flex">
             <img
               className="px-[20px] m-0 rounded-[10px]"
-              src="https://voilio.s3.ap-northeast-2.amazonaws.com/thumbnail/test8.png"
-              alt="thumbnail"
+              // src="https://voilio.s3.ap-northeast-2.amazonaws.com/thumbnail/test8.png"
+              src={thumbnailUrl}
             />
           </div>
           <div className="flex justify-start items-center px-[20px] py-[10px]">
             <img
               className="w-[60px] h-[60px] rounded-full m-0"
-              src="/asset/sample.png"
+              // src="/asset/sample.png"
+              src={imageUrl}
               alt="profile"
             />
             <div className="flex flex-col ml-[15px]">
               <div className="text-black text-[20px] font-semibol">
-                {title || "Loading..."}
+                {title && title.length > 10
+                  ? `${content.slice(0, 10)}...`
+                  : title || "Loading..."}
               </div>
               <div className="text-neutral-700 text-[17px] font-normal ">
                 {content && content.length > 15
