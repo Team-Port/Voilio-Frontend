@@ -9,17 +9,21 @@ const VideoItem = ({
   content,
   category1,
   category2,
-  createDate,
-  imageUrl,
+  createAt,
+  // imageUrl,
   thumbnailUrl,
+  user_id,
 }) => {
-  // const [data, setData] = useState(null);
+  const createDate = new Date(createAt);
+  const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+  const day = createDate.getDate();
+  const [data, setData] = useState(null);
   // const [title, setTitle] = useState(null);
   // const [content, setContent] = useState(null);
   // const [category1, setCategory1] = useState(null);
   // const [category2, setCategory2] = useState(null);
   // const [createDate, setCreateDate] = useState(null);
-  // const [imageUrl, setimageUrl] = useState(null);
+  const [imageUrl, setimageUrl] = useState(null);
   // const [thumbnailUrl, setThumbnailUrl] = useState(null);
 
   // useEffect(() => {
@@ -50,9 +54,10 @@ const VideoItem = ({
   //       });
   //   }
   // }, [item]);
+  // const item = [];
   // useEffect(() => {
   //   const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
-  //   const user_id = item.id;
+  //   // const user_id = item.id;
   //   if (jwtToken && user_id) {
   //     axios
   //       .get(`${HOST_URL}/api/v1/users/${user_id}`, {
@@ -70,6 +75,26 @@ const VideoItem = ({
   //       });
   //   }
   // }, [item.id]);
+  useEffect(() => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+
+    if (jwtToken && user_id) {
+      axios
+        .get(`${HOST_URL}/api/v1/users/${user_id}`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+        })
+        .then((response) => {
+          setData(response.data);
+          if (response.status === 200) {
+            setimageUrl(response.data.data.imageUrl);
+            console.log("프로필을 정상적으로 불러왔습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log("프로필을 불러오는데 실패했습니다.");
+        });
+    }
+  }, [user_id]);
 
   return (
     <div className="w-full h-full flex px-3">
@@ -82,7 +107,8 @@ const VideoItem = ({
             </div>
             <div className="flex justify-between items-center gap-[10px]">
               <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
-                {createDate || "Loading..."}
+                {/* {createAt || "Loading..."} */}
+                {`${month}월 ${day}일`}
               </div>
               <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
                 <img

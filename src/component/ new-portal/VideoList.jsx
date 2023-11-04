@@ -4,7 +4,10 @@ import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
 
 const VideoList = () => {
+  const [imageUrl, setimageUrl] = useState(null);
+  const [data, setData] = useState(null);
   const [items, setItems] = useState([]);
+  const [createAt, setCreateAt] = useState(null);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
@@ -17,6 +20,10 @@ const VideoList = () => {
         .then((response) => {
           if (response.status === 200) {
             setItems(response.data.data.content);
+            const createAt = new Date(response.data.data.createAt);
+            const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+            const day = createAt.getDate();
+            setCreateAt(`${month}월 ${day}일`);
             console.log("게시글을 정상적으로 불러왔습니다.");
           }
         })
@@ -25,6 +32,27 @@ const VideoList = () => {
         });
     }
   }, []);
+  // useEffect(() => {
+  //   const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
+  //   const user_id = null;
+  //   if (jwtToken && user_id) {
+  //     // if (jwtToken) {
+  //     axios
+  //       .get(`${HOST_URL}/api/v1/users/${user_id}`, {
+  //         headers: { Authorization: `Bearer ${jwtToken}` },
+  //       })
+  //       .then((response) => {
+  //         setData(response.data);
+  //         if (response.status === 200) {
+  //           setimageUrl(response.data.data.imageUrl);
+  //           console.log(response.data);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log("프로필을 불러오는데 실패했습니다.");
+  //       });
+  //   }
+  // }, []);
 
   return (
     <div className="w-full h-full">
@@ -39,11 +67,11 @@ const VideoList = () => {
               content={item.content}
               category1={item.category1}
               category2={item.category2}
-              createDate={item.createDate}
+              createAt={item.createAt}
               imageUrl={item.imageUrl}
               thumbnailUrl={item.thumbnailUrl}
+              user_id={item.id} // user_id를 전달
             />
-            {/* boardId를 props로 전달합니다. */}
           </div>
         ))}
       </div>
