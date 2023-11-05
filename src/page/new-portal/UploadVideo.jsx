@@ -58,70 +58,25 @@ const ThumbnailPicker = ({ handleThumbnailChange, showMargin }) => {
 };
 
 const UploadVideo = () => {
-  const videoId = useParams().boardId;
-  const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(false);
-
   const [video, setVideo] = useState(null);
+  const [videoFileName, setVideoFileName] = useState("");
+  const [videoMargin, setVideoMargin] = useState(true);
+
   const [thumbnail, setThumbnail] = useState(null);
-  const [videoBlobUrl, setVideoBlobUrl] = useState(null);
+  const [thumbnailFileName, setThumbnailFileName] = useState("");
+  const [thumbnailMargin, setThumbnailMargin] = useState(true);
+
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
   const [editorHtml, setEditorHtml] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [videoMargin, setVideoMargin] = useState(true);
-  const [thumbnailMargin, setThumbnailMargin] = useState(true);
-
-  useEffect(() => {
-    if (!sessionStorage.getItem("jwtAuthToken")) {
-      alert("로그인이 되어있지 않습니다. 로그인 후 이용해주시길 바랍니다.");
-      navigate("/login");
-      return;
-    }
-
-    if (video) {
-      const blobUrl = URL.createObjectURL(video);
-      setVideoBlobUrl(blobUrl);
-    }
-
-    if (videoId) {
-      axios
-        .get(`${HOST_URL}/api/v1/boards/${videoId}`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
-          },
-        })
-        .then((response) => {
-          if (!response.data.data.auth) {
-            alert("본 게시물의 권리가 없습니다.");
-            navigate("/");
-            return;
-          }
-          setVideoBlobUrl(response.data.data.video_url);
-          setThumbnail(response.data.data.thumbnail_url);
-          setTitle(response.data.data.title);
-          setEditorHtml(response.data.data.content);
-          setCategories[0](response.data.data.category1);
-          setCategories[1](response.data.data.category2);
-          console.log(response);
-        })
-        .catch((err) => {
-          alert("로그인이 풀림.");
-          navigate("/new-portal/login");
-          return;
-        });
-    }
-    return () => {
-      if (videoBlobUrl) {
-        URL.revokeObjectURL(videoBlobUrl);
-      }
-    };
-  }, [video]);
+  const navigate = useNavigate();
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     setVideo(file);
+    setVideoFileName(file.name);
 
     if (file) {
       if (file.name.length > 20) {
@@ -135,6 +90,7 @@ const UploadVideo = () => {
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     setThumbnail(file);
+    setThumbnailFileName(file.name);
 
     if (file) {
       if (file.name.length > 20) {
@@ -143,6 +99,10 @@ const UploadVideo = () => {
     } else {
       return setThumbnailMargin(true);
     }
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
   const handleCategoryChange = (selected) => {
@@ -155,51 +115,42 @@ const UploadVideo = () => {
     setEditorHtml(html);
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category1", categories[0].value);
-    formData.append("category2", categories[1].value);
-    formData.append("content", editorHtml);
 
     const token = sessionStorage.getItem("jwtAuthToken");
     const decodedToken = jwt_decode(token);
     const userId = decodedToken.sub;
-    formData.append("user_id", userId);
 
-    const timestamp = Date.now();
+    const boardData = {
+      title: title,
+      content: editorHtml,
+      category1: categories[0].value,
+      category2: categories[1].value,
+      videoUrl: "",
+      thumbnailUrl: "",
+      isPublic: "Y",
+      division: "VIDEO",
+    };
 
     if (video) {
-      let videoFileExtension = video.name.split(".").pop();
-      if (videoFileExtension === "mov") videoFileExtension = "mp4";
-      const newVideoName = userId + "_" + timestamp + "_v";
-
-      const newVideoFile = new File(
-        [video],
-        newVideoName + "." + videoFileExtension,
-        {
-          type: video.type,
-          lastModified: video.lastModified,
-        }
-      );
+      const videoFormData = new FormData();
+      videoFormData.append("video", video);
 
       try {
         let response;
         response = await axios.post(
           `${HOST_URL}/api/v1/boards/video`,
-          formData,
+          videoFormData,
           {
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }
         );
-        console.log(response.data);
-        formData.append("videoUrl", response.data.videoUrl);
+        boardData.videoUrl = response.data.data.videoUrl;
       } catch (error) {
         console.error(error);
 
@@ -216,31 +167,22 @@ const UploadVideo = () => {
     }
 
     if (thumbnail) {
-      const imgFileExtension = thumbnail.name.split(".").pop();
-      const newImgName = userId + "_" + timestamp + "_v";
-
-      const newImgFile = new File(
-        [thumbnail],
-        newImgName + "." + imgFileExtension,
-        {
-          type: thumbnail.type,
-          lastModified: thumbnail.lastModified,
-        }
-      );
+      const thumbnailFormData = new FormData();
+      thumbnailFormData.append("thumbnail", thumbnail);
 
       try {
         let response;
         response = await axios.post(
           `${HOST_URL}/api/v1/boards/thumbnail`,
-          formData,
+          thumbnailFormData,
           {
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }
         );
-        formData.append("thumbnailUrl", response.data.thumbnailUrl);
+        boardData.thumbnailUrl = response.data.data.thumbnailUrl;
       } catch (error) {
         console.error(error);
 
@@ -258,37 +200,21 @@ const UploadVideo = () => {
 
     try {
       let response;
-      if (videoId) {
-        response = await axios.put(
-          `${HOST_URL}/api/v1/boards/update/${videoId}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
-            },
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${HOST_URL}/api/v1/boards/create`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
-            },
-          }
-        );
-      }
-      console.log(response.data);
-      if (response.data.status === "201") {
-        navigate("/"); // 추후 마이페이지로 이동
-        window.location.reload();
-      } else if (response.data.status === "200") {
-        const nickname = sessionStorage.getItem("nickname");
-        if (nickname) {
-          navigate(`/profile/@${nickname}`);
+      response = await axios.post(
+        `${HOST_URL}/api/v1/boards/create`,
+        boardData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      }
+      );
+      console.log(response.data);
+
+      alert("게시물이 정상적으로 업로드 되었습니다.");
+      navigate("/new-portal");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       if (error.response.status === 401) {
@@ -319,6 +245,7 @@ const UploadVideo = () => {
         <TextEditor
           categories={categories}
           editorHtml={editorHtml}
+          handleTitleChange={handleTitleChange}
           handleCategoryChange={handleCategoryChange}
           handleEditorChange={handleEditorChange}
         />
