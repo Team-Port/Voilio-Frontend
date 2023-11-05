@@ -50,7 +50,7 @@ const VideoItem = ({ item }) => {
   }, [item]);
 
   return (
-    <div className="w-full h-full flex px-3">
+    <div className="flex w-full h-full px-3">
       <div className="w-full h-full ">
         <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px] ">
           <div className="flex justify-between items-center px-[23px] my-[10px]">
@@ -94,15 +94,13 @@ const VideoItem = ({ item }) => {
               alt="profile"
             />
             <div className="flex flex-col ml-[15px]">
-              <div className="text-black text-[20px] font-semibol">
+              <div className="text-black text-[20px] line-clamp-1 font-semibol">
                 {title || "Loading..."}
               </div>
-              <div className="text-neutral-700 text-[17px] font-normal ">
-                {content && content.length > 15
-                  ? `${content.slice(0, 15)}...`
-                  : content || "Loading..."}
-                {/* {content || "Loading..."} */}
-              </div>
+              <div
+                className="text-neutral-700 line-clamp-1 text-[17px] font-normal"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
             </div>
           </div>
         </div>
