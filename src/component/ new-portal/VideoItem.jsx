@@ -18,63 +18,7 @@ const VideoItem = ({
   const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
   const day = createDate.getDate();
   const [data, setData] = useState(null);
-  // const [title, setTitle] = useState(null);
-  // const [content, setContent] = useState(null);
-  // const [category1, setCategory1] = useState(null);
-  // const [category2, setCategory2] = useState(null);
-  // const [createDate, setCreateDate] = useState(null);
   const [imageUrl, setimageUrl] = useState(null);
-  // const [thumbnailUrl, setThumbnailUrl] = useState(null);
-
-  // useEffect(() => {
-  //   const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
-  //   const boardId = item.id;
-  //   if (jwtToken && boardId) {
-  //     axios
-  //       .get(`${HOST_URL}/api/v1/boards/${boardId}`, {
-  //         headers: { Authorization: `Bearer ${jwtToken}` },
-  //       })
-  //       .then((response) => {
-  //         setData(response.data);
-  //         if (response.status === 200) {
-  //           setTitle(response.data.data.title);
-  //           setContent(response.data.data.content);
-  //           setCategory1(response.data.data.category1);
-  //           setCategory2(response.data.data.category2);
-  //           const createAt = new Date(response.data.data.createAt);
-  //           const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-  //           const day = createAt.getDate();
-  //           setCreateDate(`${month}월 ${day}일`);
-  //           setThumbnailUrl(response.data.data.thumbnailUrl);
-  //           console.log(response.data);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log("게시글을 불러오는데 실패했습니다.");
-  //       });
-  //   }
-  // }, [item]);
-  // const item = [];
-  // useEffect(() => {
-  //   const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
-  //   // const user_id = item.id;
-  //   if (jwtToken && user_id) {
-  //     axios
-  //       .get(`${HOST_URL}/api/v1/users/${user_id}`, {
-  //         headers: { Authorization: `Bearer ${jwtToken}` },
-  //       })
-  //       .then((response) => {
-  //         setData(response.data);
-  //         if (response.status === 200) {
-  //           setimageUrl(response.data.data.imageUrl);
-  //           console.log(response.data);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log("프로필을 불러오는데 실패했습니다.");
-  //       });
-  //   }
-  // }, [item.id]);
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
 

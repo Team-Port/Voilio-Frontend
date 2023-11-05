@@ -32,27 +32,6 @@ const VideoList = () => {
         });
     }
   }, []);
-  // useEffect(() => {
-  //   const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
-  //   const user_id = null;
-  //   if (jwtToken && user_id) {
-  //     // if (jwtToken) {
-  //     axios
-  //       .get(`${HOST_URL}/api/v1/users/${user_id}`, {
-  //         headers: { Authorization: `Bearer ${jwtToken}` },
-  //       })
-  //       .then((response) => {
-  //         setData(response.data);
-  //         if (response.status === 200) {
-  //           setimageUrl(response.data.data.imageUrl);
-  //           console.log(response.data);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log("프로필을 불러오는데 실패했습니다.");
-  //       });
-  //   }
-  // }, []);
 
   return (
     <div className="w-full h-full">
