@@ -8,7 +8,7 @@ const Filter = () => {
   };
 
   return (
-    <div className="fixed flex flex-col gap-[15px] z-20 bg-[#F5F5F7] pt-[25px] ">
+    <div className="fixed flex flex-col gap-[15px] z-20 bg-[#F5F5F7] w-full pt-[25px] ">
       <div className="flex justify-start items-center ml-[10px]">
         <button className="flex gap-[55px]">
           <div
