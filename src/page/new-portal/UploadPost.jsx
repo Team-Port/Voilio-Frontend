@@ -5,13 +5,19 @@ import { HOST_URL } from "../../lib/HostUrl";
 import jwt_decode from "jwt-decode";
 
 import TextEditor from "../../component/ new-portal/TextEditor";
+import { useNavigate } from "react-router-dom";
 
 const UploadPost = () => {
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
   const [editorHtml, setEditorHtml] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
 
   const handleCategoryChange = (selected) => {
     if (selected.length <= 2) {
@@ -23,38 +29,42 @@ const UploadPost = () => {
     setEditorHtml(html);
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category1", categories[0].value);
-    formData.append("category2", categories[1].value);
-    formData.append("content", editorHtml);
 
     const token = sessionStorage.getItem("jwtAuthToken");
     const decodedToken = jwt_decode(token);
     const userId = decodedToken.sub;
-    formData.append("user_id", userId);
 
-    const timestamp = Date.now();
+    const boardData = {
+      title: title,
+      content: editorHtml,
+      category1: categories[0].value,
+      category2: categories[1].value,
+      videoUrl: "",
+      thumbnailUrl: "",
+      isPublic: "Y",
+      division: "NORMAL",
+    };
 
     try {
       let response;
       response = await axios.post(
         `${HOST_URL}/api/v1/boards/create`,
-        formData,
+        boardData,
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("jwtAuthToken")}`,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
       console.log(response.data);
-      if (response.data.status === "201") {
-        window.location.reload();
-      }
+
+      alert("게시물이 정상적으로 업로드 되었습니다.");
+      navigate("/new-portal");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       if (error.response.status === 401) {
@@ -75,6 +85,7 @@ const UploadPost = () => {
         <TextEditor
           categories={categories}
           editorHtml={editorHtml}
+          handleTitleChange={handleTitleChange}
           handleCategoryChange={handleCategoryChange}
           handleEditorChange={handleEditorChange}
         />
