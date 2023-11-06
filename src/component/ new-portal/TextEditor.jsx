@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import ReactQuill from "react-quill";
 import ReactSelect from "react-select";
 import { components } from "react-select";
@@ -62,6 +60,7 @@ const modules = {
 const TextEditor = ({
   categories,
   editorHtml,
+  handleTitleChange,
   handleCategoryChange,
   handleEditorChange,
 }) => {
@@ -79,6 +78,16 @@ const TextEditor = ({
       </div>
     );
   };
+  
+  const categoryOld = [
+    { value: "IT", label: "IT" },
+    { value: "BACKEND", label: "Backend" },
+    { value: "JAVA", label: "Java" },
+    { value: "PYTHON", label: "Python" },
+    { value: "REACT", label: "React" },
+    { value: "DANCE", label: "Dance" },
+    { value: "LANGUAGE", label: "language" },
+  ]
 
   const category = [
     { value: "IT", label: "IT" },
@@ -93,13 +102,15 @@ const TextEditor = ({
     <div className="flex flex-col z-10 mt-[30px] mx-[0px] xl:mx-[70px] gap-[30px]">
       <div className="flex flex-row gap-[10px] items-center">
         <input
+          type="text"
           className="flex-grow outline-none border-b-[1px] bg-white bg-opacity-0 border-[#CCCCCC] px-[10px] py-[10px]"
           placeholder="제목"
+          onChange={handleTitleChange}
         />
         <ReactSelect
           className="w-[35%] lg:w-[30%] xl:w-[26%] outline-none"
           placeholder="카테고리를 선택하세요."
-          options={category}
+          options={categoryOld}
           isMulti
           closeMenuOnSelect={true}
           hideSelectedOptions={false}
