@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../src/styles/tailwind.css";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { Link, useNavigate } from "react-router-dom";
 
 const VideoItem = ({ item }) => {
   const [data, setData] = useState(null);
@@ -20,6 +21,8 @@ const VideoItem = ({ item }) => {
   const category1Color = categoryColors[item.category1] || "#c7c7c7";
   const category2Color = categoryColors[item.category2] || "#c7c7c7";
   const [createDate, setCreateDate] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken"); // 세션 스토리지에서 토큰 가져오기
@@ -50,7 +53,10 @@ const VideoItem = ({ item }) => {
   }, [item]);
 
   return (
-    <div className="flex w-full h-full px-3">
+    <div
+      className="flex w-full h-full px-3 hover:cursor-pointer"
+      onClick={() => navigate(`/new-portal/boards/${item.id}`)}
+    >
       <div className="w-full h-full ">
         <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px] ">
           <div className="flex justify-between items-center px-[23px] my-[10px]">
