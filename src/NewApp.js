@@ -25,11 +25,11 @@ const NewApp = () => {
             <Sidebar />
             <img
               className="fixed bottom-0 z-0 w-full m-0"
-              src="../asset/bg-gradation.svg"
+              src="/asset/bg-gradation.svg"
             />
             <img
               className="fixed m-0 right-0 bottom-0 h-[60%] z-0"
-              src="../asset/bg-word.svg"
+              src="/asset/bg-word.svg"
             />
           </>
         )}
@@ -41,11 +41,8 @@ const NewApp = () => {
         <Route path="/new-portal/signin" element={<Signin />} />
         <Route path="/new-portal/upload-video" element={<UploadVideo />} />
         <Route path="/new-portal/upload-post" element={<UploadPost />} />
+        <Route path="/new-portal/boards/:id" element={<Detail />} />
         <Route path="/new-portal/mypage" element={<Mypage />} />
-        <Route
-          path="/new-portal/video-detail"
-          element={<Detail />} // 추후 '/video/:id' 형식으로 바꿀 예정
-        />
       </Routes>
     </BrowserRouter>
   );
