@@ -67,7 +67,7 @@ const UploadModal = ({ navigate, showModal, setShowModal }) => {
   return (
     <div
       ref={modalRef}
-      className="absolute px-[13px] z-30 py-[8px] mt-[10px] border-gray-300 border-[1px] bg-white rounded-[8px]"
+      className="absolute px-[13px] py-[8px] mt-[10px] border-gray-300 border-[1px] bg-white rounded-[8px]"
     >
       <button
         className="hover:cursor-pointer"
@@ -100,7 +100,7 @@ const Header = () => {
 
   return (
     <div
-      className="fixed w-full h-[85px] bg-white flex flex-row z-20"
+      className="fixed w-full h-[85px] bg-white flex flex-row z-50"
       ref={outsideRef}
     >
       <div className="flex flex-row">
