@@ -27,11 +27,9 @@ const VideoList = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 gap-4 pl-[20px] pr-[55px]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-4 pl-[20px] pr-[55px]">
         {items.map((item) => (
-          <div key={item.id} className="bg-white bg-opacity-75 rounded-[10px]">
-            <VideoItem item={item} /> {/* boardId를 props로 전달합니다. */}
-          </div>
+          <VideoItem item={item} key={item.id} />
         ))}
       </div>
     </div>
