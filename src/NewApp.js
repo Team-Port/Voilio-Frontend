@@ -12,6 +12,7 @@ import Signin from "./page/new-portal/Signin";
 import UploadVideo from "./page/new-portal/UploadVideo";
 import UploadPost from "./page/new-portal/UploadPost";
 import Detail from "./page/new-portal/Detail";
+import Mypage from "./page/new-portal/Mypage";
 
 const NewApp = () => {
   return (
@@ -40,6 +41,7 @@ const NewApp = () => {
         <Route path="/new-portal/signin" element={<Signin />} />
         <Route path="/new-portal/upload-video" element={<UploadVideo />} />
         <Route path="/new-portal/upload-post" element={<UploadPost />} />
+        <Route path="/new-portal/mypage" element={<Mypage />} />
         <Route
           path="/new-portal/video-detail"
           element={<Detail />} // 추후 '/video/:id' 형식으로 바꿀 예정
