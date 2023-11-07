@@ -36,7 +36,7 @@ const Mypage = ({ user_id }) => {
     <div>
       <div className="pl-[230px] pt-[85px] relative">
         <div className="flex flex-col">
-          <Profile nickname={nickname} />
+          <Profile nickname={nickname} imageUrl={imageUrl} />
           <div className="w-full h-full">
             <div className="flex px-4 z-20">
               <Filter />

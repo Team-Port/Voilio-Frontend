@@ -1,12 +1,15 @@
 import React from "react";
 
-const Profile = ({ nickname }) => {
+const Profile = ({ nickname, imageUrl }) => {
   return (
     <div className="flex h-[250px] gap-[50px]">
       <div className="flex items-center ml-[20px] mt-[20px]">
         <img
           className="w-[220px] h-[220px] rounded-full object-cover m-0"
-          src="https://voilio.s3.ap-northeast-2.amazonaws.com/thumbnail/test8.png"
+          src={
+            imageUrl ||
+            "/Users/a82108/Desktop/Voilio/Voilio-Frontend/public/asset/sample.png"
+          }
           alt=""
         />
       </div>
