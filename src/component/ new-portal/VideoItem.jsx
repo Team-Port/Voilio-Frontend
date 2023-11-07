@@ -53,9 +53,13 @@ const VideoItem = ({
               alt="profile"
             />
             <div className="flex flex-col ml-[15px] justify-center">
-              <div className="text-black text-[20px] font-semibol truncate overflow-ellipsis max-w-[45%]">
+              <div className="text-black text-[20px] font-semibol truncate overflow-ellipsis max-w-[45%] line-clamp-1">
                 {title || "Loading..."}
               </div>
+              <div
+                className="text-neutral-700 line-clamp-1 text-[17px] font-normal"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
               <div className="text-neutral-700 text-[17px] font-normal truncate overflow-ellipsis max-w-[53%]">
                 {content || "Loading..."}
               </div>
