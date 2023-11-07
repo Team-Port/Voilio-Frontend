@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../../../src/styles/tailwind.css";
-import axios from "axios";
-import { HOST_URL } from "../../lib/HostUrl";
 import Category from "../../component/ new-portal/Category";
 
 const VideoItem = ({
@@ -10,35 +8,12 @@ const VideoItem = ({
   category1,
   category2,
   createAt,
-  // imageUrl,
+  imageUrl,
   thumbnailUrl,
-  user_id,
 }) => {
   const createDate = new Date(createAt);
   const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
   const day = createDate.getDate();
-  const [data, setData] = useState(null);
-  const [imageUrl, setimageUrl] = useState(null);
-  useEffect(() => {
-    const jwtToken = sessionStorage.getItem("jwtAuthToken");
-
-    if (jwtToken && user_id) {
-      axios
-        .get(`${HOST_URL}/api/v1/users/${user_id}`, {
-          headers: { Authorization: `Bearer ${jwtToken}` },
-        })
-        .then((response) => {
-          setData(response.data);
-          if (response.status === 200) {
-            setimageUrl(response.data.data.imageUrl);
-            console.log("프로필을 정상적으로 불러왔습니다.");
-          }
-        })
-        .catch((error) => {
-          console.log("프로필을 불러오는데 실패했습니다.");
-        });
-    }
-  }, [user_id]);
 
   return (
     <div className="w-full h-full flex px-3">
@@ -67,27 +42,22 @@ const VideoItem = ({
           <div className="flex justify-center">
             <img
               className="mx-[40px] rounded-[10px] h-full w-[95%]"
-              // src="https://voilio.s3.ap-northeast-2.amazonaws.com/thumbnail/test8.png"
               src={thumbnailUrl}
+              alt="thumbnail"
             />
           </div>
           <div className="flex items-center pl-[20px] pb-[10px]">
             <img
               className="w-[60px] h-[60px] rounded-full m-0 object-cover"
-              // src="/asset/sample.png"
               src={imageUrl}
               alt="profile"
             />
             <div className="flex flex-col ml-[15px] justify-center">
-              <div className="text-black text-[20px] font-semibol">
-                {title && title.length > 15
-                  ? `${title.slice(0, 15)}...`
-                  : title || "Loading..."}
+              <div className="text-black text-[20px] font-semibol truncate overflow-ellipsis max-w-[45%]">
+                {title || "Loading..."}
               </div>
-              <div className="text-neutral-700 text-[17px] font-normal ">
-                {content && content.length > 20
-                  ? `${content.slice(0, 20)}...`
-                  : content || "Loading..."}
+              <div className="text-neutral-700 text-[17px] font-normal truncate overflow-ellipsis max-w-[53%]">
+                {content || "Loading..."}
               </div>
             </div>
           </div>

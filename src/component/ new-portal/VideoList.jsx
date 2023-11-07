@@ -3,7 +3,7 @@ import VideoItem from "./VideoItem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
 
-const VideoList = () => {
+const VideoList = ({ user_id }) => {
   const [imageUrl, setimageUrl] = useState(null);
   const [data, setData] = useState(null);
   const [items, setItems] = useState([]);
@@ -33,6 +33,27 @@ const VideoList = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+
+    if (jwtToken) {
+      axios
+        .get(`${HOST_URL}/api/v1/auth/me`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+        })
+        .then((response) => {
+          setData(response.data);
+          if (response.status === 200) {
+            setimageUrl(response.data.data.imageUrl);
+            console.log("프로필을 정상적으로 불러왔습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log("프로필을 불러오는데 실패했습니다.");
+        });
+    }
+  }, []);
+
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-3 grid-rows-3 gap-4 pl-[20px] pr-[70px]">
@@ -47,9 +68,9 @@ const VideoList = () => {
               category1={item.category1}
               category2={item.category2}
               createAt={item.createAt}
-              imageUrl={item.imageUrl}
+              imageUrl={imageUrl}
               thumbnailUrl={item.thumbnailUrl}
-              user_id={item.id} // user_id를 전달
+              user_id={item.id}
             />
           </div>
         ))}
