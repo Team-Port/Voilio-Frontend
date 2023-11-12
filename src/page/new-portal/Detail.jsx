@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import { useParams } from "react-router-dom";
 
-import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { useQuery } from "react-query";
 
 const comments = [
   {
@@ -134,96 +134,114 @@ const Comment = ({ comments }) => {
 };
 
 const Detail = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category1, setCategory1] = useState("");
-  const [category2, setCategory2] = useState("");
-  const [date, setDate] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [content, setContent] = useState("");
+  // const [category1, setCategory1] = useState("");
+  // const [category2, setCategory2] = useState("");
+  // const [date, setDate] = useState(null);
+  // const [videoUrl, setVideoUrl] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const token = sessionStorage.getItem("jwtAuthToken");
+  // const token = sessionStorage.getItem("jwtAuthToken");
   const { boardId } = useParams();
 
-  useEffect(() => {
-    setIsLoading(true);
+  // useEffect(() => {
+  //   setIsLoading(true);
 
-    if (!token || !boardId) return;
+  //   if (!token || !boardId) return;
 
-    const getBoardData = async () => {
-      try {
-        const response = await axios.get(
-          `${HOST_URL}/api/v1/boards/${boardId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+  //   const getBoardData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${HOST_URL}/api/v1/boards/${boardId}`,
+  //         {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         }
+  //       );
 
-        setTitle(response.data.data.title);
-        setContent(response.data.data.content);
-        setCategory1(response.data.data.category1);
-        setCategory2(response.data.data.category2);
-        setDate(response.data.data.createAt);
-        setVideoUrl(response.data.data.videoUrl);
+  //       setTitle(response.data.data.title);
+  //       setContent(response.data.data.content);
+  //       setCategory1(response.data.data.category1);
+  //       setCategory2(response.data.data.category2);
+  //       setDate(response.data.data.createAt);
+  //       setVideoUrl(response.data.data.videoUrl);
 
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    getBoardData();
-  }, [token, boardId]);
+  //   getBoardData();
+  // }, [token, boardId]);
+
+  const { data, isLoading } = useQuery({
+    queryKey: [{ boardId }],
+    queryFn: () =>
+      fetch(`${HOST_URL}/api/v1/boards/${boardId}`)
+        .then((res) => res.json())
+        .then((data) => data.data),
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+  });
+
+  if (isLoading) return <div></div>;
 
   return (
     <div className="pl-[230px] pt-[110px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="flex flex-row h-[100vh] col-span-5 z-10">
         <div className="bg-white w-full h-[87%] rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
           <div className="flex flex-row w-full mb-[17px] items-center">
-            <div className="flex-grow text-4xl">{title}</div>
+            <div className="flex-grow text-4xl">{data.title}</div>
             <div className="flex flex-row justify-end gap-[10px]">
               <div className="text-[#8F8F8F] mt-[2px]">
-                {format(new Date(date), "yyyy.M.d")}
+                {format(new Date(data.createAt), "yyyy.M.d")}
               </div>
               <div className="rounded-[50px] bg-[#85AED3] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {category1}
+                {data.category1}
               </div>
               <div className="rounded-[50px] bg-[#EAB191] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {category2}
+                {data.category2}
               </div>
             </div>
           </div>
           <div className="h-[450px]">
-            {videoUrl && (
+            {data.videoUrl ? (
               <iframe
                 className="w-full h-full"
                 type="text/html"
                 title="video player"
-                src={videoUrl}
+                src={data.videoUrl}
               />
+            ) : (
+              <div>no video</div>
             )}
           </div>
           <div className="flex flex-row my-[20px]">
             <div className="flex flex-row items-center flex-grow gap-[15px]">
-              <div className="rounded-full w-[50px] h-[50px] border-[1px] border-black" />
-              <div className="text-xl">creator</div>
+              <img
+                className="rounded-full w-[50px] h-[50px]"
+                src={data.userSimpleDto.imageUrl}
+              />
+              <div className="text-xl">{data.userSimpleDto.nickname}</div>
             </div>
             <div className="flex flex-row gap-[10px]">
               <div className="flex flex-row items-center gap-[5px]">
                 <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
-                <div className="text-[#8F8F8F]">3.4k</div>
+                <div className="text-[#8F8F8F]">{data.view}</div>
               </div>
               <div className="flex flex-row items-center gap-[5px]">
                 <img className="mt-[3px]" src="/asset/Icon_heart.svg" />
-                <div className="text-[#8F8F8F]">1234</div>
+                <div className="text-[#8F8F8F]">{data.likeCount}</div>
               </div>
             </div>
           </div>
           <div className="h-[1px] bg-[#444444] mb-[20px]" />
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <div dangerouslySetInnerHTML={{ __html: data.content }} />
         </div>
       </div>
       <div className="right-0 z-10 col-span-2">
