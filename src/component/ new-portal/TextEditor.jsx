@@ -78,24 +78,14 @@ const TextEditor = ({
       </div>
     );
   };
-  
-  const categoryOld = [
-    { value: "IT", label: "IT" },
-    { value: "BACKEND", label: "Backend" },
-    { value: "JAVA", label: "Java" },
-    { value: "PYTHON", label: "Python" },
-    { value: "REACT", label: "React" },
-    { value: "DANCE", label: "Dance" },
-    { value: "LANGUAGE", label: "language" },
-  ]
 
   const category = [
     { value: "IT", label: "IT" },
-    { value: "design", label: "Design" },
-    { value: "dance", label: "Dance" },
-    { value: "exercise", label: "Exercise" },
-    { value: "language", label: "Language" },
-    { value: "sales", label: "Sales" },
+    { value: "DESIGN", label: "Design" },
+    { value: "DANCE", label: "Dance" },
+    { value: "EXERCISE", label: "Exercise" },
+    { value: "LANGUAGE", label: "Language" },
+    { value: "SALES", label: "Sales" },
   ];
 
   return (
@@ -110,7 +100,7 @@ const TextEditor = ({
         <ReactSelect
           className="w-[35%] lg:w-[30%] xl:w-[26%] outline-none"
           placeholder="카테고리를 선택하세요."
-          options={categoryOld}
+          options={category}
           isMulti
           closeMenuOnSelect={true}
           hideSelectedOptions={false}
