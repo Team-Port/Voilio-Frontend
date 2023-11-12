@@ -40,12 +40,14 @@ const UploadPost = () => {
     const boardData = {
       title: title,
       content: editorHtml,
+      summary: "",
       category1: categories[0].value,
       category2: categories[1].value,
       videoUrl: "",
       thumbnailUrl: "",
       isPublic: "Y",
       division: "NORMAL",
+      boardImageUrls: [],
     };
 
     try {
