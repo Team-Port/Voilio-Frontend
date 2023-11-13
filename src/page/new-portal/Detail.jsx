@@ -94,7 +94,7 @@ const Comment = ({ boardId, comments, activeId, handleActive }) => {
   });
 
   return (
-    <div className="bg-white w-full h-[87%] rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
+    <div className="bg-white w-full h-full rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
       <span className="text-xl">댓글</span>
       <div className="mt-[15px] bg-black h-[1px]" />
       <div className="overflow-y-auto">
@@ -180,9 +180,9 @@ const Detail = () => {
 
   if (!boardData) return null;
   return (
-    <div className="pl-[230px] pt-[110px] pr-[25px] gap-[20px] grid grid-cols-7">
-      <div className="flex flex-row h-[100vh] col-span-5 z-10">
-        <div className="bg-white w-full h-[87%] rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
+    <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
+      <div className="z-10 flex flex-row col-span-5">
+        <div className="bg-white h-[98%] w-full rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
           <div className="flex flex-row w-full mb-[17px] items-center">
             <div className="flex-grow text-4xl">{boardData.title}</div>
             <div className="flex flex-row justify-end gap-[10px]">
@@ -232,7 +232,7 @@ const Detail = () => {
           <div dangerouslySetInnerHTML={{ __html: boardData.content }} />
         </div>
       </div>
-      <div className="right-0 z-10 col-span-2">
+      <div className="right-0 h-[98%] overflow-y-auto z-10 col-span-2">
         <Comment
           boardId={boardId}
           comments={commentData}
