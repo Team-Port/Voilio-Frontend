@@ -1,46 +1,12 @@
 import { useState } from "react";
 import { format } from "date-fns";
-import { useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
-import { useQuery } from "react-query";
+import axios from "axios";
 
-const comments = [
-  {
-    id: 1,
-    author: "test user",
-    createdAt: "2023-10-26",
-    text: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
-    subComments: [
-      {
-        id: 1,
-        author: "test user2",
-        createdAt: "2023-10-26",
-        text: "heyyyyyy",
-      },
-      {
-        id: 2,
-        author: "test user3",
-        createdAt: "2023-10-26",
-        text: "hola",
-      },
-    ],
-  },
-  {
-    id: 2,
-    author: "test user2",
-    createdAt: "2023-10-26",
-    text: "hello",
-  },
-  {
-    id: 3,
-    author: "test user3",
-    createdAt: "2023-10-27",
-    text: "진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. 진작 할걸.. ",
-  },
-];
-
-const CommentBox = ({ activeId, setActiveId, comment }) => {
+const CommentBox = ({ activeId, handleActive, comment }) => {
   const isActive = activeId === comment.id;
 
   return (
@@ -49,29 +15,33 @@ const CommentBox = ({ activeId, setActiveId, comment }) => {
       ${isActive ? "bg-[#F3F3F3]" : ""}`}
     >
       <div className="flex flex-row items-center">
-        <img className="m-0 w-[35px] h-[35px]" src="/asset/Icon_user.svg" />
-        <div className="ml-[8px]">{comment.author}</div>
+        <img
+          className="m-0 rounded-full w-[35px] h-[35px]"
+          src={comment.user.imageUrl}
+        />
+        <div className="ml-[8px]">{comment.user.nickname}</div>
         <div className="flex justify-end flex-grow mr-[5px] text-[#8F8F8F]">
-          {format(new Date(comment.createdAt), "yyyy.M.d")}
+          yyyy.M.d
         </div>
       </div>
-      <div className={isActive ? "" : "line-clamp-4"}>{comment.text}</div>
+      <div className={isActive ? "" : "line-clamp-4"}>{comment.content}</div>
       <div className="flex flex-row gap-[20px]">
         <img className="m-0" src="/asset/Icon_heart.svg" />
-        <img
-          className="m-0"
-          src="/asset/Icon_comment.svg"
-          onClick={() => {
-            setActiveId(comment.id);
-          }}
-        />
+        <div className="flex flex-row gap-[8px] items-center">
+          <img
+            className="m-0"
+            src="/asset/Icon_comment.svg"
+            onClick={() => handleActive(comment.id)}
+          />
+          <div className="text-sm">{comment.childComments.length}</div>
+        </div>
       </div>
-      {comment.subComments && comment.subComments.length > 0 && (
+      {comment.childComments && (
         <div className="pl-[29px]">
-          {comment.subComments.map((subComment) => (
-            <SubCommentBox
-              key={subComment.id}
-              subcomment={subComment}
+          {comment.childComments.map((childComment) => (
+            <ChildCommentBox
+              key={childComment.id}
+              childComment={childComment}
               isActive={isActive}
             />
           ))}
@@ -81,25 +51,47 @@ const CommentBox = ({ activeId, setActiveId, comment }) => {
   );
 };
 
-const SubCommentBox = ({ subcomment, isActive }) => {
+const ChildCommentBox = ({ childComment, isActive }) => {
   if (isActive)
     return (
       <div className="flex flex-col gap-[15px] py-[12px]">
         <div className="flex flex-row items-center">
-          <img className="m-0 w-[35px] h-[35px]" src="/asset/Icon_user.svg" />
-          <div className="ml-[8px]">{subcomment.author}</div>
+          <img
+            className="m-0 rounded-full w-[35px] h-[35px]"
+            src={childComment.user.imageUrl}
+          />
+          <div className="ml-[8px]">{childComment.user.nickname}</div>
           <div className="flex justify-end flex-grow mr-[5px] text-[#8F8F8F]">
-            {format(new Date(subcomment.createdAt), "yyyy.M.d")}
+            yyyy.M.d
           </div>
         </div>
-        <div className="line-clamp-4">{subcomment.text}</div>
+        <div>{childComment.content}</div>
         <img className="w-[17px] h-[17px] m-0" src="/asset/Icon_heart.svg" />
       </div>
     );
 };
 
-const Comment = ({ comments }) => {
-  const [activeId, setActiveId] = useState(null);
+const Comment = ({ boardId, comments, activeId, handleActive }) => {
+  const [content, setContent] = useState("");
+
+  const createComment = (payload) => {
+    const token = sessionStorage.getItem("jwtAuthToken");
+
+    return axios.post(`${HOST_URL}/api/v1/comments`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const { mutate } = useMutation((comment) => createComment(comment), {
+    onSuccess: (data) => {
+      console.log(`Comment has posted successfully: ${data}`);
+    },
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+  });
 
   return (
     <div className="bg-white w-full h-[87%] rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
@@ -112,7 +104,7 @@ const Comment = ({ comments }) => {
               <CommentBox
                 key={comment.id}
                 activeId={activeId}
-                setActiveId={setActiveId}
+                handleActive={handleActive}
                 comment={comment}
               />
             </div>
@@ -125,8 +117,19 @@ const Comment = ({ comments }) => {
           <input
             className="py-[10px] outline-none flex-grow border-b-[1px] border-black"
             placeholder="댓글을 입력하세요."
+            onChange={(e) => setContent(e.target.value)}
           />
-          <img className="m-0 pt-[5px]" src="/asset/Icon_upload2.svg" />
+          <img
+            className="m-0 pt-[5px]"
+            src="/asset/Icon_upload2.svg"
+            onClick={() => {
+              mutate({
+                boardId: boardId,
+                content: content,
+                parentId: activeId === null ? 0 : activeId,
+              });
+            }}
+          />
         </div>
       </div>
     </div>
@@ -134,52 +137,25 @@ const Comment = ({ comments }) => {
 };
 
 const Detail = () => {
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  // const [category1, setCategory1] = useState("");
-  // const [category2, setCategory2] = useState("");
-  // const [date, setDate] = useState(null);
-  // const [videoUrl, setVideoUrl] = useState("");
+  const [activeId, setActiveId] = useState(null);
+  const [isActive, setIsActive] = useState(false);
 
-  // const [isLoading, setIsLoading] = useState(false);
+  const handleActive = (commentId) => {
+    setActiveId(commentId);
+    if (activeId === commentId && isActive) {
+      // 해당 옵션을 재클릭하여 옵션이 해제된 경우
+      setIsActive(false);
+      setActiveId(null);
+    } else {
+      setIsActive(true);
+    }
+  };
 
-  // const token = sessionStorage.getItem("jwtAuthToken");
+  const token = sessionStorage.getItem("jwtAuthToken");
   const { boardId } = useParams();
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-
-  //   if (!token || !boardId) return;
-
-  //   const getBoardData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${HOST_URL}/api/v1/boards/${boardId}`,
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       );
-
-  //       setTitle(response.data.data.title);
-  //       setContent(response.data.data.content);
-  //       setCategory1(response.data.data.category1);
-  //       setCategory2(response.data.data.category2);
-  //       setDate(response.data.data.createAt);
-  //       setVideoUrl(response.data.data.videoUrl);
-
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   getBoardData();
-  // }, [token, boardId]);
-
-  const { data, isLoading } = useQuery({
-    queryKey: [{ boardId }],
+  const { data: boardData } = useQuery({
+    queryKey: [{ boardId }, "board"],
     queryFn: () =>
       fetch(`${HOST_URL}/api/v1/boards/${boardId}`)
         .then((res) => res.json())
@@ -187,35 +163,47 @@ const Detail = () => {
     onError: (error) => {
       return `An error has occurred: ${error.message}`;
     },
+    enabled: !!token,
   });
 
-  if (isLoading) return <div></div>;
+  const { data: commentData } = useQuery({
+    queryKey: [{ boardId }, "comment"],
+    queryFn: () =>
+      fetch(`${HOST_URL}/api/v1/comments/${boardId}/list`)
+        .then((res) => res.json())
+        .then((data) => data.data),
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+    enabled: !!token,
+  });
 
+  if (!boardData) return null;
   return (
     <div className="pl-[230px] pt-[110px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="flex flex-row h-[100vh] col-span-5 z-10">
         <div className="bg-white w-full h-[87%] rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
           <div className="flex flex-row w-full mb-[17px] items-center">
-            <div className="flex-grow text-4xl">{data.title}</div>
+            <div className="flex-grow text-4xl">{boardData.title}</div>
             <div className="flex flex-row justify-end gap-[10px]">
               <div className="text-[#8F8F8F] mt-[2px]">
-                {format(new Date(data.createAt), "yyyy.M.d")}
+                {format(new Date(boardData.createAt), "yyyy.M.d")}
               </div>
               <div className="rounded-[50px] bg-[#85AED3] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {data.category1}
+                {boardData.category1}
               </div>
               <div className="rounded-[50px] bg-[#EAB191] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {data.category2}
+                {boardData.category2}
               </div>
             </div>
           </div>
           <div className="h-[450px]">
-            {data.videoUrl ? (
+            {boardData.videoUrl ? (
               <iframe
                 className="w-full h-full"
                 type="text/html"
                 title="video player"
-                src={data.videoUrl}
+                src={boardData.videoUrl}
               />
             ) : (
               <div>no video</div>
@@ -225,27 +213,32 @@ const Detail = () => {
             <div className="flex flex-row items-center flex-grow gap-[15px]">
               <img
                 className="rounded-full w-[50px] h-[50px]"
-                src={data.userSimpleDto.imageUrl}
+                src={boardData.userSimpleDto.imageUrl}
               />
-              <div className="text-xl">{data.userSimpleDto.nickname}</div>
+              <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
             </div>
             <div className="flex flex-row gap-[10px]">
               <div className="flex flex-row items-center gap-[5px]">
                 <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
-                <div className="text-[#8F8F8F]">{data.view}</div>
+                <div className="text-[#8F8F8F]">{boardData.view}</div>
               </div>
               <div className="flex flex-row items-center gap-[5px]">
-                <img className="mt-[3px]" src="/asset/Icon_heart.svg" />
-                <div className="text-[#8F8F8F]">{data.likeCount}</div>
+                <img className="mt-[3px]" src="/asset/Icon_heart.svg" type />
+                <div className="text-[#8F8F8F]">{boardData.likeCount}</div>
               </div>
             </div>
           </div>
           <div className="h-[1px] bg-[#444444] mb-[20px]" />
-          <div dangerouslySetInnerHTML={{ __html: data.content }} />
+          <div dangerouslySetInnerHTML={{ __html: boardData.content }} />
         </div>
       </div>
       <div className="right-0 z-10 col-span-2">
-        <Comment comments={comments} />
+        <Comment
+          boardId={boardId}
+          comments={commentData}
+          activeId={activeId}
+          handleActive={handleActive}
+        />
       </div>
     </div>
   );
