@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
@@ -71,12 +71,27 @@ const ChildCommentBox = ({ childComment, isActive }) => {
     );
 };
 
-const Comment = ({ boardId, comments, activeId, handleActive }) => {
+const Comment = ({ boardId, activeId, handleActive }) => {
   const [content, setContent] = useState("");
 
-  const createComment = (payload) => {
-    const token = sessionStorage.getItem("jwtAuthToken");
+  const queryClient = useQueryClient();
+  const token = sessionStorage.getItem("jwtAuthToken");
 
+  const navigate = useNavigate();
+
+  const { data: comments } = useQuery({
+    queryKey: [{ boardId }, "comment"],
+    queryFn: () =>
+      fetch(`${HOST_URL}/api/v1/comments/${boardId}/list`)
+        .then((res) => res.json())
+        .then((data) => data.data),
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+    enabled: !!token,
+  });
+
+  const createComment = (payload) => {
     return axios.post(`${HOST_URL}/api/v1/comments`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,14 +99,20 @@ const Comment = ({ boardId, comments, activeId, handleActive }) => {
     });
   };
 
-  const { mutate } = useMutation((comment) => createComment(comment), {
-    onSuccess: (data) => {
-      console.log(`Comment has posted successfully: ${data}`);
-    },
-    onError: (error) => {
-      return `An error has occurred: ${error.message}`;
-    },
-  });
+  const { mutate: submitComment } = useMutation(
+    (comment) => createComment(comment),
+    {
+      onSuccess: (data) => {
+        console.log(`Comment has posted successfully: ${data}`);
+        queryClient.invalidateQueries([{ boardId }, "comment"]);
+        setContent("");
+        navigate(`/new-portal/boards/${boardId}`);
+      },
+      onError: (error) => {
+        return `An error has occurred: ${error.message}`;
+      },
+    }
+  );
 
   return (
     <div className="bg-white w-full h-full rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
@@ -128,8 +149,9 @@ const Comment = ({ boardId, comments, activeId, handleActive }) => {
           <img
             className="m-0 pt-[5px]"
             src="/asset/Icon_upload2.svg"
+            alt="comment submit button"
             onClick={() => {
-              mutate({
+              submitComment({
                 boardId: boardId,
                 content: content,
                 parentId: activeId === null ? 0 : activeId,
@@ -172,34 +194,14 @@ const Detail = () => {
     enabled: !!token,
   });
 
-  const { data: commentData } = useQuery({
-    queryKey: [{ boardId }, "comment"],
-    queryFn: () =>
-      fetch(`${HOST_URL}/api/v1/comments/${boardId}/list`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-    onError: (error) => {
-      return `An error has occurred: ${error.message}`;
-    },
-    enabled: !!token,
-  });
-
   if (!boardData) return null;
   return (
     <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="z-10 flex flex-row col-span-5">
         <div className="bg-white h-[98%] w-full rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
           <div className="flex flex-row w-full mb-[17px] items-center">
-            <div className="flex-grow text-4xl line-clamp-1">
+            <div className="flex-grow text-3xl line-clamp-2">
               {boardData.title}
-            </div>
-            <div className="flex flex-row justify-end gap-[10px]">
-              <div className="rounded-[50px] bg-[#85AED3] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {boardData.category1}
-              </div>
-              <div className="rounded-[50px] bg-[#EAB191] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
-                {boardData.category2}
-              </div>
             </div>
           </div>
           {boardData.videoUrl ? (
@@ -222,17 +224,27 @@ const Detail = () => {
               />
               <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
             </div>
-            <div className="flex flex-row gap-[10px] items-center">
-              <div className="text-[#8F8F8F]">
-                {format(new Date(boardData.createAt), "yyyy.M.d")}
+            <div className="flex flex-col gap-[3px]">
+              <div className="flex flex-row justify-end gap-[10px]">
+                <div className="rounded-[50px] bg-[#85AED3] py-[1px] px-[8px] items-center min-w-[70px] flex justify-center text-sm font-semibold text-white">
+                  {boardData.category1}
+                </div>
+                <div className="rounded-[50px] bg-[#EAB191] py-[1px] px-[8px] items-center min-w-[70px] flex justify-center text-sm font-semibold text-white">
+                  {boardData.category2}
+                </div>
               </div>
-              <div className="flex flex-row items-center gap-[5px]">
-                <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
-                <div className="text-[#8F8F8F]">{boardData.view}</div>
-              </div>
-              <div className="flex flex-row items-center gap-[5px]">
-                <img className="mt-[3px]" src="/asset/Icon_heart.svg" type />
-                <div className="text-[#8F8F8F]">{boardData.likeCount}</div>
+              <div className="flex flex-row gap-[10px] items-center">
+                <div className="text-[#8F8F8F]">
+                  {format(new Date(boardData.createAt), "yyyy.M.d")}
+                </div>
+                <div className="flex flex-row items-center gap-[5px]">
+                  <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
+                  <div className="text-[#8F8F8F]">{boardData.view}</div>
+                </div>
+                <div className="flex flex-row items-center gap-[5px]">
+                  <img className="mt-[3px]" src="/asset/Icon_heart.svg" type />
+                  <div className="text-[#8F8F8F]">{boardData.likeCount}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -243,7 +255,6 @@ const Detail = () => {
       <div className="right-0 h-[98%] overflow-y-auto z-10 col-span-2">
         <Comment
           boardId={boardId}
-          comments={commentData}
           activeId={activeId}
           handleActive={handleActive}
         />
