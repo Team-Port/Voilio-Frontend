@@ -15,8 +15,6 @@ const Login = () => {
   const [showId, setShowId] = useState(true);
   const [showPwd, setShowPwd] = useState(false);
 
-  const navigate = useNavigate();
-
   const loginAxios = () => {
     axios
       .post(`${HOST_URL}/api/v1/auth/login`, {
