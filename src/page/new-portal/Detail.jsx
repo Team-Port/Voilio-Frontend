@@ -36,7 +36,7 @@ const CommentBox = ({ activeId, handleActive, comment }) => {
           <div className="text-sm">{comment.childComments.length}</div>
         </div>
       </div>
-      {comment.childComments && (
+      {comment && comment.childComments && (
         <div className="pl-[29px]">
           {comment.childComments.map((childComment) => (
             <ChildCommentBox
@@ -97,19 +97,25 @@ const Comment = ({ boardId, comments, activeId, handleActive }) => {
     <div className="bg-white w-full h-full rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
       <span className="text-xl">댓글</span>
       <div className="mt-[15px] bg-black h-[1px]" />
-      <div className="overflow-y-auto">
-        {comments.map((comment) => {
-          return (
-            <div>
-              <CommentBox
-                key={comment.id}
-                activeId={activeId}
-                handleActive={handleActive}
-                comment={comment}
-              />
-            </div>
-          );
-        })}
+      <div className="flex flex-col h-full overflow-y-auto">
+        {comments && comments.length > 0 ? (
+          comments.map((comment) => {
+            return (
+              <div>
+                <CommentBox
+                  key={comment.id}
+                  activeId={activeId}
+                  handleActive={handleActive}
+                  comment={comment}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            작성된 댓글이 없습니다.
+          </div>
+        )}
       </div>
       <div className="flex items-end flex-grow px-[13px]">
         <div className="flex w-full flex-row items-center gap-[7px]">
@@ -184,11 +190,10 @@ const Detail = () => {
       <div className="z-10 flex flex-row col-span-5">
         <div className="bg-white h-[98%] w-full rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
           <div className="flex flex-row w-full mb-[17px] items-center">
-            <div className="flex-grow text-4xl">{boardData.title}</div>
+            <div className="flex-grow text-4xl line-clamp-1">
+              {boardData.title}
+            </div>
             <div className="flex flex-row justify-end gap-[10px]">
-              <div className="text-[#8F8F8F] mt-[2px]">
-                {format(new Date(boardData.createAt), "yyyy.M.d")}
-              </div>
               <div className="rounded-[50px] bg-[#85AED3] px-[10px] py-[3px] min-w-[70px] flex justify-center font-semibold text-white">
                 {boardData.category1}
               </div>
@@ -197,18 +202,18 @@ const Detail = () => {
               </div>
             </div>
           </div>
-          <div className="h-[450px]">
-            {boardData.videoUrl ? (
+          {boardData.videoUrl ? (
+            <div className="h-[450px]">
               <iframe
                 className="w-full h-full"
                 type="text/html"
                 title="video player"
                 src={boardData.videoUrl}
               />
-            ) : (
-              <div>no video</div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="flex flex-row my-[20px]">
             <div className="flex flex-row items-center flex-grow gap-[15px]">
               <img
@@ -217,7 +222,10 @@ const Detail = () => {
               />
               <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
             </div>
-            <div className="flex flex-row gap-[10px]">
+            <div className="flex flex-row gap-[10px] items-center">
+              <div className="text-[#8F8F8F]">
+                {format(new Date(boardData.createAt), "yyyy.M.d")}
+              </div>
               <div className="flex flex-row items-center gap-[5px]">
                 <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
                 <div className="text-[#8F8F8F]">{boardData.view}</div>
