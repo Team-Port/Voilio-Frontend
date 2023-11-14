@@ -9,6 +9,7 @@ const VideoItem = ({
   category2,
   createAt,
   // imageUrl,
+  division,
   thumbnailUrl,
   view,
   userSimpleDto,
