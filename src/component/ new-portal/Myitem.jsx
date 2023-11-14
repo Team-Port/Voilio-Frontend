@@ -1,23 +1,19 @@
 import React from "react";
 import "../../../src/styles/tailwind.css";
-import Category from "../../component/ new-portal/Category";
+import Category from "./Category";
 
-const VideoItem = ({
+const Myitem = ({
   title,
-  // summary,
+  summary,
   category1,
   category2,
   createAt,
-  // imageUrl,
-  division,
   thumbnailUrl,
   view,
-  userSimpleDto,
 }) => {
   const createDate = new Date(createAt);
   const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
   const day = createDate.getDate();
-  const { nickname, imageUrl } = userSimpleDto;
 
   return (
     <div className="flex w-full h-full px-3">
@@ -50,22 +46,15 @@ const VideoItem = ({
               alt="thumbnail"
             />
           </div>
-          <div className="flex items-center pl-[10px] pb-[10px]">
-            <img
-              className="w-[60px] h-[60px] rounded-full m-0 object-cover"
-              src={imageUrl}
-              alt="profile"
-            />
-            <div className="flex flex-col ml-[15px] justify-center">
+          <div className="flex items-center pl-[20px] pb-[10px]">
+            <div className="flex flex-col justify-center">
               <div className="text-black text-[20px] font-semibold line-clamp-1">
                 {title || "Loading..."}
               </div>
               <div
-                className="text-neutral-700 line-clamp-1 text-[17px]
-                font-normal"
-              >
-                {nickname || "Loading..."}
-              </div>
+                className="text-neutral-700 line-clamp-1 text-[17px] font-normal "
+                dangerouslySetInnerHTML={{ __html: summary }}
+              />
             </div>
           </div>
         </div>
@@ -74,4 +63,4 @@ const VideoItem = ({
   );
 };
 
-export default VideoItem;
+export default Myitem;

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const Filter = () => {
-  const [activeFilter, setActiveFilter] = useState(null);
+const Filter = ({ onFilterChange }) => {
+  const [activeFilter, setActiveFilter] = useState("전체");
 
   const handleFilterClick = (filter) => {
-    setActiveFilter((prevFilter) => (prevFilter === filter ? null : filter));
+    // setActiveFilter((prevFilter) => (prevFilter === filter ? null : filter));
+    // onFilterChange && onFilterChange(filter);
+
+    setActiveFilter(filter);
+    onFilterChange(filter);
   };
 
   return (
