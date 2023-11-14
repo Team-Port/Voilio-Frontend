@@ -1,6 +1,7 @@
 import React from "react";
 import "../../../src/styles/tailwind.css";
 import Category from "../../component/ new-portal/Category";
+import { useNavigate } from "react-router-dom";
 
 const VideoItem = ({
   title,
@@ -19,8 +20,10 @@ const VideoItem = ({
   const day = createDate.getDate();
   const { nickname, imageUrl } = userSimpleDto;
 
+  const navigate = useNavigate();
+
   return (
-    <div className="flex w-full h-full px-3">
+    <div className="flex w-full h-full px-3 hover:cursor-pointer">
       <div className="w-full h-full ">
         <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
           <div className="flex justify-between items-center px-[10px] mt-[10px]">
