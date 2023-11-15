@@ -4,10 +4,10 @@ const Category = ({ category }) => {
     bgColor = "bg-slate-400";
     label = "ALL";
   } else if (category === "IT") {
-    bgColor = "bg-slate-400";
+    bgColor = "bg-sky-200";
     label = "IT";
   } else if (category === "DESIGN") {
-    bgColor = "bg-rose-200";
+    bgColor = "bg-pink-200";
     label = "Design";
   } else if (category === "DANCE") {
     bgColor = "bg-red-300";
@@ -16,8 +16,8 @@ const Category = ({ category }) => {
     bgColor = "bg-emerald-200";
     label = "Exercise";
   } else if (category === "LANGUAGE") {
-    bgColor = "bg-slate-300";
-    label = "Laguage";
+    bgColor = "bg-violet-300";
+    label = "Language";
   } else if (category === "SALES") {
     bgColor = "bg-amber-200";
     label = "Sales";

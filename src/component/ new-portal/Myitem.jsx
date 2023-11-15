@@ -7,13 +7,15 @@ const Myitem = ({
   summary,
   category1,
   category2,
+  // createAt,
+  // eventDate,
   createAt,
   thumbnailUrl,
   view,
 }) => {
-  const createDate = new Date(createAt);
-  const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-  const day = createDate.getDate();
+  // const createDate = new Date(createAt);
+  // const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+  // const day = createDate.getDate();
 
   return (
     <div className="flex w-full h-full px-3">
@@ -27,7 +29,9 @@ const Myitem = ({
             <div className="flex justify-between items-center gap-[10px]">
               <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
                 {/* {createAt || "Loading..."} */}
-                {`${month}월 ${day}일`}
+                {/* {`${month}월 ${day}일`} */}
+                {/* {eventDate} */}
+                {createAt}
               </div>
               <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
                 <img

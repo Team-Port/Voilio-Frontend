@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Myitem from "./Myitem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { formatDistanceToNow } from "date-fns";
+import ko from "date-fns/locale/ko"; // 로케일 파일 불러오기
 
 const MyList = ({ division, filter }) => {
   const [imageUrl, setimageUrl] = useState(null);
@@ -23,7 +25,6 @@ const MyList = ({ division, filter }) => {
     } else if (division === "게시글") {
       apiUrl += "?division=NORMAL";
     }
-
     if (jwtToken) {
       axios
         .get(`${HOST_URL}/api/v1/boards/${userId}/result`, {
@@ -42,19 +43,13 @@ const MyList = ({ division, filter }) => {
                 (item) => item.division === "NORMAL"
               );
             }
-
             setItems(filteredItems);
             setVideoItems(filteredItems);
-            // setItems(response.data.data.content);
-            const createAt = new Date(response.data.data.createAt);
-            const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-            const day = createAt.getDate();
-            setCreateAt(`${month}월 ${day}일`);
             console.log("게시글을 정상적으로 불러왔습니다.");
           }
         })
         .catch((error) => {
-          console.log("게시글을 불러오는데 실패했습니다.");
+          console.log("게시글을 불러오는데 실패했습니다.", error);
         });
     }
   }, [division, filter, userId]);
@@ -72,7 +67,10 @@ const MyList = ({ division, filter }) => {
               summary={item.summary}
               category1={item.category1}
               category2={item.category2}
-              createAt={item.createAt}
+              createAt={formatDistanceToNow(new Date(item.createAt), {
+                locale: ko,
+                addSuffix: true,
+              })}
               imageUrl={imageUrl}
               thumbnailUrl={item.thumbnailUrl}
               view={item.view}
