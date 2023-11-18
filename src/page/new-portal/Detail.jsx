@@ -129,7 +129,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
 
   return (
     <div className="bg-white w-full h-full rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
-      <span className="text-xl">댓글</span>
+      <span className="text-xl">{`댓글 (${comments.length})`}</span>
       <div className="mt-[15px] bg-black h-[1px]" />
       <div className="flex flex-col h-full overflow-y-auto">
         {comments && comments.length > 0 ? (
