@@ -89,6 +89,22 @@ const Comment = ({ boardId, activeId, handleActive }) => {
     enabled: !!token,
   });
 
+  const { data: me } = useQuery({
+    queryKey: ["me"],
+    queryFn: () =>
+      fetch(`${HOST_URL}/api/v1/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => data.data),
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+    enabled: !!token,
+  });
+
   const createComment = (payload) => {
     return axios.post(`${HOST_URL}/api/v1/comments`, payload, {
       headers: {
@@ -137,7 +153,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
       </div>
       <div className="flex items-end flex-grow px-[13px]">
         <div className="flex w-full flex-row items-center gap-[7px]">
-          <div className="pt-[3px]">user4</div>
+          <div className="pt-[3px]">{me.nickname}</div>
           <input
             className="py-[10px] outline-none flex-grow border-b-[1px] border-black"
             placeholder="댓글을 입력하세요."
@@ -217,7 +233,7 @@ const Detail = () => {
     <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="z-10 flex flex-row col-span-5">
         <div className="bg-white h-[98%] w-full rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
-          <div className="flex flex-row w-full mb-[17px] pt-[10px] items-center">
+          <div className="flex flex-row w-full mb-[17px] pt-[5px] items-center">
             <div className="text-3xl line-clamp-2">{boardData.title}</div>
           </div>
           {boardData.videoUrl ? (
