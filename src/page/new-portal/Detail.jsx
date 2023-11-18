@@ -180,6 +180,8 @@ const Detail = () => {
   const token = sessionStorage.getItem("jwtAuthToken");
   const { boardId } = useParams();
 
+  const queryClient = useQueryClient();
+
   const { data: boardData } = useQuery({
     queryKey: [{ boardId }, "board"],
     queryFn: () =>
@@ -190,6 +192,24 @@ const Detail = () => {
       return `An error has occurred: ${error.message}`;
     },
     enabled: !!token,
+  });
+
+  const clickLike = (payload) => {
+    return axios.post(`${HOST_URL}/api/v1/likes/`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const { mutate: setLike } = useMutation((boardId) => clickLike(boardId), {
+    onSuccess: (data) => {
+      console.log(`Set like successfully: ${data}`);
+      queryClient.invalidateQueries([{ boardId }, "board"]);
+    },
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
   });
 
   if (!boardData) return null;
@@ -217,6 +237,7 @@ const Detail = () => {
               <img
                 className="rounded-full w-[50px] h-[50px]"
                 src={boardData.userSimpleDto.imageUrl}
+                alt="user profile"
               />
               <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
             </div>
@@ -234,11 +255,39 @@ const Detail = () => {
                   {format(new Date(boardData.createAt), "yyyy.M.d")}
                 </div>
                 <div className="flex flex-row items-center gap-[5px]">
-                  <img className="mt-[3px]" src="/asset/Icon_eye.svg" />
+                  <img
+                    className="mt-[3px]"
+                    src="/asset/Icon_eye.svg"
+                    alt="eye icon"
+                  />
                   <div className="text-[#8F8F8F]">{boardData.view}</div>
                 </div>
                 <div className="flex flex-row items-center gap-[5px]">
-                  <img className="mt-[3px]" src="/asset/Icon_heart.svg" type />
+                  {boardData.existLike ? (
+                    <img
+                      className="mt-[3px] hover:cursor-pointer"
+                      src="/asset/Icon_filled_heart.svg"
+                      alt="filled heart icon"
+                      onClick={() => {
+                        setLike({
+                          contentId: boardId,
+                          division: "BOARD_LIKE",
+                        });
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="mt-[3px] hover:cursor-pointer"
+                      src="/asset/Icon_heart.svg"
+                      alt="heart icon"
+                      onClick={() => {
+                        setLike({
+                          contentId: boardId,
+                          division: "BOARD_LIKE",
+                        });
+                      }}
+                    />
+                  )}
                   <div className="text-[#8F8F8F]">{boardData.likeCount}</div>
                 </div>
               </div>

@@ -46,7 +46,7 @@ const VideoItem = ({
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center h-[220px] w-[310px] object-cover">
             <img
               className="mx-[40px] rounded-[10px] h-full w-[95%]"
               src={thumbnailUrl}
