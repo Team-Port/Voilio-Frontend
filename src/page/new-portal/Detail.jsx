@@ -129,7 +129,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
 
   return (
     <div className="bg-white w-full h-full rounded-[10px] flex flex-col px-[23px] pt-[20px] pb-[28px] z-10">
-      <span className="text-xl">{`댓글 (${comments.length})`}</span>
+      <span className="text-xl">{`댓글 (${comments?.length})`}</span>
       <div className="mt-[15px] bg-black h-[1px]" />
       <div className="flex flex-col h-full overflow-y-auto">
         {comments && comments.length > 0 ? (
@@ -153,7 +153,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
       </div>
       <div className="flex items-end flex-grow px-[13px]">
         <div className="flex w-full flex-row items-center gap-[7px]">
-          <div className="pt-[3px]">{me.nickname}</div>
+          <div className="pt-[3px]">{me?.nickname}</div>
           <input
             className="py-[10px] outline-none flex-grow border-b-[1px] border-black"
             placeholder="댓글을 입력하세요."
