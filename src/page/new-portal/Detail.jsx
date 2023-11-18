@@ -77,8 +77,6 @@ const Comment = ({ boardId, activeId, handleActive }) => {
   const queryClient = useQueryClient();
   const token = sessionStorage.getItem("jwtAuthToken");
 
-  const navigate = useNavigate();
-
   const { data: comments } = useQuery({
     queryKey: [{ boardId }, "comment"],
     queryFn: () =>
@@ -106,7 +104,6 @@ const Comment = ({ boardId, activeId, handleActive }) => {
         console.log(`Comment has posted successfully: ${data}`);
         queryClient.invalidateQueries([{ boardId }, "comment"]);
         setContent("");
-        navigate(`/new-portal/boards/${boardId}`);
       },
       onError: (error) => {
         return `An error has occurred: ${error.message}`;
@@ -145,6 +142,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
             className="py-[10px] outline-none flex-grow border-b-[1px] border-black"
             placeholder="댓글을 입력하세요."
             onChange={(e) => setContent(e.target.value)}
+            value={content}
           />
           <img
             className="m-0 pt-[5px]"
@@ -199,10 +197,8 @@ const Detail = () => {
     <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
       <div className="z-10 flex flex-row col-span-5">
         <div className="bg-white h-[98%] w-full rounded-[10px] overflow-y-auto px-[60px] py-[20px]">
-          <div className="flex flex-row w-full mb-[17px] items-center">
-            <div className="flex-grow text-3xl line-clamp-2">
-              {boardData.title}
-            </div>
+          <div className="flex flex-row w-full mb-[17px] pt-[10px] items-center">
+            <div className="text-3xl line-clamp-2">{boardData.title}</div>
           </div>
           {boardData.videoUrl ? (
             <div className="h-[450px]">
