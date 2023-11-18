@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import VideoItem from "./VideoItem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { Link } from "react-router-dom";
 
 const VideoList = ({ division, filter }) => {
   // const [imageUrl, setimageUrl] = useState(null);
@@ -67,24 +68,26 @@ const VideoList = ({ division, filter }) => {
     <div className="w-full h-full">
       <div className="grid grid-cols-3 grid-rows-3 gap-4 pl-[20px] pr-[70px]">
         {items.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
-          >
-            <VideoItem
-              title={item.title}
-              summary={item.summary}
-              category1={item.category1}
-              category2={item.category2}
-              createAt={item.createAt}
-              // imageUrl={imageUrl}
-              thumbnailUrl={item.thumbnailUrl}
-              view={item.view}
-              user_id={item.id}
-              division={item.division}
-              userSimpleDto={item.userSimpleDto}
-            />
-          </div>
+          <Link to={`/new-portal/boards/${item.id}`}>
+            <div
+              key={item.id}
+              className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+            >
+              <VideoItem
+                title={item.title}
+                summary={item.summary}
+                category1={item.category1}
+                category2={item.category2}
+                createAt={item.createAt}
+                // imageUrl={imageUrl}
+                thumbnailUrl={item.thumbnailUrl}
+                view={item.view}
+                user_id={item.id}
+                division={item.division}
+                userSimpleDto={item.userSimpleDto}
+              />
+            </div>
+          </Link>
         ))}
       </div>
     </div>

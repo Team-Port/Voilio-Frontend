@@ -126,12 +126,14 @@ const UploadVideo = () => {
     const boardData = {
       title: title,
       content: editorHtml,
+      summary: "",
       category1: categories[0].value,
       category2: categories[1].value,
       videoUrl: "",
       thumbnailUrl: "",
       isPublic: "Y",
       division: "VIDEO",
+      boardImageUrls: [],
     };
 
     if (video) {
@@ -168,12 +170,12 @@ const UploadVideo = () => {
 
     if (thumbnail) {
       const thumbnailFormData = new FormData();
-      thumbnailFormData.append("thumbnail", thumbnail);
+      thumbnailFormData.append("imageFile", thumbnail);
 
       try {
         let response;
         response = await axios.post(
-          `${HOST_URL}/api/v1/boards/thumbnail`,
+          `${HOST_URL}/api/v1/boards/THUMBNAIL`,
           thumbnailFormData,
           {
             headers: {
@@ -197,6 +199,8 @@ const UploadVideo = () => {
         setIsLoading(false);
       }
     }
+
+    console.log(boardData);
 
     try {
       let response;
