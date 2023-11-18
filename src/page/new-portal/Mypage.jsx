@@ -38,19 +38,17 @@ const Mypage = () => {
         })
         .then((response) => {
           setData(response.data.data);
-          // setId(response.data.data.id);
-          // console.log(id);
           setUser_id(response.data.data.id);
           console.log(user_id);
           console.log(response.data.data.id);
           if (response.status === 200) {
             setData(response.data.data);
-            // setimageUrl(response.data.data.imageUrl);
-            // setNickname(response.data.data.nickname);
-            // setFollowing(response.data.data.following);
-            // setVideoCount(response.data.data.videoCount);
-            // setNormalCount(response.data.data.normalCount);
-            // setFollowerCount(response.data.data.followerCount);
+            setimageUrl(response.data.data.imageUrl);
+            setNickname(response.data.data.nickname);
+            setFollowing(response.data.data.following);
+            setVideoCount(response.data.data.videoCount);
+            setNormalCount(response.data.data.normalCount);
+            setFollowerCount(response.data.data.followerCount);
             console.log("프로필을 정상적으로 불러왔습니다.");
           }
         })
@@ -60,30 +58,29 @@ const Mypage = () => {
     }
   }, [user_id]);
   return (
-    <div>
-      <div className="pl-[230px] pt-[85px] relative">
-        <div className="flex flex-col">
-          <Profile
-            nickname={nickname}
-            imageUrl={imageUrl}
-            following={following}
-            videoCount={videoCount}
-            normalCount={normalCount}
-            followerCount={followerCount}
-          />
-          <div className="w-full h-full">
-            <div className="">
-              <div className="fixed w-full flex pt-[170px] px-4 z-20 bg-[#F5F5F7]">
-                <Filter onFilterChange={handleFilterChange} />
-                {/* <Mylist videoItems={videoItems} display="list-h" /> */}
-              </div>
-              <div className="pt-[60px] mb-[30px]"></div>
-              <Mylist division={division} items={items} filter={filter} />
-            </div>
+    // <div>
+    <div className="pl-[215px] pt-[90px] relative">
+      <div className="flex flex-col">
+        <Profile
+          nickname={nickname}
+          imageUrl={imageUrl}
+          following={following}
+          videoCount={videoCount}
+          normalCount={normalCount}
+          followerCount={followerCount}
+        />
+        <div className="w-full h-full flex flex-col">
+          {/* <div className=""> */}
+          <div className="fixed w-full flex pt-[170px] px-4 z-20 bg-[#F5F5F7] ">
+            <Filter onFilterChange={handleFilterChange} />
           </div>
+          <div className="w-full pt-[60px] mb-[30px]"></div>
+          <Mylist division={division} items={items} filter={filter} />
+          {/* </div> */}
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

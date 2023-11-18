@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Filter = ({ onFilterChange }) => {
   const [activeFilter, setActiveFilter] = useState("전체");
@@ -12,7 +12,7 @@ const Filter = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="fixed flex flex-col gap-[15px] z-20 bg-[#F5F5F7] w-full pt-[25px] ">
+    <div className="fixed flex flex-col gap-[15px] z-20 bg-[#F5F5F7] w-full sm:w-10/12 pt-[25px]">
       <div className="flex justify-start items-center ml-[10px]">
         <button className="flex gap-[55px]">
           <div
@@ -41,7 +41,7 @@ const Filter = ({ onFilterChange }) => {
           </div>
         </button>
       </div>
-      <div className="w-[1200px] h-[1px] bg-black"></div>
+      <div className="w-full h-[1px] bg-black"></div>
     </div>
   );
 };

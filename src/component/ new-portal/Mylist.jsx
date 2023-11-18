@@ -56,7 +56,7 @@ const MyList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] pl-[20px] pr-[70px]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] px-[18px]">
         {items.map((item) => (
           <div
             key={item.id}

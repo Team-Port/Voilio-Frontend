@@ -24,18 +24,14 @@ const Home = () => {
 
   return (
     <div>
-      <div className="pl-[230px] pt-[85px] relative">
-        {" "}
-        {/* 이렇게 설정하면 현재는 위치가 맞지 않으나, 모든 페이지에 header와 sidebar 때문에 padding을 설정해 주어야 할 것 같습니다!*/}
+      <div className="pl-[215px] pt-[85px] relative">
         <div className="w-full h-full">
           <div className="flex px-4 z-20">
             <Filter onFilterChange={handleFilterChange} />
             {/* <VideoList videoItems={videoItems} display="list-h" /> */}
           </div>
           <div className="pt-[60px] mb-[30px]"></div>
-          <div className="">
-            <VideoList division={division} items={items} filter={filter} />
-          </div>
+          <VideoList division={division} items={items} filter={filter} />
         </div>
       </div>
     </div>
