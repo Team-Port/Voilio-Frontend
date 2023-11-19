@@ -4,28 +4,28 @@ const Category = ({ category }) => {
     bgColor = "bg-slate-400";
     label = "ALL";
   } else if (category === "IT") {
-    bgColor = "bg-slate-400";
+    bgColor = "bg-gray-300";
     label = "IT";
   } else if (category === "DESIGN") {
-    bgColor = "bg-rose-200";
+    bgColor = "bg-[#EAB191]";
     label = "Design";
   } else if (category === "DANCE") {
-    bgColor = "bg-red-300";
+    bgColor = "bg-[#FACAD5]";
     label = "Dance";
   } else if (category === "EXERCISE") {
-    bgColor = "bg-emerald-200";
+    bgColor = "bg-[#85AED3]";
     label = "Exercise";
   } else if (category === "LANGUAGE") {
-    bgColor = "bg-slate-300";
-    label = "Laguage";
+    bgColor = "bg-[#CFB8E1]";
+    label = "Language";
   } else if (category === "SALES") {
-    bgColor = "bg-amber-200";
+    bgColor = "bg-[#A9D8B6]";
     label = "Sales";
   } else return null;
 
   return (
     <div
-      className={`flex items-center justify-center w-[75px] h-[22px] pb-[2px] ${bgColor} rounded-[10px] mr-[3px]`}
+      className={`flex items-center min-w-[60px] justify-center h-[22px] pb-[2px] ${bgColor} rounded-[20px] px-[10px]`}
     >
       <div className="items-center text-center text-white text-[15px] font-semibold">
         {label}
