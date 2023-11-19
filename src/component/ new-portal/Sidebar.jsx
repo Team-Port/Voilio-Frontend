@@ -1,11 +1,9 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { HOST_URL } from "../../lib/HostUrl";
+import Following from "./Following";
 
 const menues = [
-  // {
-  //   id: 1,
-  //   name: "Category",
-  //   value: "category",
-  // },
   {
     id: 2,
     name: "All",
@@ -57,7 +55,46 @@ const Menu = () => {
   const [activeMenu, setActiveMenu] = useState(1);
   const [activeCategory, setActiveCategory] = useState(1);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [data, setData] = useState(null);
+  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("2");
+  const [nicknames, setNicknames] = useState([]);
 
+  useEffect(() => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+
+    if (jwtToken) {
+      axios
+        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${userId}`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+          params: { fromUserid: userId },
+        })
+        .then((response) => {
+          setData(response.data.data);
+
+          if (response.status === 200) {
+            console.log(response.data.data);
+            const subscriptions = response.data.data;
+
+            const tempNicknames = subscriptions
+              .map((subscription) => subscription.toUser?.nickname)
+              .filter(Boolean);
+
+            setNicknames(tempNicknames); // 여기서 받아온 닉네임 목록을 상태로 설정해주세요
+            subscriptions.forEach((subscription) => {
+              const nickname = subscription.toUser?.nickname;
+              if (nickname) {
+                console.log("구독한 회원의 닉네임:", nickname);
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          console.log("구독자를 불러오는데 실패했습니다.");
+          console.log(error);
+        });
+    }
+  }, [userId]);
   const makeMenus = () => {
     if (!menues || menues.length === 0) return [];
     return (
@@ -98,33 +135,7 @@ const Menu = () => {
             </button>
           );
         })}
-        {showDropdown && (
-          <div className="relative flex w-[134px] text-center">
-            <div className="right-0 z-10  w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div
-                className="py-1 text-center"
-                role="none"
-                style={{ maxHeight: "150px", overflowY: "auto" }}
-              >
-                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
-                  User 1
-                </div>
-                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
-                  User 2
-                </div>
-                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
-                  User 3
-                </div>
-                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
-                  User 4
-                </div>
-                <div className="text-gray-700 block px-4 py-2 text-sm text-center">
-                  User 5
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {showDropdown && <Following nicknames={nicknames} />}
       </div>
     );
   };
