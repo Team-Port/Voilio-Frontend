@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import Myitem from "./Myitem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { Link } from "react-router-dom";
 
 const MyList = ({ division, filter }) => {
   const [imageUrl, setimageUrl] = useState(null);
-  const [data, setData] = useState(null);
   const [items, setItems] = useState([]);
-  const [createAt, setCreateAt] = useState(null);
   const [userId, setUserId] = useState("2");
   const [videoItems, setVideoItems] = useState([]);
 
@@ -45,11 +44,6 @@ const MyList = ({ division, filter }) => {
 
             setItems(filteredItems);
             setVideoItems(filteredItems);
-            // setItems(response.data.data.content);
-            const createAt = new Date(response.data.data.createAt);
-            const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-            const day = createAt.getDate();
-            setCreateAt(`${month}월 ${day}일`);
             console.log("게시글을 정상적으로 불러왔습니다.");
           }
         })
@@ -61,25 +55,15 @@ const MyList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] pl-[20px] pr-[70px]">
+      <div className="grid grid-cols-3 gap-4 xl:grid-cols-4">
         {items.map((item) => (
-          <div
+          <Link
+            to={`/new-portal/boards/${item.id}`}
             key={item.id}
-            className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+            className="z-10"
           >
-            <Myitem
-              title={item.title}
-              summary={item.summary}
-              category1={item.category1}
-              category2={item.category2}
-              createAt={item.createAt}
-              imageUrl={imageUrl}
-              thumbnailUrl={item.thumbnailUrl}
-              view={item.view}
-              user_id={item.id}
-              division={item.division}
-            />
-          </div>
+            <Myitem item={item} />
+          </Link>
         ))}
       </div>
     </div>
