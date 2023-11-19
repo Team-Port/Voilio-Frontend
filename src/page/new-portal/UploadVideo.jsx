@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { HOST_URL } from "../../lib/HostUrl";
@@ -138,7 +138,21 @@ const UploadVideo = () => {
 
     if (video) {
       const videoFormData = new FormData();
-      videoFormData.append("video", video);
+
+      let videoFileExtension = video.name.split(".").pop();
+      if (videoFileExtension === "mov") videoFileExtension = "mp4";
+      const newVideoName = userId + "_" + Date.new() + "_v";
+
+      const newVideo = new File(
+        [video],
+        newVideoName + "." + videoFileExtension,
+        {
+          type: video.type,
+          lastModified: video.lastModified,
+        }
+      );
+
+      videoFormData.append("video", newVideo);
 
       try {
         let response;
