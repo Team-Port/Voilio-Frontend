@@ -64,30 +64,26 @@ const VideoList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-5 px-[25px]">
+      <div className="grid grid-cols-3 gap-4 pl-4 xl:grid-cols-4">
         {items.map((item) => (
-          // <Link to={`/new-portal/boards/${item.id}`}>
-          <Link key={item.id} to={`/new-portal/boards/${item.id}`}>
-            <div
-              // key={item.id}
-              className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
-            >
-              <VideoItem
-                title={item.title}
-                summary={item.summary}
-                category1={item.category1}
-                category2={item.category2}
-                createAt={formatDistanceToNow(new Date(item.createAt), {
-                  locale: ko,
-                  addSuffix: true,
-                })}
-                thumbnailUrl={item.thumbnailUrl}
-                view={item.view}
-                user_id={item.id}
-                division={item.division}
-                userSimpleDto={item.userSimpleDto}
-              />
-            </div>
+          <Link
+            to={`/new-portal/boards/${item.id}`}
+            key={item.id}
+            className="z-10"
+          >
+            <VideoItem
+              title={item.title}
+              summary={item.summary}
+              category1={item.category1}
+              category2={item.category2}
+              createAt={item.createAt}
+              // imageUrl={imageUrl}
+              thumbnailUrl={item.thumbnailUrl}
+              view={item.view}
+              user_id={item.id}
+              division={item.division}
+              userSimpleDto={item.userSimpleDto}
+            />
           </Link>
         ))}
       </div>

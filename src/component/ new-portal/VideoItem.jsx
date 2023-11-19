@@ -1,7 +1,8 @@
 import React from "react";
 import "../../../src/styles/tailwind.css";
 import Category from "../../component/ new-portal/Category";
-import { useNavigate } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const VideoItem = ({
   title,
@@ -13,57 +14,47 @@ const VideoItem = ({
   view,
   userSimpleDto,
 }) => {
-  const createDate = new Date(createAt);
-  const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-  const day = createDate.getDate();
+  const formatDate = formatDistanceToNow(new Date(createAt), {
+    addSuffix: true,
+    locale: ko,
+  });
   const { nickname, imageUrl } = userSimpleDto;
 
-  const navigate = useNavigate();
-
   return (
-    <div className="w-full h-full px-3 hover:cursor-pointer flex flex-col bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
-      <div className="flex justify-between items-center px-[10px] mt-[10px]">
-        <div className="flex justify-center">
+    <div className="px-[15px] flex flex-col gap-[10px] py-[10px] rounded-[10px] h-[330px] bg-white shadow-sm">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-[5px]">
           <Category category={category1} />
           <Category category={category2} />
         </div>
-        <div className="flex justify-between items-center gap-[10px]">
-          <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
-            {createAt}
-          </div>
-          <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
-            <img
-              className="w-[16px] h-[16px] justify-center m-1"
-              src="/asset/icon_eye.svg"
-              alt="eyeicon"
-            />
-            {view}
-          </div>
+        <div className="flex flex-row items-center">
+          <div className="text-sm mr-[8px]">{formatDate}</div>
+          <img
+            className="m-0 mr-[4px]"
+            src="/asset/Icon_eye.svg"
+            alt="eye icon"
+          />
+          <div className="text-sm pb-[1px]">{view}</div>
         </div>
       </div>
-      <div className="flex justify-center object-cover">
+      {thumbnailUrl ? (
         <img
-          className="mx-[40px] rounded-[10px] h-full w-[95%]"
+          className="h-full rounded-[10px] object-cover overflow-hidden"
           src={thumbnailUrl}
           alt="thumbnail"
         />
-      </div>
-      <div className="flex items-center pl-[10px] pb-[10px]">
+      ) : (
+        <div className="bg-gray-50 rounded-[10px] h-full" />
+      )}
+      <div className="flex flex-row gap-[10px] items-center">
         <img
-          className="w-[60px] h-[60px] rounded-full m-0 object-cover"
+          className="m-0 w-[60px] h-[60px] object-cover rounded-full"
           src={imageUrl}
-          alt="profile"
+          alt="user profile"
         />
-        <div className="flex flex-col ml-[15px] justify-center">
-          <div className="text-black text-[20px] font-semibold line-clamp-1">
-            {title || "Loading..."}
-          </div>
-          <div
-            className="text-neutral-700 line-clamp-1 text-[17px]
-                font-normal"
-          >
-            {nickname || "Loading..."}
-          </div>
+        <div className="flex flex-col">
+          <div className="text-lg font-semibold line-clamp-2">{title}</div>
+          <div className="text-sm">{nickname}</div>
         </div>
       </div>
     </div>
