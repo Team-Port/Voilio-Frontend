@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import VideoList from "../../component/ new-portal/VideoList";
-import { useRecoilValue } from "recoil";
-import { isVideoItems } from "../../store/video/isVideoItems";
 import Filter from "../../component/ new-portal/Filter";
 
 const Home = () => {
@@ -19,7 +17,9 @@ const Home = () => {
   return (
     <div>
       <div className="pl-[230px] pr-[25px] pt-[85px]">
-        <Filter onFilterChange={handleFilterChange} />
+        <div className="sticky top-[85px] z-20">
+          <Filter onFilterChange={handleFilterChange} />
+        </div>
         <div className="mt-[20px]">
           <VideoList division={division} items={items} filter={filter} />
         </div>

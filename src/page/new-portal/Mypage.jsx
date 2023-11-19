@@ -59,21 +59,23 @@ const Mypage = () => {
     }
   }, [user_id]);
   return (
-    <div className="pl-[215px] pt-[90px] relative">
-      <div className="flex flex-col">
-        <Profile
-          nickname={nickname}
-          imageUrl={imageUrl}
-          videoCount={videoCount}
-          normalCount={normalCount}
-          followerCount={followerCount}
-        />
-        <div className="w-full h-full flex flex-col">
-          <div className="fixed w-full flex pt-[170px] px-4 z-20 bg-[#F5F5F7] ">
-            <Filter onFilterChange={handleFilterChange} />
+    <div>
+      <div className="pl-[230px] pt-[85px] pr-[25px]">
+        <div className="flex flex-col">
+          <Profile
+            nickname={nickname}
+            imageUrl={imageUrl}
+            following={following}
+            user_id={user_id}
+          />
+          <div className="w-full h-full">
+            <div className="sticky top-[270px] z-20">
+              <Filter onFilterChange={handleFilterChange} />
+            </div>
+            <div className="mt-[210px] pl-4">
+              <Mylist division={division} items={items} filter={filter} />
+            </div>
           </div>
-          <div className="w-full pt-[60px] mb-[30px]"></div>
-          <Mylist division={division} items={items} filter={filter} />
         </div>
       </div>
     </div>

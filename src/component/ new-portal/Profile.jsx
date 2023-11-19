@@ -8,7 +8,7 @@ const Profile = ({
   normalCount,
 }) => {
   return (
-    <div className="fixed flex w-full h-[200px] gap-[50px] z-30">
+    <div className="fixed flex h-[200px] gap-[50px] w-full bg-[#F5F5F7] z-20">
       <div className="flex items-center ml-[20px] ">
         <img
           className="w-[150px] h-[150px] rounded-full object-cover m-0"

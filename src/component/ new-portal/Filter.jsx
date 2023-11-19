@@ -12,7 +12,7 @@ const Filter = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="sticky w-full top-[85px] flex flex-col gap-[15px] pl-4 z-20 bg-[#F5F5F7] pt-[25px]">
+    <div className="w-full flex flex-col gap-[15px] pl-4 bg-[#F5F5F7] pt-[25px]">
       <div className="flex justify-start items-center ml-[10px]">
         <button className="flex gap-[55px]">
           <div
