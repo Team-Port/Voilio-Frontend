@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Myitem from "./Myitem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { Link } from "react-router-dom";
 
 const Followinglist = ({ division, filter }) => {
   const [imageUrl, setimageUrl] = useState(null);
@@ -51,10 +52,12 @@ const Followinglist = ({ division, filter }) => {
             const day = createAt.getDate();
             setCreateAt(`${month}월 ${day}일`);
             console.log("게시글을 정상적으로 불러왔습니다.");
+            console.log(response.data.data);
           }
         })
         .catch((error) => {
           console.log("게시글을 불러오는데 실패했습니다.");
+          console.log(error);
         });
     }
   }, [division, filter, userId]);
@@ -62,25 +65,26 @@ const Followinglist = ({ division, filter }) => {
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] pl-[20px] pr-[70px]">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
-          >
-            <Myitem
-              title={item.title}
-              summary={item.summary}
-              category1={item.category1}
-              category2={item.category2}
-              createAt={item.createAt}
-              imageUrl={imageUrl}
-              thumbnailUrl={item.thumbnailUrl}
-              view={item.view}
-              user_id={item.id}
-              division={item.division}
-            />
-          </div>
-        ))}
+        {items &&
+          items.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+            >
+              <Myitem
+                title={item.title}
+                summary={item.summary}
+                category1={item.category1}
+                category2={item.category2}
+                createAt={item.createAt}
+                imageUrl={imageUrl}
+                thumbnailUrl={item.thumbnailUrl}
+                view={item.view}
+                user_id={item.id}
+                division={item.division}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

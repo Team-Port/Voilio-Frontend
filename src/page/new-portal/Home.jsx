@@ -8,6 +8,7 @@ import VideoItem from "../../component/ new-portal/VideoItem";
 import Filter from "../../component/ new-portal/Filter";
 import Sidebar from "../../component/ new-portal/Sidebar";
 import Header from "../../component/ new-portal/Header";
+import Followinglist from "../../component/ new-portal/Followinglist";
 
 const Home = () => {
   const [division, setDivision] = useState("");
@@ -25,14 +26,17 @@ const Home = () => {
   return (
     <div>
       <div className="pl-[215px] pt-[85px] relative">
-        <div className="w-full h-full">
-          <div className="flex px-4 z-20">
+        <div className="w-full h-full flex flex-col">
+          {/* <div className="w-full h-full flex flex-col"> */}
+          <div className="w-full flex px-4 z-20">
             <Filter onFilterChange={handleFilterChange} />
             {/* <VideoList videoItems={videoItems} display="list-h" /> */}
           </div>
-          <div className="pt-[60px] mb-[30px]"></div>
+          <div className="w-full pt-[60px] mb-[30px]"></div>
           <VideoList division={division} items={items} filter={filter} />
+          {/* <Followinglist division={division} items={items} filter={filter} /> */}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

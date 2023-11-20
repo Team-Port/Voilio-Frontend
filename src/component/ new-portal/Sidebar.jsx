@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
-import Followinglist from "./Followinglist";
-// import Following from "./Followinglist";
 
 const menues = [
   {
@@ -66,7 +64,7 @@ const Menu = () => {
 
     if (jwtToken) {
       axios
-        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${userId}`, {
+        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${"2"}`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
           params: { fromUserid: userId },
         })
@@ -81,7 +79,7 @@ const Menu = () => {
               .map((subscription) => subscription.toUser?.nickname)
               .filter(Boolean);
 
-            setNicknames(tempNicknames); // 여기서 받아온 닉네임 목록을 상태로 설정해주세요
+            setNicknames(tempNicknames); // 여기서 받아온 =닉네임 목록을 상태로 설정해주세요
             subscriptions.forEach((subscription) => {
               const nickname = subscription.toUser?.nickname;
               if (nickname) {
@@ -96,6 +94,10 @@ const Menu = () => {
         });
     }
   }, [userId]);
+
+  const handleFollowingClick = () => {
+    setShowDropdown(!showDropdown);
+  };
   const makeMenus = () => {
     if (!menues || menues.length === 0) return [];
     return (
@@ -114,6 +116,7 @@ const Menu = () => {
                 menu.id !== 1 && setActiveCategory(null);
                 if (menu.value === "following") {
                   setShowDropdown(!showDropdown);
+                  handleFollowingClick();
                 } else {
                   setShowDropdown(false); // Following이 아닌 다른 메뉴 클릭 시 dropdown 닫기
                 }
@@ -138,8 +141,7 @@ const Menu = () => {
         })}
         {showDropdown && (
           <div>
-            <Followinglist />
-            <div className="flex justify-center w-[135px] pl-[8px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
+            <div className="flex justify-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
               <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[5px] text-gray-700 py-2 text-base text-center">
                 {nicknames &&
                   nicknames.map((name, index) => (

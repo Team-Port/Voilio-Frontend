@@ -3,6 +3,8 @@ import VideoItem from "./VideoItem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
 import { Link } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
+import ko from "date-fns/locale/ko"; // 로케일 파일 불러오기
 
 const VideoList = ({ division, filter }) => {
   // const [imageUrl, setimageUrl] = useState(null);
@@ -50,10 +52,6 @@ const VideoList = ({ division, filter }) => {
 
             console.log("필터를 정상적으로 불러왔습니다.");
             // setItems(response.data.data.content);
-            const createAt = new Date(response.data.data.createAt);
-            const month = createAt.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
-            const day = createAt.getDate();
-            setCreateAt(`${month}월 ${day}일`);
             console.log("게시글을 정상적으로 불러왔습니다.");
             // console.log(division);
           }
@@ -66,11 +64,12 @@ const VideoList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 px-[18px]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-5 px-[25px]">
         {items.map((item) => (
-          <Link to={`/new-portal/boards/${item.id}`}>
+          // <Link to={`/new-portal/boards/${item.id}`}>
+          <Link key={item.id} to={`/new-portal/boards/${item.id}`}>
             <div
-              key={item.id}
+              // key={item.id}
               className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
             >
               <VideoItem
@@ -78,8 +77,10 @@ const VideoList = ({ division, filter }) => {
                 summary={item.summary}
                 category1={item.category1}
                 category2={item.category2}
-                createAt={item.createAt}
-                // imageUrl={imageUrl}
+                createAt={formatDistanceToNow(new Date(item.createAt), {
+                  locale: ko,
+                  addSuffix: true,
+                })}
                 thumbnailUrl={item.thumbnailUrl}
                 view={item.view}
                 user_id={item.id}
