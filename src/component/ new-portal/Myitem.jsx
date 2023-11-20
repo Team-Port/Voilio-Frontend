@@ -12,8 +12,6 @@ const Myitem = ({
   view,
 }) => {
   return (
-    // <div className="flex w-full h-full px-3">
-    //{/* <div className="w-full h-full "> */}
     <div className="flex flex-col w-full h-full px-3 bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
       <div className="flex justify-between items-center px-[10px] mt-[10px]">
         <div className="flex justify-center">
@@ -53,8 +51,6 @@ const Myitem = ({
         </div>
       </div>
     </div>
-    // </div>
-    // </div>
   );
 };
 

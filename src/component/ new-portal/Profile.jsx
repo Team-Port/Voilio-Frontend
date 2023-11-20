@@ -12,10 +12,6 @@ const Profile = ({
       <div className="flex items-center ml-[20px] ">
         <img
           className="w-[150px] h-[150px] rounded-full object-cover m-0"
-          // src={
-          //   imageUrl ||
-          //   "/Users/a82108/Desktop/Voilio/Voilio-Frontend/public/asset/sample.png"
-          // }
           src={imageUrl}
           alt=""
         />
