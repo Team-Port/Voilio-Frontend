@@ -66,7 +66,7 @@ const VideoList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 pl-[20px] pr-[70px]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-4 px-[18px]">
         {items.map((item) => (
           <Link to={`/new-portal/boards/${item.id}`}>
             <div
