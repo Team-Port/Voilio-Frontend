@@ -1,8 +1,14 @@
 import React from "react";
 
-const Profile = ({ nickname, imageUrl, following }) => {
+const Profile = ({
+  nickname,
+  imageUrl,
+  videoCount,
+  followerCount,
+  normalCount,
+}) => {
   return (
-    <div className="fixed flex h-[200px] gap-[50px] z-30">
+    <div className="fixed flex w-full h-[200px] gap-[50px] z-30">
       <div className="flex items-center ml-[20px] ">
         <img
           className="w-[150px] h-[150px] rounded-full object-cover m-0"
@@ -23,10 +29,9 @@ const Profile = ({ nickname, imageUrl, following }) => {
           ></img>
         </div>
         <div className="flex gap-[30px] text-xl text-zinc-500 mt-[5px]">
-          <div className="">팔로워 {following}</div>
-          {following}
-          <div className="">동영상</div>
-          <div className="">게시글</div>
+          <div className="">팔로워 {followerCount}</div>
+          <div className="">동영상 {videoCount}</div>
+          <div className="">게시글 {normalCount}</div>
         </div>
       </div>
     </div>
