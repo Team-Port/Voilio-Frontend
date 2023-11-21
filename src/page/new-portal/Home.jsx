@@ -23,7 +23,6 @@ const Home = () => {
         <div className="mt-[20px]">
           <VideoList division={division} items={items} filter={filter} />
         </div>
-        {/* </div> */}
       </div>
     </div>
   );

@@ -11,6 +11,8 @@ const Myitem = (item) => {
     locale: ko,
   });
 
+  console.log(data);
+
   return (
     <div className="px-[15px] flex flex-col gap-[10px] py-[10px] rounded-[10px] h-[330px] bg-white shadow-sm">
       <div className="flex flex-row justify-between">
