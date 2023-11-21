@@ -59,7 +59,7 @@ const Mypage = () => {
     }
   }, [user_id]);
   return (
-    <div className="pl-[215px] pt-[90px] relative">
+    <div className="pl-[215px] pt-[85px] relative">
       <div className="flex flex-col">
         <Profile
           nickname={nickname}

@@ -17,12 +17,16 @@ const Profile = ({
         />
       </div>
       <div className="flex flex-col gap-[10px] justify-center">
-        <div className="flex gap-[15px]">
+        <div className="flex gap-[20px]">
           <div className="text-4xl font-bold">{nickname || "Loading..."}</div>
           <img
-            className="w-[25px] h-[25px] mt-[6px]"
+            className="w-[25px] h-[25px] mt-[9px]"
             src="/asset/icon_edit.svg"
-          ></img>
+          />
+          <img
+            className="w-[28px] h-[28px] mt-[7px]"
+            src="/asset/Icon_follow.svg"
+          />
         </div>
         <div className="flex gap-[30px] text-xl text-zinc-500 mt-[5px]">
           <div className="">팔로워 {followerCount}</div>

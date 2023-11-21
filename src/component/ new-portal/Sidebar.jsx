@@ -50,7 +50,7 @@ const menues = [
   },
 ];
 
-const Menu = () => {
+const Menu = ({ imageUrl }) => {
   const [activeMenu, setActiveMenu] = useState(1);
   const [activeCategory, setActiveCategory] = useState(1);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -64,7 +64,7 @@ const Menu = () => {
 
     if (jwtToken) {
       axios
-        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${"2"}`, {
+        .get(`${HOST_URL}/api/v1/follows/list`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
           params: { fromUserid: userId },
         })
@@ -140,18 +140,25 @@ const Menu = () => {
           );
         })}
         {showDropdown && (
-          <div>
-            <div className="flex justify-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
-              <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[5px] text-gray-700 py-2 text-base text-center">
-                {nicknames &&
-                  nicknames.map((name, index) => (
+          // <div className="flex items-center">
+          <div className="fle items-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
+            <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[10px] text-gray-700 py-2 text-base text-center">
+              {nicknames &&
+                nicknames.map((name, index) => (
+                  <div className="flex items-center justify-center">
+                    <img
+                      className="w-[30px] h-[30px] rounded-full m-0 object-cover"
+                      src={imageUrl} // 해당 닉네임의 이미지 URL
+                      alt="profile"
+                    />
                     <button className="hover:bg-slate-200" key={index}>
                       {name}
                     </button>
-                  ))}
-              </div>
+                  </div>
+                ))}
             </div>
           </div>
+          // </div>
         )}
       </div>
     );

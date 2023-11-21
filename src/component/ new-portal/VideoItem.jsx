@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 const VideoItem = ({
   title,
+  // summary,
   category1,
   category2,
   createAt,
+  // imageUrl,
   division,
   thumbnailUrl,
   view,
@@ -21,52 +23,63 @@ const VideoItem = ({
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full px-3 hover:cursor-pointer flex flex-col bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
-      <div className="flex justify-between items-center px-[10px] mt-[10px]">
-        <div className="flex justify-center">
-          <Category category={category1} />
-          <Category category={category2} />
+    // <div className="flex w-full h-full px-3 hover:cursor-pointer">
+    //   <div className="w-full h-full ">
+    //     <div className="flex flex-col bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
+    //       <div className="flex justify-between items-center px-[10px] mt-[10px]">
+    //         <div className="flex justify-center">
+
+    <div>
+      <div className="flex flex-col w-full h-full px-3 bg-white bg-opacity-75 rounded-[10px] gap-[10px]">
+        <div className="flex justify-between items-center px-[10px] mt-[10px]">
+          <div className="flex justify-center">
+            <Category category={category1} />
+            <Category category={category2} />
+          </div>
+          <div className="flex justify-between items-center gap-[10px]">
+            <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
+              {/* {createAt || "Loading..."} */}
+              {/* {`${month}월 ${day}일`} */}
+              {createAt}
+            </div>
+            <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
+              <img
+                className="w-[16px] h-[16px] justify-center m-1"
+                src="/asset/icon_eye.svg"
+                alt="eyeicon"
+              />
+              {view}
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between items-center gap-[10px]">
-          <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
-            {createAt}
-          </div>
-          <div className="flex justify-center text-center text-neutral-400 text-[15px] font-normal">
-            <img
-              className="w-[16px] h-[16px] justify-center m-1"
-              src="/asset/icon_eye.svg"
-              alt="eyeicon"
-            />
-            {view}
-          </div>
+        <div className="flex justify-center ">
+          <img
+            className="mx-[40px] rounded-[10px] h-full w-[95%]"
+            src={thumbnailUrl}
+            alt="thumbnail"
+          />
         </div>
-      </div>
-      <div className="flex justify-center object-cover">
-        <img
-          className="mx-[40px] rounded-[10px] h-full w-[95%]"
-          src={thumbnailUrl}
-          alt="thumbnail"
-        />
-      </div>
-      <div className="flex items-center pl-[10px] pb-[10px]">
-        <img
-          className="w-[60px] h-[60px] rounded-full m-0 object-cover"
-          src={imageUrl}
-          alt="profile"
-        />
-        <div className="flex flex-col ml-[15px] justify-center">
-          <div className="text-black text-[20px] font-semibold line-clamp-1">
-            {title || "Loading..."}
-          </div>
-          <div
-            className="text-neutral-700 line-clamp-1 text-[17px]
+        <div className="flex items-center pl-[10px] pb-[10px]">
+          <img
+            className="w-[60px] h-[60px] rounded-full m-0 object-cover"
+            src={imageUrl}
+            alt="profile"
+          />
+          <div className="flex flex-col ml-[15px] justify-center">
+            <div className="text-black text-[20px] font-semibold line-clamp-1">
+              {title || "Loading..."}
+            </div>
+            <div
+              className="text-neutral-700 line-clamp-1 text-[17px]
                 font-normal"
-          >
-            {nickname || "Loading..."}
+            >
+              {nickname || "Loading..."}
+            </div>
           </div>
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 
