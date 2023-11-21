@@ -13,9 +13,6 @@ import {
 } from "../auth";
 
 export const useLogin = () => {
-  const queryClient = new QueryClient();
-  const myInfoQuery = useMyInfo();
-
   return useMutation(
     ({ email, password }) =>
       axios.post(`${HOST_URL}/api/v1/auth/login`, {

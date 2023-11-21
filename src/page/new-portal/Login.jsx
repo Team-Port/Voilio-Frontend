@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { useLogin } from "../../modules/apis/Auth";
+import { useLogin } from "../../modules/apis/auth";
 
 import AuthInput from "../../component/ new-portal/AuthInput";
 import ServiceIntro from "../../component/ new-portal/ServiceIntro";
@@ -14,37 +14,6 @@ const Login = () => {
   const [showPwd, setShowPwd] = useState(false);
 
   const { mutate: onLogin } = useLogin();
-
-  // const loginAxios = () => {
-  //   axios
-  //     .post(`${HOST_URL}/api/v1/auth/login`, {
-  //       email: emailValue,
-  //       password: pwdValue,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       alert("반가워요!");
-  //       if (response.status === 200) {
-  //         setJwtToken(response.data.data.replace("Bearer ", ""));
-  //         const decodedToken = jwt_decode(
-  //           response.data.data.replace("Bearer ", "")
-  //         );
-  //         const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-
-  //         if (expirationTime < Date.now()) {
-  //           removeJwtToken();
-  //         }
-
-  //         return (window.location.href = "/new-portal");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       if (error.response && error.response.status === 401) {
-  //         alert("E-mail 또는 비밀번호를 확인해 주세요.");
-  //       }
-  //     });
-  // };
 
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
