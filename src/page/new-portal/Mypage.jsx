@@ -66,7 +66,7 @@ const Mypage = () => {
             <div className="sticky top-[270px] z-20">
               <Filter onFilterChange={handleFilterChange} />
             </div>
-            <div className="mt-[210px] pl-4">
+            <div className="mt-[205px] pl-4">
               <Mylist division={division} items={items} filter={filter} />
             </div>
           </div>

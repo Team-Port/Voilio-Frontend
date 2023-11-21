@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "react-query";
-import { QueryClient } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
@@ -59,9 +58,6 @@ export const useMyInfo = () => {
       })
         .then((res) => res.json())
         .then((data) => data.data),
-    onSuccess: (data) => {
-      setUserNickname(data.nickname);
-    },
     onError: (error) => {
       return `An error has occurred: ${error.message}`;
     },

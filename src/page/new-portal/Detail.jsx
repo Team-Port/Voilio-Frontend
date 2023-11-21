@@ -5,6 +5,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
+import { getJwtToken } from "../../modules/auth";
+import { useMyInfo } from "../../modules/apis/auth";
 
 const CommentBox = ({ activeId, handleActive, comment }) => {
   const isActive = activeId === comment.id;
@@ -74,28 +76,14 @@ const Comment = ({ boardId, activeId, handleActive }) => {
   const [content, setContent] = useState("");
 
   const queryClient = useQueryClient();
-  const token = sessionStorage.getItem("jwtAuthToken");
+  const token = getJwtToken();
+
+  const { data: me } = useMyInfo();
 
   const { data: comments } = useQuery({
     queryKey: [{ boardId }, "comment"],
     queryFn: () =>
       fetch(`${HOST_URL}/api/v1/comments/${boardId}/list`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-    onError: (error) => {
-      return `An error has occurred: ${error.message}`;
-    },
-    enabled: !!token,
-  });
-
-  const { data: me } = useQuery({
-    queryKey: ["me"],
-    queryFn: () =>
-      fetch(`${HOST_URL}/api/v1/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
         .then((res) => res.json())
         .then((data) => data.data),
     onError: (error) => {
