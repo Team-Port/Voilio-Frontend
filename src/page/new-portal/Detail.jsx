@@ -251,10 +251,10 @@ const Detail = () => {
             <div className="flex flex-row items-center flex-grow gap-[15px]">
               <img
                 className="rounded-full w-[50px] h-[50px]"
-                src={boardData.userSimpleDto.imageUrl}
+                src={boardData.user.imageUrl}
                 alt="user profile"
               />
-              <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
+              <div className="text-xl">{boardData.user.nickname}</div>
             </div>
             <div className="flex flex-col gap-[3px]">
               <div className="flex flex-row justify-end gap-[10px]">

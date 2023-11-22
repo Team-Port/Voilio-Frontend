@@ -85,7 +85,7 @@ const VideoList = ({ division, filter }) => {
                 view={item.view}
                 user_id={item.id}
                 division={item.division}
-                userSimpleDto={item.userSimpleDto}
+                user={item.user}
               />
             </div>
           </Link>

@@ -50,7 +50,7 @@ const menues = [
   },
 ];
 
-const Menu = ({ imageUrl }) => {
+const Menu = () => {
   const [activeMenu, setActiveMenu] = useState(1);
   const [activeCategory, setActiveCategory] = useState(1);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -58,6 +58,7 @@ const Menu = ({ imageUrl }) => {
   const [id, setId] = useState("");
   const [userId, setUserId] = useState("2");
   const [nicknames, setNicknames] = useState([]);
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
@@ -78,8 +79,15 @@ const Menu = ({ imageUrl }) => {
             const tempNicknames = subscriptions
               .map((subscription) => subscription.toUser?.nickname)
               .filter(Boolean);
-
             setNicknames(tempNicknames); // 여기서 받아온 =닉네임 목록을 상태로 설정해주세요
+
+            // 이미지 URL 가져오기
+            const tempImageUrls = subscriptions
+              .map((subscription) => subscription.toUser?.imageUrl)
+              .filter(Boolean);
+            // 가져온 이미지 URL 상태로 설정
+            setImageUrl(tempImageUrls);
+
             subscriptions.forEach((subscription) => {
               const nickname = subscription.toUser?.nickname;
               if (nickname) {
@@ -141,20 +149,21 @@ const Menu = ({ imageUrl }) => {
         })}
         {showDropdown && (
           // <div className="flex items-center">
-          <div className="fle items-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
+          <div className="flex items-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
             <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[10px] text-gray-700 py-2 text-base text-center">
               {nicknames &&
                 nicknames.map((name, index) => (
-                  <div className="flex items-center justify-center">
+                  <button
+                    key={index}
+                    className="flex gap-[13px] pr-[3px] items-center justify-center hover:bg-rose-100"
+                  >
                     <img
-                      className="w-[30px] h-[30px] rounded-full m-0 object-cover"
-                      src={imageUrl} // 해당 닉네임의 이미지 URL
+                      className="w-[33px] h-[33px] rounded-full m-0 object-cover"
+                      src={imageUrl[index]} // 해당 닉네임의 이미지 URL
                       alt="profile"
                     />
-                    <button className="hover:bg-slate-200" key={index}>
-                      {name}
-                    </button>
-                  </div>
+                    <div key={index}>{name}</div>
+                  </button>
                 ))}
             </div>
           </div>
