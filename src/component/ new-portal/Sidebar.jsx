@@ -155,7 +155,7 @@ const Menu = () => {
                 nicknames.map((name, index) => (
                   <button
                     key={index}
-                    className="flex gap-[13px] pr-[3px] items-center justify-center hover:bg-rose-100"
+                    className="flex gap-[13px] pr-[3px] items-center justify-center hover:bg-pink-100"
                   >
                     <img
                       className="w-[33px] h-[33px] rounded-full m-0 object-cover"
