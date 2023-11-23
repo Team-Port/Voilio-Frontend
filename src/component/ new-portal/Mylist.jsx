@@ -12,7 +12,28 @@ const MyList = ({ division, filter }) => {
   const [createAt, setCreateAt] = useState(null);
   const [userId, setUserId] = useState("2");
   const [videoItems, setVideoItems] = useState([]);
+  const [boardId, setBoardId] = useState("");
 
+  const handleHidePost = (boardId) => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+    if (jwtToken) {
+      axios
+        .patch(`${HOST_URL}/api/v1/boards/${boardId}/hide`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+          // params: { boardId },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("게시글을 정상적으로 숨겼습니다.");
+            // 필요한 상태 업데이트 등의 로직을 추가할 수 있습니다.
+          }
+        })
+        .catch((error) => {
+          console.log("게시글을 숨기는데 실패했습니다.", error);
+          console.log(boardId);
+        });
+    }
+  };
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
     let apiUrl = `${HOST_URL}/api/v1/boards/lists`;
@@ -43,8 +64,8 @@ const MyList = ({ division, filter }) => {
                 (item) => item.division === "NORMAL"
               );
             }
+
             setItems(filteredItems);
-            setVideoItems(filteredItems);
             console.log("게시글을 정상적으로 불러왔습니다.");
           }
         })
@@ -76,6 +97,8 @@ const MyList = ({ division, filter }) => {
               view={item.view}
               user_id={item.id}
               division={item.division}
+              handleHidePost={handleHidePost}
+              boardId={item.id}
             />
           </div>
         ))}

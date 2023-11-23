@@ -58,13 +58,14 @@ const Menu = () => {
   const [id, setId] = useState("");
   const [userId, setUserId] = useState("2");
   const [nicknames, setNicknames] = useState([]);
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
 
     if (jwtToken) {
       axios
-        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${"2"}`, {
+        .get(`${HOST_URL}/api/v1/follows/list`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
           params: { fromUserid: userId },
         })
@@ -78,8 +79,15 @@ const Menu = () => {
             const tempNicknames = subscriptions
               .map((subscription) => subscription.toUser?.nickname)
               .filter(Boolean);
-
             setNicknames(tempNicknames); // 여기서 받아온 =닉네임 목록을 상태로 설정해주세요
+
+            // 이미지 URL 가져오기
+            const tempImageUrls = subscriptions
+              .map((subscription) => subscription.toUser?.imageUrl)
+              .filter(Boolean);
+            // 가져온 이미지 URL 상태로 설정
+            setImageUrl(tempImageUrls);
+
             subscriptions.forEach((subscription) => {
               const nickname = subscription.toUser?.nickname;
               if (nickname) {
@@ -140,18 +148,26 @@ const Menu = () => {
           );
         })}
         {showDropdown && (
-          <div>
-            <div className="flex justify-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
-              <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[5px] text-gray-700 py-2 text-base text-center">
-                {nicknames &&
-                  nicknames.map((name, index) => (
-                    <button className="hover:bg-slate-200" key={index}>
-                      {name}
-                    </button>
-                  ))}
-              </div>
+          // <div className="flex items-center">
+          <div className="flex items-center w-[135px] text-center z-10 origin-top-right rounded-md bg-white shadow-lg focus:outline-none">
+            <div className="w-full max-h-32 overflow-y-auto flex flex-col gap-[10px] text-gray-700 py-2 text-base text-center">
+              {nicknames &&
+                nicknames.map((name, index) => (
+                  <button
+                    key={index}
+                    className="flex gap-[13px] pr-[3px] items-center justify-center hover:bg-pink-100"
+                  >
+                    <img
+                      className="w-[33px] h-[33px] rounded-full m-0 object-cover"
+                      src={imageUrl[index]} // 해당 닉네임의 이미지 URL
+                      alt="profile"
+                    />
+                    <div key={index}>{name}</div>
+                  </button>
+                ))}
             </div>
           </div>
+          // </div>
         )}
       </div>
     );
