@@ -5,6 +5,7 @@ import { HOST_URL } from "../../lib/HostUrl";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import ko from "date-fns/locale/ko"; // 로케일 파일 불러오기
+import { useNavigate } from "react-router-dom";
 
 const VideoList = ({ division, filter }) => {
   // const [imageUrl, setimageUrl] = useState(null);
@@ -13,6 +14,27 @@ const VideoList = ({ division, filter }) => {
   const [createAt, setCreateAt] = useState(null);
   // const [division, setDivision] = useState(null);
   const [videoItems, setVideoItems] = useState([]);
+  const navigate = useNavigate();
+
+  const onClickCategory = (category) => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+    if (jwtToken) {
+      axios
+        .get(`${HOST_URL}/api/v1/boards/lists/category/${category}`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+            navigate("/category/${category}");
+          }
+        })
+        .catch((error) => {
+          console.log("실패했습니다.");
+          console.log(error);
+        });
+    }
+  };
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
@@ -71,6 +93,7 @@ const VideoList = ({ division, filter }) => {
             <div
               // key={item.id}
               className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+              onClick={() => onClickCategory(item.category1)}
             >
               <VideoItem
                 title={item.title}
@@ -85,7 +108,7 @@ const VideoList = ({ division, filter }) => {
                 view={item.view}
                 user_id={item.id}
                 division={item.division}
-                userSimpleDto={item.userSimpleDto}
+                user={item.user}
               />
             </div>
           </Link>

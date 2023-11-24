@@ -40,7 +40,7 @@ const NewApp = () => {
         <Routes>
           <Route path="/new-portal/landing" element={<Landing />} />
           <Route path="/new-portal" element={<Home />} />
-          <Route path="/new-portal/:category" element={<Home />} />
+          <Route path="/new-portal/:category/{category}" element={<Home />} />
           <Route path="/new-portal/login" element={<Login />} />
           <Route path="/new-portal/signin" element={<Signin />} />
           <Route path="/new-portal/upload-video" element={<UploadVideo />} />

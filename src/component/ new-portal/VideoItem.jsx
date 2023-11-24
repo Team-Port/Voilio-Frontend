@@ -11,12 +11,12 @@ const VideoItem = ({
   division,
   thumbnailUrl,
   view,
-  userSimpleDto,
+  user,
 }) => {
   const createDate = new Date(createAt);
   const month = createDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
   const day = createDate.getDate();
-  const { nickname, imageUrl } = userSimpleDto;
+  const { nickname, imageUrl } = user;
 
   const navigate = useNavigate();
 

@@ -1,42 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
+import { useNavigate } from "react-router-dom";
 
 const menues = [
   {
     id: 2,
     name: "All",
-    value: "all",
+    value: "ALL",
   },
   {
     id: 3,
     name: "IT",
-    value: "all",
+    value: "IT",
   },
   {
     id: 4,
     name: "Design",
-    value: "design",
+    value: "DESIGN",
   },
   {
     id: 5,
     name: "Dance",
-    value: "dance",
+    value: "DANCE",
   },
   {
     id: 6,
     name: "Exercise",
-    value: "exercise",
+    value: "EXERCISE",
   },
   {
     id: 7,
     name: "Language",
-    value: "language",
+    value: "LANGUAGE",
   },
   {
     id: 8,
     name: "Sales",
-    value: "sales",
+    value: "SALES",
   },
   {
     id: 9,
@@ -59,12 +60,56 @@ const Menu = () => {
   const [userId, setUserId] = useState("2");
   const [nicknames, setNicknames] = useState([]);
 
+  const navigate = useNavigate();
+  const onClickCategory = ({ category }) => {
+    const jwtToken = sessionStorage.getItem("jwtAuthToken");
+    if (jwtToken) {
+      axios
+        .get(`${HOST_URL}/api/v1/boards/lists/category/${category}`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(category);
+            navigate("/new-portal/:category/{category}");
+          }
+        })
+        .catch((error) => {
+          console.log("실패했습니다.");
+          console.log(error);
+        });
+    }
+  };
+  const handleMenuClick = (categoryValue) => {
+    if (categoryValue !== "following") {
+      setShowDropdown(false); // Following이 아닌 다른 메뉴 클릭 시 dropdown 닫기
+    }
+
+    let selectedCategory = categoryValue;
+
+    // Following 메뉴를 선택한 경우에는 따로 설정
+    if (categoryValue === "following") {
+      setShowDropdown(!showDropdown);
+      handleFollowingClick();
+    } else {
+      setShowDropdown(false); // Following이 아닌 다른 메뉴 클릭 시 dropdown 닫기
+
+      // 선택한 카테고리 값을 설정
+      selectedCategory = menues.find(
+        (menu) => menu.value === categoryValue
+      )?.value;
+    }
+
+    // 카테고리에 해당하는 API 호출
+    onClickCategory({ category: selectedCategory });
+  };
+
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
 
     if (jwtToken) {
       axios
-        .get(`${HOST_URL}/api/v1/Follows/list?fromUserid=${"2"}`, {
+        .get(`${HOST_URL}/api/v1/follows/list`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
           params: { fromUserid: userId },
         })
@@ -112,6 +157,9 @@ const Menu = () => {
             <button
               className="flex gap-[15px] w-full flex-col"
               onClick={() => {
+                handleMenuClick(menu.value);
+                // onClickCategory(menu.value);
+                // onClickCategory({ category: categoryValue });
                 setActiveMenu(menu.id);
                 menu.id !== 1 && setActiveCategory(null);
                 if (menu.value === "following") {
