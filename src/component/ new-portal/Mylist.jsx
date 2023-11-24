@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
-import VideoItem from "./VideoItem";
+import Myitem from "./Myitem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
-import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import ko from "date-fns/locale/ko"; // 로케일 파일 불러오기
 
-const VideoList = ({ division, filter }) => {
-  // const [imageUrl, setimageUrl] = useState(null);
+const MyList = ({ division, filter }) => {
+  const [imageUrl, setimageUrl] = useState(null);
   const [data, setData] = useState(null);
   const [items, setItems] = useState([]);
   const [createAt, setCreateAt] = useState(null);
-  // const [division, setDivision] = useState(null);
+  const [userId, setUserId] = useState("2");
   const [videoItems, setVideoItems] = useState([]);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
-    // console.log(division);
     let apiUrl = `${HOST_URL}/api/v1/boards/lists`;
 
     if (division === "전체") {
@@ -27,10 +25,9 @@ const VideoList = ({ division, filter }) => {
     } else if (division === "게시글") {
       apiUrl += "?division=NORMAL";
     }
-
     if (jwtToken) {
       axios
-        .get(apiUrl, {
+        .get(`${HOST_URL}/api/v1/boards/${userId}/result`, {
           headers: { Authorization: `Bearer ${jwtToken}` },
         })
         .then((response) => {
@@ -46,53 +43,45 @@ const VideoList = ({ division, filter }) => {
                 (item) => item.division === "NORMAL"
               );
             }
-
             setItems(filteredItems);
             setVideoItems(filteredItems);
-
-            console.log("필터를 정상적으로 불러왔습니다.");
-            // setItems(response.data.data.content);
             console.log("게시글을 정상적으로 불러왔습니다.");
-            // console.log(division);
           }
         })
         .catch((error) => {
-          console.log("게시글을 불러오는데 실패했습니다.");
+          console.log("게시글을 불러오는데 실패했습니다.", error);
         });
     }
-  }, [division, filter]);
+  }, [division, filter, userId]);
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-5 px-[25px]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] px-[18px]">
         {items.map((item) => (
-          // <Link to={`/new-portal/boards/${item.id}`}>
-          <Link key={item.id} to={`/new-portal/boards/${item.id}`}>
-            <div
-              // key={item.id}
-              className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
-            >
-              <VideoItem
-                title={item.title}
-                summary={item.summary}
-                category1={item.category1}
-                category2={item.category2}
-                createAt={formatDistanceToNow(new Date(item.createAt), {
-                  locale: ko,
-                  addSuffix: true,
-                })}
-                thumbnailUrl={item.thumbnailUrl}
-                view={item.view}
-                user_id={item.id}
-                division={item.division}
-                userSimpleDto={item.userSimpleDto}
-              />
-            </div>
-          </Link>
+          <div
+            key={item.id}
+            className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+          >
+            <Myitem
+              title={item.title}
+              summary={item.summary}
+              category1={item.category1}
+              category2={item.category2}
+              createAt={formatDistanceToNow(new Date(item.createAt), {
+                locale: ko,
+                addSuffix: true,
+              })}
+              imageUrl={imageUrl}
+              thumbnailUrl={item.thumbnailUrl}
+              view={item.view}
+              user_id={item.id}
+              division={item.division}
+            />
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default VideoList;
+export default MyList;
