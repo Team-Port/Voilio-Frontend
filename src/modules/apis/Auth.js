@@ -50,7 +50,9 @@ export const useMyInfo = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then((res) => res.data.data),
+      })
+        .then((res) => res.json())
+        .then((data) => data.data),
     onError: (error) => {
       return `An error has occurred: ${error.message}`;
     },
