@@ -6,6 +6,7 @@ import { ko } from "date-fns/locale";
 
 const VideoItem = ({
   title,
+  summary,
   category1,
   category2,
   createAt,
@@ -19,6 +20,40 @@ const VideoItem = ({
     locale: ko,
   });
   const { nickname, imageUrl } = user;
+
+  const getBgColor = (category1) => {
+    let bgColor;
+
+    switch (category1) {
+      case "ALL":
+        bgColor = "bg-slate-400";
+        break;
+      case "IT":
+        bgColor = "bg-gray-300";
+        break;
+      case "DESIGN":
+        bgColor = "bg-[#EAB191]";
+        break;
+      case "DANCE":
+        bgColor = "bg-[#FACAD5]";
+        break;
+      case "EXERCISE":
+        bgColor = "bg-[#85AED3]";
+        break;
+      case "LANGUAGE":
+        bgColor = "bg-[#CFB8E1]";
+        break;
+      case "SALES":
+        bgColor = "bg-[#A9D8B6]";
+        break;
+      default:
+        bgColor = "bg-gray-50";
+        break;
+    }
+
+    return { bgColor };
+  };
+  const { bgColor } = getBgColor(category1);
 
   return (
     <div className="px-[15px] flex flex-col gap-[10px] py-[10px] rounded-[10px] h-[330px] bg-white shadow-sm">
@@ -44,7 +79,13 @@ const VideoItem = ({
           alt="thumbnail"
         />
       ) : (
-        <div className="bg-gray-50 rounded-[10px] h-full" />
+        <div
+          className={`${bgColor} px-[20px] rounded-[10px] flex items-center justify-center h-full`}
+        >
+          <div className="text-5xl font-semibold leading-tight text-center text-white line-clamp-2">
+            {summary}
+          </div>
+        </div>
       )}
       <div className="flex flex-row gap-[10px] items-center">
         <img
