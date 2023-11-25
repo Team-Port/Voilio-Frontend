@@ -3,6 +3,7 @@ const AuthInput = ({
   placeholder,
   icon,
   anotherIcon,
+  value,
   setValue,
   event,
   setEvent,
@@ -15,6 +16,7 @@ const AuthInput = ({
           type={event ? "text" : "password"}
           className="w-full outline-none"
           placeholder={placeholder}
+          value={value}
           onChange={(e) => {
             setValue(e.target.value);
           }}
