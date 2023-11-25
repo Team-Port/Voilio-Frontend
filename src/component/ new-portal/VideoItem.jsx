@@ -12,13 +12,13 @@ const VideoItem = ({
   division,
   thumbnailUrl,
   view,
-  userSimpleDto,
+  user,
 }) => {
   const formatDate = formatDistanceToNow(new Date(createAt), {
     addSuffix: true,
     locale: ko,
   });
-  const { nickname, imageUrl } = userSimpleDto;
+  const { nickname, imageUrl } = user;
 
   return (
     <div className="px-[15px] flex flex-col gap-[10px] py-[10px] rounded-[10px] h-[330px] bg-white shadow-sm">
