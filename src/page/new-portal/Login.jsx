@@ -1,12 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import axios from "axios";
-
-import jwt_decode from "jwt-decode";
-import { HOST_URL } from "../../lib/HostUrl";
+import { useLogin } from "../../modules/apis/auth";
 
 import AuthInput from "../../component/ new-portal/AuthInput";
 import ServiceIntro from "../../component/ new-portal/ServiceIntro";
+import { removeJwtToken } from "../../modules/Auth";
 
 const Login = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -15,52 +13,7 @@ const Login = () => {
   const [showId, setShowId] = useState(true);
   const [showPwd, setShowPwd] = useState(false);
 
-  const loginAxios = () => {
-    axios
-      .post(`${HOST_URL}/api/v1/auth/login`, {
-        email: emailValue,
-        password: pwdValue,
-      })
-      .then((response) => {
-        console.log(response);
-        alert("반가워요!");
-        if (response.status === 200) {
-          sessionStorage.setItem(
-            "jwtAuthToken",
-            response.data.data.replace("Bearer ", "")
-          );
-          const decodedToken = jwt_decode(
-            response.data.data.replace("Bearer ", "")
-          );
-          const expirationTime = decodedToken.exp * 1000; // 토큰 만료 시간(ms)
-
-          if (expirationTime < Date.now()) {
-            sessionStorage.removeItem("jwtAuthToken"); // 만료된 토큰 삭제
-          }
-
-          getUser(decodedToken.sub);
-          return (window.location.href = "/new-portal");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response && error.response.status === 401) {
-          alert("E-mail 또는 비밀번호를 확인해 주세요.");
-        }
-      });
-  };
-
-  const getUser = (userId) => {
-    axios
-      .get(`${HOST_URL}/api/v1/users/${userId}`)
-      .then((response) => {
-        sessionStorage.setItem("nickname", response.data.data.nickname);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  console.log(showId);
+  const { mutate: onLogin } = useLogin();
 
   return (
     <div className="relative flex bg-[#F8FAFC] flex-row">
@@ -93,7 +46,13 @@ const Login = () => {
             </div>
             <button
               className="flex w-full justify-center px-[24px] py-[16px] mb-[29px] bg-[#FACAD5] rounded-[4px] text-white font-bold"
-              onClick={loginAxios}
+              onClick={() => {
+                removeJwtToken();
+                onLogin({
+                  email: emailValue,
+                  password: pwdValue,
+                });
+              }}
             >
               Login
             </button>

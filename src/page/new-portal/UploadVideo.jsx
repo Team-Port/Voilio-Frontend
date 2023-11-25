@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import jwt_decode from "jwt-decode";
 
 import TextEditor from "../../component/ new-portal/TextEditor";
+import { useSubmitBoard } from "../../modules/apis/upload";
+import { getJwtToken } from "../../modules/Auth";
 
 const VideoPicker = ({ handleVideoChange, showMargin }) => {
   return (
@@ -68,10 +69,12 @@ const UploadVideo = () => {
 
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
+  const [summary, setSummary] = useState("");
   const [editorHtml, setEditorHtml] = useState("");
+  const [plainText, setPlainText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
+  const quillRef = useRef();
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
@@ -88,7 +91,7 @@ const UploadVideo = () => {
   };
 
   const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
+    const file = e?.target.files[0];
     setThumbnail(file);
     setThumbnailFileName(file.name);
 
@@ -102,7 +105,7 @@ const UploadVideo = () => {
   };
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+    setTitle(e?.target.value);
   };
 
   const handleCategoryChange = (selected) => {
@@ -111,24 +114,41 @@ const UploadVideo = () => {
     }
   };
 
+  const handleSummaryChange = (e) => {
+    if (e.target.value !== null) {
+      setSummary(e.target.value);
+    }
+  };
+
   const handleEditorChange = (html) => {
     setEditorHtml(html);
   };
+
+  const handleGetEditorText = (quillRef) => {
+    if (quillRef.current) {
+      const quill = quillRef.current.getEditor();
+      const plainText = quill.getText();
+
+      setPlainText(plainText);
+    }
+  };
+
+  const { mutate: submitVideo } = useSubmitBoard();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const token = sessionStorage.getItem("jwtAuthToken");
+    const token = getJwtToken();
     const decodedToken = jwt_decode(token);
     const userId = decodedToken.sub;
 
     const boardData = {
       title: title,
       content: editorHtml,
-      summary: "",
-      category1: categories[0].value,
-      category2: categories[1].value,
+      summary: summary,
+      category1: categories[0] ? categories[0].value : "ALL",
+      category2: categories[1] ? categories[1].value : "ALL",
       videoUrl: "",
       thumbnailUrl: "",
       isPublic: "Y",
@@ -138,7 +158,21 @@ const UploadVideo = () => {
 
     if (video) {
       const videoFormData = new FormData();
-      videoFormData.append("video", video);
+
+      let videoFileExtension = video.name.split(".").pop();
+      if (videoFileExtension === "mov") videoFileExtension = "mp4";
+      const newVideoName = userId + "_" + Date.now() + "_v";
+
+      const newVideo = new File(
+        [video],
+        newVideoName + "." + videoFileExtension,
+        {
+          type: video.type,
+          lastModified: video.lastModified,
+        }
+      );
+
+      videoFormData.append("video", newVideo);
 
       try {
         let response;
@@ -200,37 +234,11 @@ const UploadVideo = () => {
       }
     }
 
-    console.log(boardData);
-
-    try {
-      let response;
-      response = await axios.post(
-        `${HOST_URL}/api/v1/boards/create`,
-        boardData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response.data);
-
-      alert("게시물이 정상적으로 업로드 되었습니다.");
-      navigate("/new-portal");
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-      if (error.response.status === 401) {
-        alert("해당 게시물의 권한이 없습니다.");
-      } else {
-        alert(
-          "서버 오류로 생성이 정상적으로 되지 않았습니다. 다시 부탁드릴게요😭"
-        );
-      }
-    } finally {
-      setIsLoading(false);
+    if (summary === "") {
+      boardData.summary = plainText;
     }
+
+    submitVideo(boardData);
   };
 
   return (
@@ -247,11 +255,14 @@ const UploadVideo = () => {
           />
         </div>
         <TextEditor
+          quillRef={quillRef}
           categories={categories}
           editorHtml={editorHtml}
           handleTitleChange={handleTitleChange}
           handleCategoryChange={handleCategoryChange}
+          handleSummaryChange={handleSummaryChange}
           handleEditorChange={handleEditorChange}
+          handleGetEditorText={handleGetEditorText}
         />
         <div className="flex justify-end mt-[70px] mr-[0px] xl:mr-[70px] mb-[30px]">
           <button

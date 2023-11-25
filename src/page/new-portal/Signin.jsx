@@ -6,6 +6,8 @@ import { HOST_URL } from "../../lib/HostUrl";
 
 import AuthInput from "../../component/ new-portal/AuthInput";
 import ServiceIntro from "../../component/ new-portal/ServiceIntro";
+import { useRandomNickname } from "../../modules/apis/auth";
+import { useQueryClient } from "react-query";
 
 const Signin = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -42,17 +44,20 @@ const Signin = () => {
       });
   };
 
+  const { data: randomNickname } = useRandomNickname();
+  const queryClient = useQueryClient();
+
+  const handleEventClick = () => {
+    queryClient.invalidateQueries(["random"]);
+    setNicknameValue(randomNickname);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
     if (pwdValue !== confirmPwdValue) {
       return alert("비밀번호가 일치하지 않습니다.");
     }
-  };
-
-  const handleEventClick = () => {
-    // random nickname 생성으로 대체될 함수
-    alert("hey👋");
   };
 
   return (
@@ -70,6 +75,7 @@ const Signin = () => {
               <AuthInput
                 formTitle="E-mail"
                 placeholder="아이디로 사용할 이메일을 입력해 주세요."
+                value={emailValue}
                 setValue={setEmailValue}
                 event={showValue}
                 setEvent={setShowValue}
@@ -79,6 +85,7 @@ const Signin = () => {
                 placeholder="비밀번호를 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
                 anotherIcon="/asset/Icon_eyeOn.svg"
+                value={pwdValue}
                 setValue={setPwdValue}
                 event={showPwd}
                 setEvent={setShowPwd}
@@ -88,6 +95,7 @@ const Signin = () => {
                 placeholder="비밀번호를 한 번 더 입력해 주세요."
                 icon="/asset/Icon_eyeOff.svg"
                 anotherIcon="/asset/Icon_eyeOn.svg"
+                value={confirmPwdValue}
                 setValue={setConfirmPwdValue}
                 event={showConfirmPwd}
                 setEvent={setShowConfirmPwd}
@@ -97,6 +105,7 @@ const Signin = () => {
                 placeholder="채널 이름으로 사용할 닉네임을 입력해 주세요."
                 icon="/asset/Icon_random.svg"
                 anotherIcon="/asset/Icon_random.svg"
+                value={nicknameValue}
                 setValue={setNicknameValue}
                 event={showValue}
                 setEvent={handleEventClick}
