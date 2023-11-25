@@ -68,10 +68,11 @@ export const useSubmitBoard = () => {
     {
       onSuccess: (data) => {
         console.log(data);
-        alert("게시물이 정상적으로 업로드 되었습니다.");
 
         navigate("/new-portal");
         window.location.reload();
+
+        alert("게시물이 정상적으로 업로드 되었습니다.");
       },
       onError: (error) => {
         handleAxiosError(error);

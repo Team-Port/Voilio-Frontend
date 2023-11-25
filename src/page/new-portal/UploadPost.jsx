@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 
 import TextEditor from "../../component/ new-portal/TextEditor";
 import { useSubmitBoard } from "../../modules/apis/upload";
+import Loading from "../../lib/Loading";
 
 const UploadPost = () => {
   const [title, setTitle] = useState("");
@@ -9,6 +10,8 @@ const UploadPost = () => {
   const [summary, setSummary] = useState("");
   const [editorHtml, setEditorHtml] = useState("");
   const [plainText, setPlainText] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const quillRef = useRef();
 
@@ -45,13 +48,12 @@ const UploadPost = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const boardData = {
       title: title,
       content: editorHtml,
       summary: summary,
-      category1: categories[0] ? categories[0].value : "ALL",
-      category2: categories[1] ? categories[1].value : "ALL",
       videoUrl: "",
       thumbnailUrl: "",
       isPublic: "Y",
@@ -63,10 +65,11 @@ const UploadPost = () => {
       boardData.summary = plainText;
     }
 
-    console.log(boardData.summary);
     submitPost(boardData);
+    setIsLoading(false);
   };
 
+  if (isLoading) return <Loading />;
   return (
     <div className="pl-[220px] pr-[30px] pt-[84px]">
       <div className="flex flex-col">
