@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
 import { getJwtToken } from "../../modules/auth";
-import { useMyInfo } from "../../modules/apis/auth";
+import { useMyInfo } from "../../modules/apis/Auth";
 
 const CommentBox = ({ activeId, handleActive, comment }) => {
   const isActive = activeId === comment.id;
