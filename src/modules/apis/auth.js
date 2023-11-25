@@ -4,7 +4,7 @@ import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import { getJwtToken, setJwtToken, removeJwtToken } from "../Authd";
+import { getJwtToken, setJwtToken, removeJwtToken } from "../Auth";
 
 export const useLogin = () => {
   return useMutation(

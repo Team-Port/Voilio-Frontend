@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
-import { getJwtToken } from "../../modules/Authd";
+import { getJwtToken } from "../../modules/Auth";
 import { useMyInfo } from "../../modules/apis/auth";
 import Category from "../../component/ new-portal/Category";
 
