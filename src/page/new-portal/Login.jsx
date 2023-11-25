@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { useLogin } from "../../modules/apis/Auth";
+import { useLogin } from "../../modules/apis/auth";
 
 import AuthInput from "../../component/ new-portal/AuthInput";
 import ServiceIntro from "../../component/ new-portal/ServiceIntro";
-import { removeJwtToken } from "../../modules/auth";
+import { removeJwtToken } from "../../modules/Auth";
 
 const Login = () => {
   const [emailValue, setEmailValue] = useState("");

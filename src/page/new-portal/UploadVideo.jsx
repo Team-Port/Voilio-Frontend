@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 
 import TextEditor from "../../component/ new-portal/TextEditor";
 import { useSubmitBoard } from "../../modules/apis/upload";
-import { getJwtToken } from "../../modules/auth";
+import { getJwtToken } from "../../modules/Auth";
 
 const VideoPicker = ({ handleVideoChange, showMargin }) => {
   return (

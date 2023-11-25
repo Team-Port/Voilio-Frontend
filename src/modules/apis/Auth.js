@@ -4,7 +4,7 @@ import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import { getJwtToken, setJwtToken, removeJwtToken } from "../auth";
+import { getJwtToken, setJwtToken, removeJwtToken } from "../Auth";
 
 export const useLogin = () => {
   return useMutation(
@@ -50,12 +50,23 @@ export const useMyInfo = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
+      }).then((res) => res.data.data),
+    onError: (error) => {
+      return `An error has occurred: ${error.message}`;
+    },
+    enabled: !!token,
+  });
+};
+
+export const useRandomNickname = () => {
+  return useQuery({
+    queryKey: ["random"],
+    queryFn: () =>
+      fetch(`${HOST_URL}/api/v1/users/nickname/random`)
         .then((res) => res.json())
         .then((data) => data.data),
     onError: (error) => {
       return `An error has occurred: ${error.message}`;
     },
-    enabled: !!token,
   });
 };

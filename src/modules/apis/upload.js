@@ -5,7 +5,7 @@ import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
 import { handleAxiosError } from "./axios-utils";
 
-import { getJwtToken } from "../auth";
+import { getJwtToken } from "../Auth";
 
 export const useUploadVideo = () => {
   const token = getJwtToken();
