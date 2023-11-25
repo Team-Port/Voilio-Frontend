@@ -5,6 +5,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
+import { getJwtToken } from "../../modules/auth";
+import { useMyInfo } from "../../modules/apis/Auth";
 
 const CommentBox = ({ activeId, handleActive, comment }) => {
   const isActive = activeId === comment.id;
@@ -22,7 +24,7 @@ const CommentBox = ({ activeId, handleActive, comment }) => {
         />
         <div className="ml-[8px]">{comment.user.nickname}</div>
         <div className="flex justify-end flex-grow mr-[5px] text-[#8F8F8F]">
-          yyyy.M.d
+          {format(new Date(comment.createAt), "yyyy.M.d")}
         </div>
       </div>
       <div className={isActive ? "" : "line-clamp-4"}>{comment.content}</div>
@@ -62,7 +64,7 @@ const ChildCommentBox = ({ childComment, isActive }) => {
           />
           <div className="ml-[8px]">{childComment.user.nickname}</div>
           <div className="flex justify-end flex-grow mr-[5px] text-[#8F8F8F]">
-            yyyy.M.d
+            {format(new Date(childComment.createAt), "yyyy.M.d")}
           </div>
         </div>
         <div>{childComment.content}</div>
@@ -74,28 +76,14 @@ const Comment = ({ boardId, activeId, handleActive }) => {
   const [content, setContent] = useState("");
 
   const queryClient = useQueryClient();
-  const token = sessionStorage.getItem("jwtAuthToken");
+  const token = getJwtToken();
+
+  const { data: me } = useMyInfo();
 
   const { data: comments } = useQuery({
     queryKey: [{ boardId }, "comment"],
     queryFn: () =>
       fetch(`${HOST_URL}/api/v1/comments/${boardId}/list`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-    onError: (error) => {
-      return `An error has occurred: ${error.message}`;
-    },
-    enabled: !!token,
-  });
-
-  const { data: me } = useQuery({
-    queryKey: ["me"],
-    queryFn: () =>
-      fetch(`${HOST_URL}/api/v1/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
         .then((res) => res.json())
         .then((data) => data.data),
     onError: (error) => {
@@ -181,16 +169,7 @@ const Detail = () => {
   const [activeId, setActiveId] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
-  const handleActive = (commentId) => {
-    setActiveId(commentId);
-    if (activeId === commentId && isActive) {
-      // 해당 옵션을 재클릭하여 옵션이 해제된 경우
-      setIsActive(false);
-      setActiveId(null);
-    } else {
-      setIsActive(true);
-    }
-  };
+  const [onLikeClicked, setOnLikeClicked] = useState(false);
 
   const token = sessionStorage.getItem("jwtAuthToken");
   const { boardId } = useParams();
@@ -227,6 +206,21 @@ const Detail = () => {
     },
   });
 
+  const handleActive = (commentId) => {
+    setActiveId(commentId);
+    if (activeId === commentId && isActive) {
+      // 해당 옵션을 재클릭하여 옵션이 해제된 경우
+      setIsActive(false);
+      setActiveId(null);
+    } else {
+      setIsActive(true);
+    }
+  };
+
+  const handleLikeClicked = () => {
+    setOnLikeClicked(!onLikeClicked);
+  };
+
   if (!boardData) return null;
   return (
     <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
@@ -251,10 +245,10 @@ const Detail = () => {
             <div className="flex flex-row items-center flex-grow gap-[15px]">
               <img
                 className="rounded-full w-[50px] h-[50px]"
-                src={boardData.userSimpleDto.imageUrl}
+                src={boardData.user.imageUrl}
                 alt="user profile"
               />
-              <div className="text-xl">{boardData.userSimpleDto.nickname}</div>
+              <div className="text-xl">{boardData.user.nickname}</div>
             </div>
             <div className="flex flex-col gap-[3px]">
               <div className="flex flex-row justify-end gap-[10px]">
@@ -278,31 +272,22 @@ const Detail = () => {
                   <div className="text-[#8F8F8F]">{boardData.view}</div>
                 </div>
                 <div className="flex flex-row items-center gap-[5px]">
-                  {boardData.existLike ? (
-                    <img
-                      className="mt-[3px] hover:cursor-pointer"
-                      src="/asset/Icon_filled_heart.svg"
-                      alt="filled heart icon"
-                      onClick={() => {
-                        setLike({
-                          contentId: boardId,
-                          division: "BOARD_LIKE",
-                        });
-                      }}
-                    />
-                  ) : (
-                    <img
-                      className="mt-[3px] hover:cursor-pointer"
-                      src="/asset/Icon_heart.svg"
-                      alt="heart icon"
-                      onClick={() => {
-                        setLike({
-                          contentId: boardId,
-                          division: "BOARD_LIKE",
-                        });
-                      }}
-                    />
-                  )}
+                  <img
+                    className="mt-[3px] hover:cursor-pointer"
+                    src={
+                      boardData.isLiked
+                        ? "/asset/Icon_filled_heart.svg"
+                        : "/asset/Icon_heart.svg"
+                    }
+                    alt="like icon"
+                    onClick={() => {
+                      setLike({
+                        contentId: boardId,
+                        division: "BOARD_LIKE",
+                      });
+                      handleLikeClicked();
+                    }}
+                  />
                   <div className="text-[#8F8F8F]">{boardData.likeCount}</div>
                 </div>
               </div>

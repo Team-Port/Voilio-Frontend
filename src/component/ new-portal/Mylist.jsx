@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import Myitem from "./Myitem";
 import axios from "axios";
 import { HOST_URL } from "../../lib/HostUrl";
-import { formatDistanceToNow } from "date-fns";
-import ko from "date-fns/locale/ko"; // 로케일 파일 불러오기
+import { Link } from "react-router-dom";
 
 const MyList = ({ division, filter }) => {
   const [imageUrl, setimageUrl] = useState(null);
-  const [data, setData] = useState(null);
   const [items, setItems] = useState([]);
-  const [createAt, setCreateAt] = useState(null);
   const [userId, setUserId] = useState("2");
   const [videoItems, setVideoItems] = useState([]);
 
@@ -56,28 +53,15 @@ const MyList = ({ division, filter }) => {
 
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-3 grid-rows-3 gap-4 pt-[170px] px-[18px]">
+      <div className="grid grid-cols-3 gap-4 xl:grid-cols-4">
         {items.map((item) => (
-          <div
+          <Link
+            to={`/new-portal/boards/${item.id}`}
             key={item.id}
-            className="bg-white bg-opacity-75 rounded-[10px] gap-[10px]"
+            className="z-10"
           >
-            <Myitem
-              title={item.title}
-              summary={item.summary}
-              category1={item.category1}
-              category2={item.category2}
-              createAt={formatDistanceToNow(new Date(item.createAt), {
-                locale: ko,
-                addSuffix: true,
-              })}
-              imageUrl={imageUrl}
-              thumbnailUrl={item.thumbnailUrl}
-              view={item.view}
-              user_id={item.id}
-              division={item.division}
-            />
-          </div>
+            <Myitem item={item} />
+          </Link>
         ))}
       </div>
     </div>
