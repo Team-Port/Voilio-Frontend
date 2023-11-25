@@ -58,11 +58,14 @@ const modules = {
 };
 
 const TextEditor = ({
+  quillRef,
   categories,
   editorHtml,
   handleTitleChange,
   handleCategoryChange,
+  handleSummaryChange,
   handleEditorChange,
+  handleGetEditorText,
 }) => {
   const Option = (props) => {
     return (
@@ -89,7 +92,7 @@ const TextEditor = ({
   ];
 
   return (
-    <div className="flex flex-col z-10 mt-[30px] mx-[0px] xl:mx-[70px] gap-[30px]">
+    <div className="flex flex-col z-10 mt-[30px] mx-[0px] xl:mx-[70px]">
       <div className="flex flex-row gap-[10px] items-center">
         <input
           type="text"
@@ -112,11 +115,21 @@ const TextEditor = ({
           value={categories}
         />
       </div>
+      <input
+        type="text"
+        className="flex-grow outline-none border-b-[1px] bg-white bg-opacity-0 border-[#CCCCCC] px-[10px] py-[10px]"
+        placeholder="게시물 요약"
+        onChange={handleSummaryChange}
+      />
       <ReactQuill
-        className="h-[500px]"
+        className="h-[500px] mt-[30px]"
+        ref={quillRef}
         value={editorHtml}
         modules={modules}
-        onChange={handleEditorChange}
+        onChange={(e) => {
+          handleEditorChange(e);
+          handleGetEditorText(quillRef);
+        }}
       />
     </div>
   );

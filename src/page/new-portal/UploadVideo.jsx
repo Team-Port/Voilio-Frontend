@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 import { HOST_URL } from "../../lib/HostUrl";
@@ -69,8 +69,12 @@ const UploadVideo = () => {
 
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
+  const [summary, setSummary] = useState("");
   const [editorHtml, setEditorHtml] = useState("");
+  const [plainText, setPlainText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const quillRef = useRef();
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
@@ -110,8 +114,23 @@ const UploadVideo = () => {
     }
   };
 
+  const handleSummaryChange = (e) => {
+    if (e.target.value !== null) {
+      setSummary(e.target.value);
+    }
+  };
+
   const handleEditorChange = (html) => {
     setEditorHtml(html);
+  };
+
+  const handleGetEditorText = (quillRef) => {
+    if (quillRef.current) {
+      const quill = quillRef.current.getEditor();
+      const plainText = quill.getText();
+
+      setPlainText(plainText);
+    }
   };
 
   const { mutate: submitVideo } = useSubmitBoard();
@@ -127,7 +146,7 @@ const UploadVideo = () => {
     const boardData = {
       title: title,
       content: editorHtml,
-      summary: "",
+      summary: summary,
       category1: categories[0].value,
       category2: categories[1].value,
       videoUrl: "",
@@ -215,6 +234,10 @@ const UploadVideo = () => {
       }
     }
 
+    if (summary === "") {
+      boardData.summary = plainText;
+    }
+
     submitVideo(boardData);
   };
 
@@ -232,11 +255,14 @@ const UploadVideo = () => {
           />
         </div>
         <TextEditor
+          quillRef={quillRef}
           categories={categories}
           editorHtml={editorHtml}
           handleTitleChange={handleTitleChange}
           handleCategoryChange={handleCategoryChange}
+          handleSummaryChange={handleSummaryChange}
           handleEditorChange={handleEditorChange}
+          handleGetEditorText={handleGetEditorText}
         />
         <div className="flex justify-end mt-[70px] mr-[0px] xl:mr-[70px] mb-[30px]">
           <button
