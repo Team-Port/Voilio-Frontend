@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -221,12 +221,6 @@ const Detail = () => {
     setOnLikeClicked(!onLikeClicked);
   };
 
-  // useEffect(() => {
-  //   queryClient.invalidateQueries([{ boardId }, "board"]);
-  //   console.log(boardData?.existLike);
-  //   console.log(boardData?.likeCount);
-  // }, [onLikeClicked]);
-
   if (!boardData) return null;
   return (
     <div className="pl-[230px] h-[100vh] pt-[110px] pb-[20px] pr-[25px] gap-[20px] grid grid-cols-7">
@@ -281,7 +275,7 @@ const Detail = () => {
                   <img
                     className="mt-[3px] hover:cursor-pointer"
                     src={
-                      boardData.existLike
+                      boardData.isLiked
                         ? "/asset/Icon_filled_heart.svg"
                         : "/asset/Icon_heart.svg"
                     }

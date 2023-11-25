@@ -77,7 +77,6 @@ const VideoList = ({ division, filter }) => {
               category1={item.category1}
               category2={item.category2}
               createAt={item.createAt}
-              // imageUrl={imageUrl}
               thumbnailUrl={item.thumbnailUrl}
               view={item.view}
               user_id={item.id}
