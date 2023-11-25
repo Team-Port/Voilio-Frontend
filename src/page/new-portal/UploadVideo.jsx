@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 import TextEditor from "../../component/ new-portal/TextEditor";
 import { useSubmitBoard } from "../../modules/apis/upload";
 import { getJwtToken } from "../../modules/Auth";
+import Loading from "../../lib/Loading";
 
 const VideoPicker = ({ handleVideoChange, showMargin }) => {
   return (
@@ -239,8 +240,10 @@ const UploadVideo = () => {
     }
 
     submitVideo(boardData);
+    setIsLoading(false);
   };
 
+  if (isLoading) return <Loading />;
   return (
     <div className="pl-[250px] pr-[30px] pt-[115px]">
       <div className="flex flex-col">

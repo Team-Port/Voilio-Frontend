@@ -7,6 +7,7 @@ import Profile from "../../component/ new-portal/Profile";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isVideoItems } from "../../store/video/isVideoItems";
+import { useMyInfo } from "../../modules/apis/auth";
 
 const Mypage = () => {
   const [data, setData] = useState(null);
@@ -26,6 +27,8 @@ const Mypage = () => {
     setFilter(selectedFilter);
     setDivision(selectedFilter); // division 값을 선택된 필터 값으로 설정
   };
+
+  const { data: me } = useMyInfo();
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("jwtAuthToken");
@@ -63,7 +66,7 @@ const Mypage = () => {
       <div className="pl-[230px] pt-[85px] pr-[25px]">
         <div className="flex flex-col">
           <Profile
-            nickname={nickname}
+            nickname={me?.nickname}
             imageUrl={imageUrl}
             following={following}
             user_id={user_id}
