@@ -7,6 +7,7 @@ import { HOST_URL } from "../../lib/HostUrl";
 import axios from "axios";
 import { getJwtToken } from "../../modules/Auth";
 import { useMyInfo } from "../../modules/apis/auth";
+import Category from "../../component/ new-portal/Category";
 
 const CommentBox = ({ activeId, handleActive, comment }) => {
   const isActive = activeId === comment.id;
@@ -79,6 +80,7 @@ const Comment = ({ boardId, activeId, handleActive }) => {
   const token = getJwtToken();
 
   const { data: me } = useMyInfo();
+  console.log(me);
 
   const { data: comments } = useQuery({
     queryKey: [{ boardId }, "comment"],
@@ -252,12 +254,8 @@ const Detail = () => {
             </div>
             <div className="flex flex-col gap-[3px]">
               <div className="flex flex-row justify-end gap-[10px]">
-                <div className="rounded-[50px] bg-[#85AED3] py-[1px] px-[8px] items-center min-w-[70px] flex justify-center text-sm font-semibold text-white">
-                  {boardData.category1}
-                </div>
-                <div className="rounded-[50px] bg-[#EAB191] py-[1px] px-[8px] items-center min-w-[70px] flex justify-center text-sm font-semibold text-white">
-                  {boardData.category2}
-                </div>
+                <Category category={boardData.category1} />
+                <Category category={boardData.category2} />
               </div>
               <div className="flex flex-row gap-[10px] items-center">
                 <div className="text-[#8F8F8F]">
